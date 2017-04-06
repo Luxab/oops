@@ -6,12 +6,12 @@ using namespace sf;
 
 class Button
 {
-  int x,y,buttonSize;
-  int buttonSpacing = 10; //Space between text and edge of button
-  Color buttonColor;
-  Font buttonFont;
-  Text buttonText;
-  RectangleShape buttonBackground;
+  int x,y,bSize;
+  int bSpacing = 10; //Space between text and edge of button
+  Color bColor;
+  Font bFont;
+  Text bText;
+  RectangleShape bBG; // Button Background
   FloatRect textRegion;
 
 public:
@@ -20,12 +20,13 @@ public:
   {
     x = xin;
     y = yin;
-    buttonSize = bsin;
+    bSize = bsin;
+    bSpacing = 10+bsin/10;
 
-    buttonColor = colin;
-    buttonFont = fin;
-    buttonText = *(new Text(tin,buttonFont,buttonSize));
-    textRegion = buttonText.getLocalBounds();
+    bColor = colin;
+    bFont = fin;
+    bText = *(new Text(tin,bFont,bSize));
+    textRegion = bText.getLocalBounds();
   }
   ~Button()
   {
@@ -37,16 +38,20 @@ public:
     return (textRegion.contains(mx,my));
   }
 
+  void centerWidth(int width)
+  {
+    x = (width-textRegion.width)/2;
+  }
+
   void drawButton(RenderWindow &window)
   {
-    RectangleShape r;
-    r.setSize(Vector2f(textRegion.width+buttonSpacing,textRegion.height+buttonSpacing));
-    r.setPosition(x,y);
-    r.setFillColor(buttonColor);
-    window.draw(r);
+    bBG.setSize(Vector2f(textRegion.width+bSpacing*2,textRegion.height+bSpacing*2));
+    bBG.setPosition(x-bSpacing,y-bSpacing);
+    bBG.setFillColor(bColor);
+    window.draw(bBG);
 
-    buttonText.setPosition(x,y);
-    window.draw(buttonText);
+    bText.setPosition(x,y);
+    window.draw(bText);
   }
 
 };
