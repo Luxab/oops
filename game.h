@@ -20,7 +20,7 @@ class Game
   int resH;
   int xmult;
   int ymult;
-  int screenInd;
+  int screenInd = 0;
 
   Font gameFont;
 
@@ -111,17 +111,9 @@ void checkExit()
     //Title text, box behind title for visibility
     mouseOnMain();
 
-    RectangleShape r;
-    r.setSize(Vector2f(780,110));
-    r.setPosition(15,50);
-    r.setFillColor(buttonColor);
-    window.draw(r);
-
-    /*
-    Text *titleText = new Text("Game Name",gameFont,90);
-    titleText->setPosition(25,50);
-    window.draw(*titleText);
-    */
+    Button titleBanner(0,0,buttonColor,gameFont,"Game Template Title",60);
+    titleBanner.centerWidth(resW);
+    titleBanner.drawButton(window);
 
     BGTexture.loadFromFile("MMBG.png");
   }
@@ -135,8 +127,8 @@ void checkExit()
   {
     window.create(VideoMode(resW,resH), "Game Template");
     window.setFramerateLimit(60);
-
     window.clear();
+
     while (window.isOpen())
     {
       // Game state
