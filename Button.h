@@ -1,4 +1,4 @@
-//  Created by Duncan Klug on 3/16/17.
+//  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 
@@ -9,14 +9,16 @@ class Button
   int x,y,h,w;
   Color buttonColor;
   Font buttonFont
+  Text buttonText
 
 public:
 
-  Button(int xin, int yin, int hin, int win, Color colin, Font fin) :
-    (x(xin),y(yin),h(hin),w(win))
+  Button(int xin, int yin, Color colin, Font fin, String tin) :
+    (x(xin),y(yin))
   {
     buttonColor = colin;
     buttonFont = fin;
+    buttonText = tin;
   }
   ~Button()
   {
@@ -35,6 +37,10 @@ public:
     r.setPosition(15,50);
     r.setFillColor(buttonColor);
     window.draw(r);
+
+    Text *drawText = new Text(buttonText,buttonFont,90);
+    drawText->setPosition(25,50);
+    window.draw(*drawText);
   }
 
 };
