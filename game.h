@@ -7,6 +7,12 @@
 
 using namespace sf;
 
+enum gameState {
+    PLAY,
+    VICTORY,
+    GAMEOVER
+} gameState = PLAY;
+
 class Game
 {
   int resW;
@@ -26,7 +32,6 @@ class Game
 public:
   Game()
   {
-    screenInd=0;
     resW = 800;
     resH = 600;
     xmult = resW/3;
@@ -35,7 +40,6 @@ public:
   }
   Game(int rw, int rh)
   {
-    screenInd=0;
     resW = rw;
     resH = rh;
     xmult = resW/3;
@@ -65,11 +69,6 @@ void mouseOnMain()
   }
 }
 
-bool contains(int mx, int my, int x, int y, int w, int h)
-{
-  return (mx>x && mx<x+w && my>y && my<y+h);
-}
-
 void cursorFollow()
 {
   //  Follows the cursor around with the appropriate player
@@ -82,6 +81,7 @@ void cursorFollow()
   */ 
   window.draw(*cursor);
 }
+
 //---------------------------------------------------------------------------------//
 //------------------------------KeyboardInput Functions----------------------------//
 void checkExit()
@@ -116,27 +116,13 @@ void checkExit()
     r.setFillColor(buttonColor);
     window.draw(r);
 
+    /*
     Text *titleText = new Text("Game Name",gameFont,90);
     titleText->setPosition(25,50);
     window.draw(*titleText);
-
-    //Single Player button
-    Text *singText = new Text("Single Player",gameFont,80);
-    singText->setPosition(100,250);
-    window.draw(*singText);
-
-    //Dual player button
-    Text *dualText = new Text("Dual Player",gameFont,80);
-    dualText->setPosition(100,350);
-    window.draw(*dualText);
-
-    //exit button
-    Text *exitText = new Text("Quit",gameFont,50);
-    exitText->setPosition(100,500);
-    window.draw(*exitText);
+    */
 
     BGTexture.loadFromFile("MMBG.png");
-    //drawMain();
   }
 
   void victoryScreen(int victor)
