@@ -2,7 +2,7 @@
 //  Partitioned into header files 3/19/17
 //	Lab 02 Spring 2017
 
-#include "TicTacToe.h"
+#include "game.h"
 
 //Globals
 int resW = 800;
