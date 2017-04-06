@@ -1,9 +1,10 @@
-//  Created by Duncan Klug on 3/19/17.
+//  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
 #include <stdlib.h>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include "Button.h"
 
 using namespace sf;
 
@@ -78,7 +79,7 @@ void cursorFollow()
   cursor = new Text("1",gameFont,90);
   cursor->setPosition(mousepos.x-15,mousepos.y-100);
   cursor->setFillColor(Color::Black);
-  */ 
+  */
   window.draw(*cursor);
 }
 
