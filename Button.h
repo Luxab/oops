@@ -40,7 +40,7 @@ public:
   void drawButton(RenderWindow &window)
   {
     RectangleShape r;
-    r.setSize(Vector2f(textRegion.width,textRegion.height));
+    r.setSize(Vector2f(textRegion.width+buttonSpacing,textRegion.height+buttonSpacing));
     r.setPosition(x,y);
     r.setFillColor(buttonColor);
     window.draw(r);
