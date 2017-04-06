@@ -6,19 +6,26 @@ using namespace sf;
 
 class Button
 {
-  int x,y,h,w,buttonSize;
+  int x,y,buttonSize;
+  int buttonSpacing = 10; //Space between text and edge of button
   Color buttonColor;
   Font buttonFont;
   Text buttonText;
+  RectangleShape buttonBackground;
+  FloatRect textRegion;
 
 public:
 
-  Button(int xin, int yin, Color colin, Font fin, String tin, int bsin) :
-    (x(xin),y(yin),buttonSize(bsin))
+  Button(int xin, int yin, Color colin, Font fin, String tin, int bsin)
   {
+    x = xin;
+    y = yin;
+    buttonSize = bsin;
+
     buttonColor = colin;
     buttonFont = fin;
-    buttonText = *(new text(buttonText,buttonFont,buttonSize));
+    buttonText = *(new Text(tin,buttonFont,buttonSize));
+    textRegion = buttonText.getLocalBounds();
   }
   ~Button()
   {
@@ -27,20 +34,19 @@ public:
 
   bool contains(int mx, int my)
   {
-    return (mx>x && mx<x+w && my>y && my<y+h);
+    return (textRegion.contains(mx,my));
   }
 
   void drawButton(RenderWindow &window)
   {
     RectangleShape r;
-    r.setSize(Vector2f(780,110));
-    r.setPosition(15,50);
+    r.setSize(Vector2f(textRegion.width,textRegion.height));
+    r.setPosition(x,y);
     r.setFillColor(buttonColor);
     window.draw(r);
 
-    Text *drawText = new Text(buttonText,buttonFont,90);
-    drawText->setPosition(25,50);
-    window.draw(*drawText);
+    buttonText.setPosition(x,y);
+    window.draw(buttonText);
   }
 
 };
