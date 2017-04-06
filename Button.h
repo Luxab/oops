@@ -6,19 +6,19 @@ using namespace sf;
 
 class Button
 {
-  int x,y,h,w;
+  int x,y,h,w,buttonSize;
   Color buttonColor;
-  Font buttonFont
-  Text buttonText
+  Font buttonFont;
+  Text buttonText;
 
 public:
 
-  Button(int xin, int yin, Color colin, Font fin, String tin) :
-    (x(xin),y(yin))
+  Button(int xin, int yin, Color colin, Font fin, String tin, int bsin) :
+    (x(xin),y(yin),buttonSize(bsin))
   {
     buttonColor = colin;
     buttonFont = fin;
-    buttonText = tin;
+    buttonText = *(new text(buttonText,buttonFont,buttonSize));
   }
   ~Button()
   {
