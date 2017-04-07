@@ -77,13 +77,32 @@ public:
   void checkHover(int mx, int my)
   {
     //Makes the button glow green when the mouse is over it
-    if (contains(mx,my) && bColor.g<200)
+    int glowVal = 220;
+
+    int asyGlow;
+    if (contains(mx,my) && bColor.g<glowVal)
     {
-      bColor.g+=10;
+      asyGlow = 20*bColor.g/bColDef.g;
+      if (bColor.g+asyGlow>glowVal)
+      {
+        bColor.g = glowVal;
+      }
+      else
+      {
+        bColor.g+=asyGlow;
+      }
     }
     else if (!contains(mx,my) && bColor.g>bColDef.g)
     {
-      bColor.g-=15;
+      asyGlow = 20*bColor.g/bColDef.g;
+      if (bColor.g-asyGlow<bColDef.g)
+      {
+        bColor.g = bColDef.g;
+      }
+      else
+      {
+        bColor.g-=asyGlow;
+      }
     }
     bBG.setFillColor(bColor);
   }
