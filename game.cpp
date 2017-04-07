@@ -1,6 +1,4 @@
-//  Created by Duncan Klug on 3/16/17.
-//  Partitioned into header files 3/19/17
-//	Lab 02 Spring 2017
+//  Created by Duncan Klug on 4/6/17.
 
 #include "game.h"
 
