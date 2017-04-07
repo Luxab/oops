@@ -30,6 +30,10 @@ class Game
 
   RenderWindow window;
 
+  Button *titleBanner;
+  Button *quitButton;
+  bool MMI = false;
+
 public:
   Game()
   {
@@ -87,30 +91,42 @@ void checkExit()
 
 //---------------------------------------------------------------------------------//
 
+  void initMM()
+  {
+    //Initializes the buttons on the main menu.
+    titleBanner= new Button(0,0,gameFont,"Game Template Title",60);
+    titleBanner->centerWidth(resW);
+
+    quitButton = new Button(0,500,gameFont,"Quit",40);
+    quitButton->setY(resH-quitButton->getHeight());
+    quitButton->centerWidth(resW);
+    MMI = true;
+  }
   void mainMenu()
   {
-    Color buttonColor(70,70,70);
+    if(!MMI)
+    {
+      initMM();
+    }
 
-    Button titleBanner(0,0,buttonColor,gameFont,"Game Template Title",60);
-    titleBanner.centerWidth(resW);
-    titleBanner.draw(window);
-
-    Button quitButton(0,500,buttonColor,gameFont,"Quit",40);
-    quitButton.setY(resH-quitButton.getHeight());
-    quitButton.centerWidth(resW);
-    quitButton.draw(window);
-
+    titleBanner->draw(window);
+    quitButton->draw(window);
     BGTexture.loadFromFile("MMBG.png");
 
+    Vector2i mousepos = Mouse::getPosition(window);
+    float mouseX = mousepos.x;
+    float mouseY = mousepos.y;
     if (Mouse::isButtonPressed(Mouse::Left))
     {
-      Vector2i mousepos = Mouse::getPosition(window);
-      float x = mousepos.x;
-      float y = mousepos.y;
-      if (quitButton.contains(x,y))
+      //std::cout << x << "; " << y << std::endl;
+      if (quitButton->contains(mouseX,mouseY))
       {
         window.close();
       }
+    }
+    else
+    {
+      quitButton->checkHover(mouseX,mouseY);
     }
   }
 
