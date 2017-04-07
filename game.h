@@ -94,10 +94,11 @@ void checkExit()
   void initMM()
   {
     //Initializes the buttons on the main menu.
-    titleBanner= new Button(0,0,gameFont,"Game Template Title",60);
+
+    titleBanner= new Button(0,0,gameFont,"Game Template Title",(.075*resW));
     titleBanner->centerWidth(resW);
 
-    quitButton = new Button(0,500,gameFont,"Quit",40);
+    quitButton = new Button(0,500,gameFont,"Quit",.05*resW);
     quitButton->setY(resH-quitButton->getHeight());
     quitButton->centerWidth(resW);
     MMI = true;
