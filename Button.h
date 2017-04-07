@@ -12,6 +12,7 @@ class Button
   Font bFont;
   Text bText;
   RectangleShape bBG; // Button Background
+  int bWidth, bHeight; //width and height of the background.
   FloatRect textRegion;
 
 public:
@@ -21,12 +22,14 @@ public:
     x = xin;
     y = yin;
     bSize = bsin;
-    bSpacing = 10+bsin/10;
+    bSpacing = 10+bSize/10;
 
     bColor = colin;
     bFont = fin;
     bText = *(new Text(tin,bFont,bSize));
     textRegion = bText.getLocalBounds();
+    bWidth = textRegion.width+bSpacing*2;
+    bHeight = textRegion.height+bSpacing*2;
   }
   ~Button()
   {
@@ -43,10 +46,25 @@ public:
     x = (width-textRegion.width)/2;
   }
 
-  void drawButton(RenderWindow &window)
+  void setY(int yin)
   {
-    bBG.setSize(Vector2f(textRegion.width+bSpacing*2,textRegion.height+bSpacing*2));
-    bBG.setPosition(x-bSpacing,y-bSpacing);
+    y = yin;
+  }
+
+  int getWidth()
+  {
+    return bWidth;
+  }
+
+  int getHeight()
+  {
+    return bHeight;
+  }
+
+  void draw(RenderWindow &window)
+  {
+    bBG.setSize(Vector2f(bWidth,bHeight));
+    bBG.setPosition(x-bSpacing,y);
     bBG.setFillColor(bColor);
     window.draw(bBG);
 
