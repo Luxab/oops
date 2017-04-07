@@ -19,10 +19,6 @@ class Button
 
 public:
 
-  Button()
-  {
-
-  }
   Button(int xin, int yin, Font fin, String tin, int bsin)
   {
     x = xin;
@@ -38,6 +34,11 @@ public:
     textRegion = bText.getLocalBounds();
     bWidth = textRegion.width+bSpacing*2;
     bHeight = textRegion.height+bSpacing*2;
+
+    bBG.setSize(Vector2f(bWidth,bHeight));
+    bBG.setPosition(x-bSpacing,y);
+    bBG.setFillColor(bColor);
+    bText.setPosition(x,y);
   }
   ~Button()
   {
@@ -46,17 +47,21 @@ public:
 
   bool contains(int mx, int my)
   {
-    return (mx>x && mx<x+bWidth && my>y && my<y+bHeight);
+    return (mx>x-bSpacing && mx<x+bWidth-bSpacing && my>y && my<y+bHeight);
   }
 
   void centerWidth(int width)
   {
     x = (width-textRegion.width)/2;
+    bBG.setPosition(x-bSpacing,y);
+    bText.setPosition(x,y);
   }
 
   void setY(int yin)
   {
     y = yin;
+    bBG.setPosition(x-bSpacing,y);
+    bText.setPosition(x,y);
   }
 
   int getWidth()
@@ -80,16 +85,12 @@ public:
     {
       bColor.g-=15;
     }
+    bBG.setFillColor(bColor);
   }
 
   void draw(RenderWindow &window)
   {
-    bBG.setSize(Vector2f(bWidth,bHeight));
-    bBG.setPosition(x-bSpacing,y);
-    bBG.setFillColor(bColor);
     window.draw(bBG);
-
-    bText.setPosition(x,y);
     window.draw(bText);
   }
 
