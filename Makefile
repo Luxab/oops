@@ -1,7 +1,7 @@
 CC = g++
 
 all:
-	$(CC) 'game.cpp' -lsfml-graphics -lsfml-window -lsfml-system -g -o a
+	$(CC) 'game.cpp' -lsfml-graphics -lsfml-window -lsfml-system -g -o runme
 
 clean:
-	rm -f a
+	rm -f runme
