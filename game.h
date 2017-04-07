@@ -30,8 +30,11 @@ class Game
 
   RenderWindow window;
 
+  //Main Menu buttons
   Button *titleBanner;
   Button *quitButton;
+  Button *optionsButton;
+  Button *playButton;
   bool MMI = false;
 
 public:
@@ -94,9 +97,14 @@ void checkExit()
   void initMM()
   {
     //Initializes the buttons on the main menu.
-
     titleBanner= new Button(0,0,gameFont,"Game Template Title",(.075*resW));
     titleBanner->centerWidth(resW);
+
+    playButton = new Button(0,resH/5,gameFont,"Play", (.06*resW));
+    playButton->centerWidth(resW);
+
+    optionsButton = new Button(0,2*resH/5,gameFont,"Options",(.06*resW));
+    optionsButton->centerWidth(resW);
 
     quitButton = new Button(0,500,gameFont,"Quit",.05*resW);
     quitButton->setY(resH-quitButton->getHeight());
@@ -111,9 +119,13 @@ void checkExit()
     }
 
     titleBanner->draw(window);
+    playButton->draw(window);
+    optionsButton->draw(window);
     quitButton->draw(window);
+    
     BGTexture.loadFromFile("MMBG.png");
 
+    //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(window);
     float mouseX = mousepos.x;
     float mouseY = mousepos.y;
@@ -128,6 +140,8 @@ void checkExit()
     else
     {
       quitButton->checkHover(mouseX,mouseY);
+      playButton->checkHover(mouseX,mouseY);
+      optionsButton->checkHover(mouseX,mouseY);
     }
   }
 
