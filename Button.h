@@ -38,7 +38,7 @@ public:
 
   bool contains(int mx, int my)
   {
-    return (textRegion.contains(mx,my));
+    return (mx>x && mx<x+bWidth && my>y && my<y+bHeight);
   }
 
   void centerWidth(int width)
