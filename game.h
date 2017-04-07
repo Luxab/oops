@@ -51,24 +51,6 @@ public:
   {
 
   }
-//------------------------------MouseInput Functions----------------------------//
-void mouseOnMain()
-{
-  //----------------Mouse Input--------------------
-  if (Mouse::isButtonPressed(Mouse::Left))
-  {
-    Vector2i mousepos = Mouse::getPosition(window);
-    float x = mousepos.x;
-    float y = mousepos.y;
-
-    Clock c;
-    Time t = seconds(.2);
-    while (c.getElapsedTime()!=t)
-    {
-
-    }
-  }
-}
 
 void cursorFollow()
 {
@@ -108,14 +90,28 @@ void checkExit()
   void mainMenu()
   {
     Color buttonColor(70,70,70);
-    //Title text, box behind title for visibility
-    mouseOnMain();
 
     Button titleBanner(0,0,buttonColor,gameFont,"Game Template Title",60);
     titleBanner.centerWidth(resW);
-    titleBanner.drawButton(window);
+    titleBanner.draw(window);
+
+    Button quitButton(0,500,buttonColor,gameFont,"Quit",40);
+    quitButton.setY(resH-quitButton.getHeight());
+    quitButton.centerWidth(resW);
+    quitButton.draw(window);
 
     BGTexture.loadFromFile("MMBG.png");
+
+    if (Mouse::isButtonPressed(Mouse::Left))
+    {
+      Vector2i mousepos = Mouse::getPosition(window);
+      float x = mousepos.x;
+      float y = mousepos.y;
+      if (quitButton.contains(x,y))
+      {
+        window.close();
+      }
+    }
   }
 
   void victoryScreen(int victor)
