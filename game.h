@@ -32,9 +32,12 @@ class Game
 
   //Main Menu buttons
   Button *titleBanner;
-  Button *quitButton;
-  Button *optionsButton;
   Button *playButton;
+  Button *optionsButton;
+  Button *scoreButton;
+  Button *quitButton;
+
+
   bool MMI = false;
 
 public:
@@ -106,6 +109,9 @@ void checkExit()
     optionsButton = new Button(0,2*resH/5,gameFont,"Options",(.06*resW));
     optionsButton->centerWidth(resW);
 
+    scoreButton = new Button(0,3*resH/5,gameFont,"Score Board", (.06*resW));
+    scoreButton->centerWidth(resW);
+
     quitButton = new Button(0,500,gameFont,"Quit",.05*resW);
     quitButton->setY(resH-quitButton->getHeight());
     quitButton->centerWidth(resW);
@@ -121,8 +127,9 @@ void checkExit()
     titleBanner->draw(window);
     playButton->draw(window);
     optionsButton->draw(window);
+    scoreButton->draw(window);
     quitButton->draw(window);
-    
+
     BGTexture.loadFromFile("MMBG.png");
 
     //--------------Mouse Input--------------//
@@ -139,9 +146,10 @@ void checkExit()
     }
     else
     {
-      quitButton->checkHover(mouseX,mouseY);
       playButton->checkHover(mouseX,mouseY);
       optionsButton->checkHover(mouseX,mouseY);
+      scoreButton->checkHover(mouseX,mouseY);
+      quitButton->checkHover(mouseX,mouseY);
     }
   }
 
