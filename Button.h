@@ -8,6 +8,8 @@ class Button
 {
   int x,y,bSize;
   int bSpacing = 10; //Space between text and edge of button
+
+  Color bColDef; //default Color
   Color bColor;
   Font bFont;
   Text bText;
@@ -17,14 +19,20 @@ class Button
 
 public:
 
-  Button(int xin, int yin, Color colin, Font fin, String tin, int bsin)
+  Button()
+  {
+
+  }
+  Button(int xin, int yin, Font fin, String tin, int bsin)
   {
     x = xin;
     y = yin;
     bSize = bsin;
     bSpacing = 10+bSize/10;
 
-    bColor = colin;
+    Color tempCol(80,80,80); //Default Color
+    bColDef = tempCol;
+    bColor = bColDef;
     bFont = fin;
     bText = *(new Text(tin,bFont,bSize));
     textRegion = bText.getLocalBounds();
@@ -59,6 +67,19 @@ public:
   int getHeight()
   {
     return bHeight;
+  }
+
+  void checkHover(int mx, int my)
+  {
+    //Makes the button glow green when the mouse is over it
+    if (contains(mx,my) && bColor.g<200)
+    {
+      bColor.g+=10;
+    }
+    else if (!contains(mx,my) && bColor.g>bColDef.g)
+    {
+      bColor.g-=15;
+    }
   }
 
   void draw(RenderWindow &window)
