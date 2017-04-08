@@ -1,0 +1,9 @@
+1: xDD 99
+2: wow 90
+3: cow 80
+4: yes 70
+5: why 60
+6: lad 50
+7: mad 40
+8: sad 30
+9: bad 20

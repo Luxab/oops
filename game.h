@@ -1,6 +1,7 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
 #include "mainMenu.h"
+#include "scoreBoard.h"
 
 using namespace sf;
 
@@ -13,7 +14,7 @@ enum gameState {
 class Game
 {
   int resW, resH; //Screen resolution
-  int screenInd = 0;
+  int level = 0;
 
   Font gameFont;
   Event event;
@@ -21,7 +22,8 @@ class Game
   RenderWindow window;
 
   //Levels:
-  mainMenu *m;
+  mainMenu *mm;
+  scoreBoard *sb;
 
 public:
   Game()
@@ -29,14 +31,16 @@ public:
     resW = 800;
     resH = 600;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    m = new mainMenu(resW,resH,window,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,level,gameFont,BGTexture);
+    sb = new scoreBoard(resW,resH,window,level,gameFont,BGTexture);
   }
   Game(int rw, int rh)
   {
     resW = rw;
     resH = rh;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    m = new mainMenu(resW,resH,window,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,level,gameFont,BGTexture);
+    sb = new scoreBoard(resW,resH,window,level,gameFont,BGTexture);
   }
   ~Game()
   {
@@ -74,10 +78,15 @@ void checkExit()
     while (window.isOpen())
     {
       // Game state
-      if (screenInd == 0)
+      if (level == 0)
       {
         //Main menu
-        m->draw();
+        mm->draw();
+      }
+      if (level ==1)
+      {
+        //Scoreboard
+        sb->draw();
       }
 
       Sprite background(BGTexture);

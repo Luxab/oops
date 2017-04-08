@@ -20,7 +20,7 @@ class mainMenu : public Level
   bool MMI = false;
 
 public:
-  mainMenu(int rw, int rh, RenderWindow &win, Font fin, Texture &tin) : Level(rw,rh,win,tin)
+  mainMenu(int rw, int rh, RenderWindow &win, int &level, Font fin, Texture &tin) : Level(rw,rh,win,level,tin)
   {
     gameFont = fin;
   }
@@ -46,6 +46,7 @@ void cursorFollow()
 
   void initMM()
   {
+    window->clear();
     //Initializes the buttons on the main menu.
     titleBanner= new Button(0,0,gameFont,"Game Template Title",(.075*resW));
     titleBanner->centerWidth(resW);
@@ -89,6 +90,10 @@ void cursorFollow()
       if (quitButton->contains(mouseX,mouseY))
       {
         window->close();
+      }
+      if (scoreButton->contains(mouseX,mouseY))
+      {
+        *levelIndex = 1;
       }
     }
     else
