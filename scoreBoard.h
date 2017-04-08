@@ -16,7 +16,7 @@ class scoreBoard : public Level
   Button *backButton;
 
 public:
-  scoreBoard(int rw, int rh, RenderWindow &win, int &level, Font fin, Texture &tin) : Level(rw,rh,win,level,tin)
+  scoreBoard(int rw, int rh, RenderWindow &win, Event &ev, int &level, Font fin, Texture &tin) : Level(rw,rh,win,ev,level,tin)
   {
     gameFont = fin;
   }

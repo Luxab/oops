@@ -15,6 +15,7 @@ protected:
   RenderWindow *window;
   Texture *BGTexture;
   int *levelIndex;
+  Event *event;
 
 public:
   Level()
@@ -22,13 +23,14 @@ public:
     resW = 800;
     resH = 600;
   }
-  Level(int rw, int rh, RenderWindow &win, int &lin, Texture &tin)
+  Level(int rw, int rh, RenderWindow &win, Event &ev, int &lin, Texture &tin)
   {
     resW = rw;
     resH = rh;
     window = &win;
     BGTexture = &tin;
     levelIndex = &lin;
+    event = &ev;
   }
   virtual ~Level()
   {

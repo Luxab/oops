@@ -14,7 +14,7 @@ enum gameState {
 class Game
 {
   int resW, resH; //Screen resolution
-  int level = 0;
+  int levelIndex = 0;
 
   Font gameFont;
   Event event;
@@ -31,16 +31,16 @@ public:
     resW = 800;
     resH = 600;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    mm = new mainMenu(resW,resH,window,level,gameFont,BGTexture);
-    sb = new scoreBoard(resW,resH,window,level,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont,BGTexture);
+    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont,BGTexture);
   }
   Game(int rw, int rh)
   {
     resW = rw;
     resH = rh;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    mm = new mainMenu(resW,resH,window,level,gameFont,BGTexture);
-    sb = new scoreBoard(resW,resH,window,level,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont,BGTexture);
+    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont,BGTexture);
   }
   ~Game()
   {
@@ -78,12 +78,12 @@ void checkExit()
     while (window.isOpen())
     {
       // Game state
-      if (level == 0)
+      if (levelIndex == 0)
       {
         //Main menu
         mm->draw();
       }
-      if (level ==1)
+      if (levelIndex ==1)
       {
         //Scoreboard
         sb->draw();
