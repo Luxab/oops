@@ -1,10 +1,6 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
-#include <stdlib.h>
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include "Button.h"
+#include "mainMenu.h"
 
 using namespace sf;
 
@@ -16,64 +12,36 @@ enum gameState {
 
 class Game
 {
-  int resW;
-  int resH;
-  int xmult;
-  int ymult;
+  int resW, resH; //Screen resolution
   int screenInd = 0;
 
   Font gameFont;
-
   Event event;
-
   Texture BGTexture;
-
   RenderWindow window;
 
-  //Main Menu buttons
-  Button *titleBanner;
-  Button *playButton;
-  Button *optionsButton;
-  Button *scoreButton;
-  Button *quitButton;
-
-
-  bool MMI = false;
+  //Levels:
+  mainMenu *m;
 
 public:
   Game()
   {
     resW = 800;
     resH = 600;
-    xmult = resW/3;
-    ymult = resH/3;
     gameFont.loadFromFile("Raleway-Regular.ttf");
+    m = new mainMenu(resW,resH,window,gameFont,BGTexture);
   }
   Game(int rw, int rh)
   {
     resW = rw;
     resH = rh;
-    xmult = resW/3;
-    ymult = resH/3;
     gameFont.loadFromFile("Raleway-Regular.ttf");
+    m = new mainMenu(resW,resH,window,gameFont,BGTexture);
   }
   ~Game()
   {
 
   }
-
-void cursorFollow()
-{
-  //  Follows the cursor around with the appropriate player
-  Vector2i mousepos = Mouse::getPosition(window);
-  Text *cursor;
-  /*
-  cursor = new Text("1",gameFont,90);
-  cursor->setPosition(mousepos.x-15,mousepos.y-100);
-  cursor->setFillColor(Color::Black);
-  */
-  window.draw(*cursor);
-}
 
 //---------------------------------------------------------------------------------//
 //------------------------------KeyboardInput Functions----------------------------//
@@ -97,67 +65,6 @@ void checkExit()
 
 //---------------------------------------------------------------------------------//
 
-  void initMM()
-  {
-    //Initializes the buttons on the main menu.
-    titleBanner= new Button(0,0,gameFont,"Game Template Title",(.075*resW));
-    titleBanner->centerWidth(resW);
-
-    playButton = new Button(0,resH/5,gameFont,"Play", (.06*resW));
-    playButton->centerWidth(resW);
-
-    optionsButton = new Button(0,2*resH/5,gameFont,"Options",(.06*resW));
-    optionsButton->centerWidth(resW);
-
-    scoreButton = new Button(0,3*resH/5,gameFont,"Score Board", (.06*resW));
-    scoreButton->centerWidth(resW);
-
-    quitButton = new Button(0,500,gameFont,"Quit",.05*resW);
-    quitButton->setY(resH-quitButton->getHeight());
-    quitButton->centerWidth(resW);
-    MMI = true;
-  }
-  void mainMenu()
-  {
-    if(!MMI)
-    {
-      initMM();
-    }
-
-    titleBanner->draw(window);
-    playButton->draw(window);
-    optionsButton->draw(window);
-    scoreButton->draw(window);
-    quitButton->draw(window);
-
-    BGTexture.loadFromFile("MMBG.png");
-
-    //--------------Mouse Input--------------//
-    Vector2i mousepos = Mouse::getPosition(window);
-    float mouseX = mousepos.x;
-    float mouseY = mousepos.y;
-    if (Mouse::isButtonPressed(Mouse::Left))
-    {
-      //std::cout << x << "; " << y << std::endl;
-      if (quitButton->contains(mouseX,mouseY))
-      {
-        window.close();
-      }
-    }
-    else
-    {
-      playButton->checkHover(mouseX,mouseY);
-      optionsButton->checkHover(mouseX,mouseY);
-      scoreButton->checkHover(mouseX,mouseY);
-      quitButton->checkHover(mouseX,mouseY);
-    }
-  }
-
-  void victoryScreen(int victor)
-  {
-    // Show victory to player
-  }
-
   void play()
   {
     window.create(VideoMode(resW,resH), "Game Template");
@@ -169,7 +76,8 @@ void checkExit()
       // Game state
       if (screenInd == 0)
       {
-        mainMenu();
+        //Main menu
+        m->draw();
       }
 
       Sprite background(BGTexture);
