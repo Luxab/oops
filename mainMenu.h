@@ -6,10 +6,7 @@ using namespace sf;
 
 class mainMenu : public Level
 {
-  int resW;
-  int resH;
 
-  Texture *BGTexture;
   Font gameFont;
 
   //Main Menu buttons
@@ -18,18 +15,14 @@ class mainMenu : public Level
   Button *optionsButton;
   Button *scoreButton;
   Button *quitButton;
-  RenderWindow *window;
+
 
   bool MMI = false;
 
 public:
-  mainMenu(int rw, int rh, RenderWindow &win, Font fin, Texture &tin)
+  mainMenu(int rw, int rh, RenderWindow &win, Font fin, Texture &tin) : Level(rw,rh,win,tin)
   {
-    resW = rw;
-    resH = rh;
-    window = &win;
     gameFont = fin;
-    BGTexture = &tin;
   }
   ~mainMenu()
   {

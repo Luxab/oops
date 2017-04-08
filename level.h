@@ -10,8 +10,11 @@ using namespace sf;
 
 class Level
 {
+protected:
   int resW;
   int resH;
+  RenderWindow *window;
+  Texture *BGTexture;
 
 public:
   Level()
@@ -19,10 +22,12 @@ public:
     resW = 800;
     resH = 600;
   }
-  Level(int rw, int rh)
+  Level(int rw, int rh, RenderWindow &win, Texture &tin)
   {
     resW = rw;
     resH = rh;
+    window = &win;
+    BGTexture = &tin;
   }
   virtual ~Level()
   {
