@@ -3,8 +3,8 @@
 #include "game.h"
 
 //Globals
-int resW = 800;
-int resH = 600;
+int resW = 960;
+int resH = 540;
 
 int main()
 {
