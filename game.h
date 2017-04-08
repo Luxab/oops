@@ -2,6 +2,8 @@
 //	Lab 02 Spring 2017
 #include "mainMenu.h"
 #include "scoreBoard.h"
+#include "testLevel.h"
+#include "pauseMenu.h"
 
 using namespace sf;
 
@@ -18,12 +20,16 @@ class Game
 
   Font gameFont;
   Event event;
-  Texture BGTexture;
   RenderWindow window;
 
   //Levels:
+  //mainMenu and scoreboard are special because they need gameFont
   mainMenu *mm;
   scoreBoard *sb;
+  pauseMenu *pm;
+  //testLevel doesn't need anything extra in contructor
+  //eventually regular levels could be put in a vector, initialized that way.
+  testLevel *tl;
 
 public:
   Game()
@@ -31,16 +37,20 @@ public:
     resW = 800;
     resH = 600;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont,BGTexture);
-    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont);
+    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont);
+    tl = new testLevel(resW,resH,window,event,levelIndex);
+    pm = new pauseMenu(resW,resH,window,event,levelIndex,gameFont);
   }
   Game(int rw, int rh)
   {
     resW = rw;
     resH = rh;
     gameFont.loadFromFile("Raleway-Regular.ttf");
-    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont,BGTexture);
-    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont,BGTexture);
+    mm = new mainMenu(resW,resH,window,event,levelIndex,gameFont);
+    sb = new scoreBoard(resW,resH,window,event,levelIndex,gameFont);
+    tl = new testLevel(resW,resH,window,event,levelIndex);
+    pm = new pauseMenu(resW,resH,window,event,levelIndex,gameFont);
   }
   ~Game()
   {
@@ -61,10 +71,10 @@ void checkExit()
   }
 
   //Close when Escape Key is pressed
-  if ((event.type==Event::KeyPressed) && (event.key.code==Keyboard::Escape))
-  {
-    window.close();
-  }
+  // if ((event.type==Event::KeyPressed) && (event.key.code==Keyboard::Escape))
+  // {
+  //   window.close();
+  // }
 }
 
 //---------------------------------------------------------------------------------//
@@ -77,6 +87,12 @@ void checkExit()
 
     while (window.isOpen())
     {
+      if (levelIndex!=3)
+      {
+        //Pause menu does not clear, so you can see paused game.
+        window.clear();
+      }
+
       // Game state
       if (levelIndex == 0)
       {
@@ -88,14 +104,20 @@ void checkExit()
         //Scoreboard
         sb->draw();
       }
-
-      Sprite background(BGTexture);
+      if (levelIndex == 2)
+      {
+        //testLevel
+        tl->draw();
+      }
+      if (levelIndex==3)
+      {
+        //Pause menu
+        pm->draw();
+      }
 
       window.display();
 
       checkExit();
-
-      window.draw(background);
     }
   }
 
