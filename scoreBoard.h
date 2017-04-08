@@ -1,7 +1,6 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
-#ifndef LEVEL_H
-#define LEVEL_H
+#include "level.h"
 #include <vector>
 #include <fstream>
 
@@ -16,7 +15,7 @@ class scoreBoard : public Level
   Button *backButton;
 
 public:
-  scoreBoard(int rw, int rh, RenderWindow &win, Event &ev, int &level, Font fin, Texture &tin) : Level(rw,rh,win,ev,level,tin)
+  scoreBoard(int rw, int rh, RenderWindow &win, Event &ev, int &level, Font fin) : Level(rw,rh,win,ev,level)
   {
     gameFont = fin;
   }
@@ -70,7 +69,7 @@ public:
     titleBanner->draw(*window);
     backButton->draw(*window);
 
-    BGTexture->loadFromFile("MMBG.png");
+    //BGTexture->loadFromFile("MMBG.png");
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);
@@ -90,5 +89,3 @@ public:
   }
 
 };
-
-#endif

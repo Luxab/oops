@@ -1,7 +1,6 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
 #include "level.h"
-
 using namespace sf;
 
 class mainMenu : public Level
@@ -20,7 +19,7 @@ class mainMenu : public Level
   bool MMI = false;
 
 public:
-  mainMenu(int rw, int rh, RenderWindow &win, Event &ev, int &level, Font fin, Texture &tin) : Level(rw,rh,win,ev,level,tin)
+  mainMenu(int rw, int rh, RenderWindow &win, Event &ev, int &level, Font fin) : Level(rw,rh,win,ev,level)
   {
     gameFont = fin;
   }
@@ -72,13 +71,14 @@ void cursorFollow()
       initMM();
     }
 
+    window->draw(background); //draw background first!
     titleBanner->draw(*window);
     playButton->draw(*window);
     optionsButton->draw(*window);
     scoreButton->draw(*window);
     quitButton->draw(*window);
 
-    BGTexture->loadFromFile("MMBG.png");
+    //BGTexture->loadFromFile("MMBG.png");
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);
@@ -94,6 +94,10 @@ void cursorFollow()
       if (scoreButton->contains(mouseX,mouseY))
       {
         *levelIndex = 1;
+      }
+      if (playButton->contains(mouseX,mouseY))
+      {
+        *levelIndex = 2;
       }
     }
     else
