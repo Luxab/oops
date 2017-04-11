@@ -81,11 +81,7 @@ void checkExit()
 
     while (window.isOpen())
     {
-      if (levelIndex!=3)
-      {
-        //Pause menu does not clear, so you can see paused game.
-        window.clear();
-      }
+      window.clear();
 
       // Game state
       if (levelIndex == 0)
