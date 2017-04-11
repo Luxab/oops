@@ -30,7 +30,7 @@ public:
     bColDef = tempCol;
     bColor = bColDef;
     bFont = fin;
-    bText = *(new Text(tin,bFont,bSize));
+    bText = Text(tin,bFont,bSize);
     textRegion = bText.getLocalBounds();
     bWidth = textRegion.width+bSpacing*2;
     bHeight = textRegion.height+bSpacing*2;
