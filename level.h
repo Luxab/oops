@@ -50,5 +50,14 @@ public:
     //All levels must be drawn
   }
 
+  void checkExit()
+  {
+    //Close when Escape Key is pressed
+    if (Keyboard::isKeyPressed(Keyboard::Escape))
+    {
+      window->close();
+    }
+  }
+
 };
 #endif

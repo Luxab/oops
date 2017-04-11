@@ -41,15 +41,6 @@ void cursorFollow()
   window->draw(*cursor);
 }
 
-void checkExit()
-{
-  //Close when Escape Key is pressed
-  if (Keyboard::isKeyPressed(Keyboard::Escape))
-  {
-    window->close();
-  }
-}
-
 //---------------------------------------------------------------------------------//
 
   void initMM()
@@ -88,8 +79,6 @@ void checkExit()
     optionsButton->draw(*window);
     scoreButton->draw(*window);
     quitButton->draw(*window);
-
-    //BGTexture->loadFromFile("MMBG.png");
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);

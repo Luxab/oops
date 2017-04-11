@@ -62,14 +62,14 @@ public:
       initSB();
     }
 
+    checkExit();
+
     for (int i = 0; i<scores.size(); i++)
     {
       scores[i].draw(*window);
     }
     titleBanner->draw(*window);
     backButton->draw(*window);
-
-    //BGTexture->loadFromFile("MMBG.png");
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);
