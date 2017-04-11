@@ -69,12 +69,6 @@ void checkExit()
   {
     window.close();
   }
-
-  //Close when Escape Key is pressed
-  // if ((event.type==Event::KeyPressed) && (event.key.code==Keyboard::Escape))
-  // {
-  //   window.close();
-  // }
 }
 
 //---------------------------------------------------------------------------------//

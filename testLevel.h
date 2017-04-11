@@ -25,7 +25,7 @@ void checkPause()
   window->pollEvent(*event);
 
   //Close when Escape Key is pressed
-  if ((event->type==Event::KeyPressed) && (event->key.code==Keyboard::Escape))
+  if (Keyboard::isKeyPressed(Keyboard::Escape))
   {
     *levelIndex = 3;
   }

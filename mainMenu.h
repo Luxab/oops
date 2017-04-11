@@ -41,6 +41,15 @@ void cursorFollow()
   window->draw(*cursor);
 }
 
+void checkExit()
+{
+  //Close when Escape Key is pressed
+  if (Keyboard::isKeyPressed(Keyboard::Escape))
+  {
+    window->close();
+  }
+}
+
 //---------------------------------------------------------------------------------//
 
   void initMM()
@@ -70,6 +79,8 @@ void cursorFollow()
     {
       initMM();
     }
+
+    checkExit();
 
     window->draw(background); //draw background first!
     titleBanner->draw(*window);
