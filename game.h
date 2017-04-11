@@ -17,6 +17,7 @@ class Game
 {
   int resW, resH; //Screen resolution
   int levelIndex = 0;
+  int tempLevelInd = 0;
 
   Font gameFont;
   Event event;
@@ -82,6 +83,16 @@ void checkExit()
     while (window.isOpen())
     {
       window.clear();
+
+      if(tempLevelInd!=levelIndex && (levelIndex == 3 || levelIndex ==2))
+      {
+        pm->pLevelIndex = tempLevelInd;
+        pm->levelClock.restart();
+        pm->delayBool = false;
+        tl->levelClock.restart();
+        tl->delayBool = false;
+        tempLevelInd = levelIndex;
+      }
 
       // Game state
       if (levelIndex == 0)

@@ -34,12 +34,21 @@ void checkPause()
   void initLevel()
   {
     window->clear();
+    levelClock.restart();
 
     init = true;
   }
   void draw()
   {
-    checkPause();
+    if (delayBool)
+    {
+      checkPause();
+    }
+    else
+    {
+      checkDelay();
+    }
+
     if(!init)
     {
       initLevel();

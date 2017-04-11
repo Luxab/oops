@@ -21,13 +21,16 @@ protected:
   RectangleShape background;
 
 public:
+  bool delayBool = false;
+  Clock levelClock;
+  
   Level()
   {
     resW = 800;
     resH = 600;
     background.setSize(Vector2f(resW,resH));
     background.setPosition(0,0);
-    background.setFillColor(*(new Color(255,255,255)));
+    background.setFillColor(Color(255,255,255));
   }
   Level(int rw, int rh, RenderWindow &win, Event &ev, int &lin)
   {
@@ -35,7 +38,7 @@ public:
     resH = rh;
     background.setSize(Vector2f(resW,resH));
     background.setPosition(0,0);
-    background.setFillColor(*(new Color(255,255,255)));
+    background.setFillColor(Color(255,255,255));
     window = &win;
     levelIndex = &lin;
     event = &ev;
@@ -43,6 +46,14 @@ public:
   virtual ~Level()
   {
 
+  }
+
+  void checkDelay()
+  {
+    if (levelClock.getElapsedTime().asSeconds() > 1)
+    {
+      delayBool = true;
+    }
   }
 
   virtual void draw()
