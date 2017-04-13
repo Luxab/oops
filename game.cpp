@@ -9,7 +9,7 @@ Game g(resW,resH);
 
 void onResizeWindowFunc ()
 {
-  std::cout << "We resized! :D" << std::endl;
+  g.window.setView(sf::View(sf::FloatRect(0, 0, g.event.size.width, g.event.size.height)));
 }
 
 void changeLevelFunc (std::string levelName)
