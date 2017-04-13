@@ -38,7 +38,7 @@ public:
     if (Mouse::isButtonPressed(Mouse::Left))
     {
       if(backButton->contains(mouseX,mouseY))
-        cl("menu");
+        cl("main");
     }
     else
       backButton->checkHover(mouseX,mouseY);
