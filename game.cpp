@@ -21,14 +21,17 @@ void escapePressed()
   {
     // Toggle between pause and current level screens
     if (g.pauseBufferLevel && g.currLevel == g.levels["pause"])
+    {
       g.currLevel = g.pauseBufferLevel;
+    }
     else
     {
       g.pauseBufferLevel = g.currLevel;
       g.currLevel = g.levels["pause"];
     }
-  } 
-  else 
+    g.currLevel->levelClock.restart();
+  }
+  else
     // escape button exits
     g.window.close();
 }
@@ -45,7 +48,7 @@ void play()
     g.window.pollEvent(g.event);
 
     // Pauses when Escape Key is pressed
-    if (Keyboard::isKeyPressed(Keyboard::Escape))
+    if (Keyboard::isKeyPressed(Keyboard::Escape) && g.currLevel->levelClock.getElapsedTime().asSeconds()>.2)
       escapePressed();
 
     // Draw current level to screen
