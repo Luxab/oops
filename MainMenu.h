@@ -63,8 +63,15 @@ void cursorFollow()
     quitButton->centerWidth(resW);
   }
 
+  void resize()
+  {
+    initLevel();
+  }
+
   void draw()
   {
+    checkWindowSize();
+
     window->draw(background); //draw background first!
     titleBanner->draw(*window);
     playButton->draw(*window);

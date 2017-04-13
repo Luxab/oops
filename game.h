@@ -69,7 +69,7 @@ public:
   void setup()
   {
     // Set proper window size
-    window.create(VideoMode(resW,resH), "Game Template");
+    window.create(VideoMode(resW,resH), "Game Template", Style::Resize);
     window.setFramerateLimit(60);
 
     levels["main"]   = new MainMenu(window,event,changeLevel,gameFont);

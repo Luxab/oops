@@ -52,8 +52,14 @@ public:
     }
   }
 
+  void resize()
+  {
+    drawButtons();
+  }
+
   void draw()
   {
+    checkWindowSize();
     // Draw scores to screen
     for (unsigned int i = 0; i<scores.size(); i++)
     {

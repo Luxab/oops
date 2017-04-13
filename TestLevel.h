@@ -8,7 +8,7 @@ class TestLevel : public Level
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
-    
+
   }
   ~TestLevel()
   {
@@ -16,6 +16,11 @@ public:
   }
 
 //--------------------------------IMPLEMENTATION-----------------------------------//
+
+  void resize()
+  {
+    
+  }
 
   void draw()
   {

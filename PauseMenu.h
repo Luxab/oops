@@ -27,8 +27,16 @@ public:
   }
 
 //--------------------------------IMPLEMENTATION-----------------------------------//
+  void resize()
+  {
+    // Display a back button
+    backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
+    backButton->setY(resH-backButton->getHeight());
+  }
+
   void draw()
   {
+    checkWindowSize();
     backButton->draw(*window);
 
     //--------------Mouse Input--------------//

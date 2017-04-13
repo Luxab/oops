@@ -24,7 +24,7 @@ protected:
 
 public:
   Clock levelClock;
-  
+
   Level()
   {
     resW = 800;
@@ -48,6 +48,22 @@ public:
   virtual ~Level()
   {
 
+  }
+
+  virtual void resize()
+  {
+
+  }
+
+  void checkWindowSize()
+  {
+    if (resW!=window->getSize().x || resH!=window->getSize().y)
+    {
+      resW = window->getSize().x;
+      resH = window->getSize().y;
+      background.setSize(Vector2f(resW,resH));
+      resize();
+    }
   }
 
   virtual void draw()
