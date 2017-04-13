@@ -7,6 +7,7 @@
 #include "ScoreBoard.h"
 #include "TestLevel.h"
 #include "PauseMenu.h"
+#include "gWindow.h"
 
 using namespace sf;
 
@@ -28,12 +29,12 @@ class Game
   //mainMenu and scoreboard are special because they need gameFont
   //testLevel doesn't need anything extra in contructor
   //eventually regular levels could be put in a vector, initialized that way.
-  
+
 public:
   void (*changeLevel)(std::string);
 
   Event event;
-  RenderWindow window;
+  gWindow window;
   Vector2u winSize;
 
   // Current level that is shown on screen
