@@ -20,7 +20,7 @@ enum gameState {
 } gameState = PLAY;
 
 // TODO: Only have resolution determined in game.h
-class Game
+class Game : RenderWindow
 {
   int resW, resH; //Screen resolution
 
@@ -32,6 +32,7 @@ class Game
 
 public:
   void (*changeLevel)(std::string);
+  void (*onResizeWindow)();
 
   Event event;
   gWindow window;
@@ -70,6 +71,7 @@ public:
   {
     // Set proper window size
     window.create(VideoMode(resW,resH), "Game Template", Style::Resize);
+    window.setResizeFunction(onResizeWindow);
     window.setFramerateLimit(60);
 
     levels["main"]   = new MainMenu(window,event,changeLevel,gameFont);

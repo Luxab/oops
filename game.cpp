@@ -7,6 +7,11 @@ int resH = 540;
 
 Game g(resW,resH);
 
+void onResizeWindowFunc ()
+{
+  std::cout << "We resized! :D" << std::endl;
+}
+
 void changeLevelFunc (std::string levelName)
 {
   g.window.clear();
@@ -62,6 +67,7 @@ int main()
 {
   // Set address value of change level func pointer
   g.changeLevel = changeLevelFunc;
+  g.onResizeWindow = onResizeWindowFunc;
 
   g.setup();
 
