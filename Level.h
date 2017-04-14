@@ -61,7 +61,7 @@ public:
     resW = window->getView().getSize().x;
     resH = window->getView().getSize().y;
     background.setSize(Vector2f(resW,resH));
-    resize();
+    //resize();
   }
 
   virtual void draw()
