@@ -24,6 +24,7 @@ public:
 
   void draw()
   {
+    checkWindowSize();
     window->draw(background); //draw background first!
     //BGTexture->loadFromFile("MMBG.png");
 

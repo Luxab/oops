@@ -57,13 +57,11 @@ public:
 
   void checkWindowSize()
   {
-    if (resW!=window->getSize().x || resH!=window->getSize().y)
-    {
-      resW = window->getSize().x;
-      resH = window->getSize().y;
-      background.setSize(Vector2f(resW,resH));
-      resize();
-    }
+    std::cout << window->getView().getSize().x << std::endl;
+    resW = window->getView().getSize().x;
+    resH = window->getView().getSize().y;
+    background.setSize(Vector2f(resW,resH));
+    resize();
   }
 
   virtual void draw()

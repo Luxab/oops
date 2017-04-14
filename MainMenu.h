@@ -26,19 +26,19 @@ public:
 
   }
 
-void cursorFollow()
-{
-  //  Follows the cursor around with the appropriate player
-  Vector2i mousepos = Mouse::getPosition(*window);
-  Text *cursor;
+  void cursorFollow()
+  {
+    //  Follows the cursor around with the appropriate player
+    Vector2i mousepos = Mouse::getPosition(*window);
+    Text *cursor;
 
-  /*
-  cursor = new Text("1",gameFont,90);
-  cursor->setPosition(mousepos.x-15,mousepos.y-100);
-  cursor->setFillColor(Color::Black);
-  */
-  window->draw(*cursor);
-}
+    /*
+    cursor = new Text("1",gameFont,90);
+    cursor->setPosition(mousepos.x-15,mousepos.y-100);
+    cursor->setFillColor(Color::Black);
+    */
+    window->draw(*cursor);
+  }
 
 //---------------------------------------------------------------------------------//
 
