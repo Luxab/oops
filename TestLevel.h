@@ -1,14 +1,19 @@
 //  Created by Duncan Klug on 4/8/17.
 //  Lab 02 Spring 2017
 #include "Level.h"
+#include "Player.h"
 
 class TestLevel : public Level
 {
+  Player p;
+  Texture playerTexture;
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
-
+    IntRect playerRectangle(0,0,10,10);
+    playerTexture.loadFromFile("Placeholder.png");
+    p = Player(playerTexture, playerRectangle, 1, 100);
   }
   ~TestLevel()
   {
@@ -19,7 +24,7 @@ public:
 
   void resize()
   {
-    
+
   }
 
   void draw()

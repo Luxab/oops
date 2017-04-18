@@ -12,7 +12,7 @@ public:
   float speed; //How fast does it move
   Weapon weapon; //Player's current weapon
 
-  Player(int xin, int yin, Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
+  Player(Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
   {
     speed = s;
     health = h;
@@ -34,7 +34,27 @@ public:
 
   void tickMove()
   {
-    
+    IntRect tRec = getTextureRect();
+    if (Keyboard::isKeyPressed(Keyboard::A))
+    {
+      setPosition(tRec.left-speed,tRec.top);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::D))
+    {
+      setPosition(tRec.left+speed,tRec.top);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::W))
+    {
+      setPosition(tRec.left,tRec.top+speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::S))
+    {
+      setPosition(tRec.left,tRec.top-speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::Space))
+    {
+
+    }
     //Move in {direction} at {speed}
     //setPosition(x,y);
   }
