@@ -29,6 +29,6 @@ public:
 
   bool contains(int mx, int my)
   {
-    return m_textureRect.contains(mx,my);
+    return getTextureRect().contains(mx,my);
   }
 };

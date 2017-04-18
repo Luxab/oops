@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include "Button.h"
+#include "Projectile.h"
 
 using namespace sf;
 
