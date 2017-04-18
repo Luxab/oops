@@ -15,15 +15,15 @@ public:
 
   Projectile(int xin, int yin, Texture &tin, IntRect &rin, float speed, float moveDir, float potency) : Sprite(tin,rin)
   {
-    // Set initial position
-    setPosition(xin,yin);
-
     // Set characteristics
     this->posX = xin;
     this->posY = yin;
     this->speed = speed;
     this->potency = potency;
     this->moveDirection = moveDir;
+
+    // Set initial position
+    setPosition(xin,yin);
   }
   ~Projectile()
   {
