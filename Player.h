@@ -12,14 +12,19 @@ public:
   float speed; //How fast does it move
   Weapon weapon; //Player's current weapon
 
+  Player()
+  {
+
+  }
   Player(Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
   {
     speed = s;
     health = h;
-    setPosition(xin,yin);
+    setPosition(rin.top, rin.left);
 
     // Default weapon
-    weapon = BBGun;
+    BBGun b;
+    weapon = b;
   }
   ~Player()
   {
@@ -57,6 +62,14 @@ public:
     }
     //Move in {direction} at {speed}
     //setPosition(x,y);
+  }
+
+  void draw()
+  {
+    tickMove();
+
+    // Draw the weapon
+    //weapon.draw();
   }
 
   bool contains(int mx, int my)

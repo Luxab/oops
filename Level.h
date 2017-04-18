@@ -58,7 +58,6 @@ public:
 
   void checkWindowSize()
   {
-    std::cout << window->getView().getSize().x << std::endl;
     resW = window->getView().getSize().x;
     resH = window->getView().getSize().y;
     background.setSize(Vector2f(resW,resH));

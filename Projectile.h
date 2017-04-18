@@ -1,3 +1,6 @@
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
+
 //  Created by Duncan Klug on 4/11/17.
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
@@ -53,3 +56,5 @@ public:
     return getTextureRect().contains(mx,my);
   }
 };
+
+#endif

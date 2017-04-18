@@ -26,7 +26,6 @@ public:
   {
     /* Implement size of Weapon shot */
   }
-  
 
   virtual void shoot(Vector2f initPos)
   {
@@ -34,29 +33,30 @@ public:
   }
 };
 
-class BBGun : Weapon
+class BBGun : public Weapon
 {
-  BBGun()
-  {
-    // Set BB characteristics
-    potency = 1;
-    speed = 0.5;
-    shotTexture.loadFromFile("images/bb.jpg");
-  }
-  ~BBGun()
-  {
+  public:
+    BBGun()
+    {
+      // Set BB characteristics
+      potency = 1;
+      speed = 0.5;
+      shotTexture.loadFromFile("images/bb.jpg");
+    }
+    ~BBGun()
+    {
 
-  }
+    }
 
-  virtual void setWeaponRect()
-  {
-    // Size of each shot 
-    size = IntRect(0, 192, 192, 192);
-  }
+    virtual void setWeaponRect()
+    {
+      // Size of each shot 
+      size = IntRect(0, 192, 192, 192);
+    }
 
-  virtual void shoot(Vector2f initPos)
-  {
-    // Single shot up
-    Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency);
-  }
+    virtual void shoot(Vector2f initPos)
+    {
+      // Single shot up
+      Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency);
+   }
 };
