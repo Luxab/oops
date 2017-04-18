@@ -10,11 +10,11 @@ public:
   int health; //How much damage can it take
   int speed; //How fast does it move
 
-  Player(int xin, int yin, Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
+  Player(Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
   {
     speed = s;
     health = h;
-    setPosition(xin,yin);
+    //setPosition(getTextureRect().left,getTextureRect().top);
   }
   ~Player()
   {
@@ -23,25 +23,26 @@ public:
 
   void tickMove()
   {
+    IntRect tRec = getTextureRect();
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-      setPosition(x-speed);
+      setPosition(tRec.left-speed,tRec.top);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-      setPosition(x+speed);
+      setPosition(tRec.left+speed,tRec.top);
     }
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-      setPosition(y+speed);
+      setPosition(tRec.left,tRec.top+speed);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-      setPosition(y-speed);
+      setPosition(tRec.left,tRec.top-speed);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {
-      
+
     }
     //Move in {direction} at {speed}
     //setPosition(x,y);
