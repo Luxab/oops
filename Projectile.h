@@ -1,6 +1,7 @@
 //  Created by Duncan Klug on 4/11/17.
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
+#include <math.h> // sin,cos
 
 using namespace sf;
 
@@ -8,13 +9,22 @@ class Projectile : Sprite
 {
 public:
   int potency; //How much damage does the projectile do
-  int speed; //How fast does the projectile move
+  float speed; //How fast does the projectile move
+  float moveDirection; // In what direction the projectile will move
+  float posX, posY;
+
   //TODO: Implement direction the projectile will move in
   //Position will be measured in floats
 
-  Projectile(int xin, int yin, Texture &tin, IntRect &rin) : Sprite(tin,rin)
+  Projectile(int xin, int yin, Texture &tin, IntRect &rin, float speed, float moveDir) : Sprite(tin,rin)
   {
+    // Set initial position
     setPosition(xin,yin);
+
+    this->posX = xin;
+    this->posY = yin;
+    this->speed = speed;
+    this->moveDirection = moveDir;
   }
   ~Projectile()
   {
@@ -25,6 +35,18 @@ public:
   {
     //Move in {direction} at {speed}
     //setPosition(x,y);
+    float moveX = cos(moveDirection);
+    float moveY = sin(moveDirection);
+
+    // Scale by the speed
+    moveX *= speed;
+    moveY *= speed;
+
+    // Add to our existing position
+    this->posX += moveX;
+    this->posY += moveY;
+
+    setPosition(posX, posY);
   }
 
   bool contains(int mx, int my)
