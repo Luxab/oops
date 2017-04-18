@@ -42,19 +42,19 @@ public:
     IntRect tRec = getTextureRect();
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-      setPosition(tRec.left-=speed,tRec.top);
+      move(-speed,0);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-      setPosition(tRec.left+=speed,tRec.top);
+      move(speed,0);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-      setPosition(tRec.left,tRec.top+=speed);
+      move(0,speed);
     }
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-      setPosition(tRec.left,tRec.top-=speed);
+      move(0,-speed);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {
