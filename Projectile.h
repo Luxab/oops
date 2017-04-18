@@ -8,22 +8,21 @@ using namespace sf;
 class Projectile : Sprite
 {
 public:
-  int potency; //How much damage does the projectile do
+  float potency; //How much damage does the projectile do
   float speed; //How fast does the projectile move
   float moveDirection; // In what direction the projectile will move
   float posX, posY;
 
-  //TODO: Implement direction the projectile will move in
-  //Position will be measured in floats
-
-  Projectile(int xin, int yin, Texture &tin, IntRect &rin, float speed, float moveDir) : Sprite(tin,rin)
+  Projectile(int xin, int yin, Texture &tin, IntRect &rin, float speed, float moveDir, float potency) : Sprite(tin,rin)
   {
     // Set initial position
     setPosition(xin,yin);
 
+    // Set characteristics
     this->posX = xin;
     this->posY = yin;
     this->speed = speed;
+    this->potency = potency;
     this->moveDirection = moveDir;
   }
   ~Projectile()
