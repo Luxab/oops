@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-class Player : Sprite
+class Player : public Sprite
 {
 public:
   int health; //How much damage can it take
@@ -42,19 +42,19 @@ public:
     IntRect tRec = getTextureRect();
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-      setPosition(tRec.left-speed,tRec.top);
+      setPosition(tRec.left-=speed,tRec.top);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-      setPosition(tRec.left+speed,tRec.top);
-    }
-    if (Keyboard::isKeyPressed(Keyboard::W))
-    {
-      setPosition(tRec.left,tRec.top+speed);
+      setPosition(tRec.left+=speed,tRec.top);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-      setPosition(tRec.left,tRec.top-speed);
+      setPosition(tRec.left,tRec.top+=speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::W))
+    {
+      setPosition(tRec.left,tRec.top-=speed);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {
@@ -62,6 +62,9 @@ public:
     }
     //Move in {direction} at {speed}
     //setPosition(x,y);
+
+    // Apply changes
+    setTextureRect(tRec);
   }
 
   void draw()

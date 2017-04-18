@@ -11,9 +11,9 @@ class TestLevel : public Level
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
-    IntRect playerRectangle(0,0,10,10);
+    IntRect playerRectangle(0,0,100,100);
     playerTexture.loadFromFile("Placeholder.png");
-    p = Player(playerTexture, playerRectangle, 1, 100);
+    p = Player(playerTexture, playerRectangle, 10, 100);
   }
   ~TestLevel()
   {
@@ -32,6 +32,8 @@ public:
     checkWindowSize();
     window->draw(background); //draw background first!
     //BGTexture->loadFromFile("MMBG.png");
+    window->draw(p);
+    p.draw();
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);
