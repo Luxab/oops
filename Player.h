@@ -23,7 +23,26 @@ public:
 
   void tickMove()
   {
-    
+    if (Keyboard::isKeyPressed(Keyboard::A))
+    {
+      setPosition(x-speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::D))
+    {
+      setPosition(x+speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::W))
+    {
+      setPosition(y+speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::S))
+    {
+      setPosition(y-speed);
+    }
+    if (Keyboard::isKeyPressed(Keyboard::Space))
+    {
+      
+    }
     //Move in {direction} at {speed}
     //setPosition(x,y);
   }
