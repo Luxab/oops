@@ -10,7 +10,7 @@ class Player : public Sprite
 public:
   int health; //How much damage can it take
   float speed; //How fast does it move
-  Weapon weapon; //Player's current weapon
+  Weapon *weapon; //Player's current weapon
 
   Player()
   {
@@ -23,18 +23,17 @@ public:
     setPosition(rin.top, rin.left);
 
     // Default weapon
-    BBGun b;
-    weapon = b;
+    weapon = new BBGun();
   }
   ~Player()
   {
 
   }
 
-  void shoot (Weapon w)
+  void shoot (Weapon *w)
   {
     Vector2f pos = getPosition();
-    w.shoot(pos);
+    w->shoot(pos);
   }
 
   void tickMove()
@@ -67,10 +66,11 @@ public:
     setTextureRect(tRec);
   }
 
-  void draw(RenderWindow &w)
+  void draw(RenderWindow &win)
   {
     tickMove();
-    weapon.draw(w);
+    weapon->draw(win);
+
     // Draw the weapon
     //weapon.draw();
   }
@@ -80,7 +80,7 @@ public:
     return getTextureRect().contains(mx,my);
   }
 
-  void setWeapon(Weapon w)
+  void setWeapon(Weapon *w)
   {
     weapon = w;
   }

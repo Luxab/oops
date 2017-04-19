@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include <vector>
+#include <stdlib.h>
+#include <iostream>
 
 using namespace sf;
 
@@ -17,30 +19,25 @@ public:
 
   Weapon()
   {
-    setWeaponRect();
+
   }
   ~Weapon()
   {
 
   }
 
-  void draw(RenderWindow &w)
+  void draw(RenderWindow &win)
   {
+    std::cout << projectiles.size() << std::endl;
     for (int i = 0; i<projectiles.size(); i++)
     {
-      w.draw(projectiles[i]);
+      win.draw(projectiles[i]);
     }
   }
 
-  virtual void setWeaponRect()
-  {
-    /* Implement size of Weapon shot */
-  }
+  virtual void setWeaponRect() = 0;
 
-  virtual void shoot(Vector2f initPos)
-  {
-    /* Implement projectile shooting */
-  }
+  virtual void shoot(Vector2f initPos) = 0;
 };
 
 class BBGun : public Weapon
@@ -52,6 +49,8 @@ class BBGun : public Weapon
       potency = 1;
       speed = 0.5;
       shotTexture.loadFromFile("images/bb.jpg");
+
+      setWeaponRect();
     }
     ~BBGun()
     {
@@ -61,12 +60,13 @@ class BBGun : public Weapon
     virtual void setWeaponRect()
     {
       // Size of each shot
-      size = IntRect(0, 0, 192, 192);
+      size = IntRect(0, 0, 92, 92);
     }
 
     virtual void shoot(Vector2f initPos)
     {
       // Single shot up
+      std::cout << "pew" << std::endl;
       projectiles.push_back(Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency));
    }
 };
