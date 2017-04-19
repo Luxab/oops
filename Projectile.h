@@ -8,7 +8,7 @@
 
 using namespace sf;
 
-class Projectile : Sprite
+class Projectile : public Sprite
 {
 public:
   float potency; //How much damage does the projectile do

@@ -2,6 +2,7 @@
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
+#include <vector>
 
 using namespace sf;
 
@@ -12,6 +13,7 @@ public:
   float potency; //How much damage each shot does
   IntRect size; //Size of each shot
   Texture shotTexture; // What the shot looks like
+  std::vector<Projectile> projectiles;
 
   Weapon()
   {
@@ -19,7 +21,15 @@ public:
   }
   ~Weapon()
   {
-    
+
+  }
+
+  void draw(RenderWindow &w)
+  {
+    for (int i = 0; i<projectiles.size(); i++)
+    {
+      w.draw(projectiles[i]);
+    }
   }
 
   virtual void setWeaponRect()
@@ -50,13 +60,13 @@ class BBGun : public Weapon
 
     virtual void setWeaponRect()
     {
-      // Size of each shot 
-      size = IntRect(0, 192, 192, 192);
+      // Size of each shot
+      size = IntRect(0, 0, 192, 192);
     }
 
     virtual void shoot(Vector2f initPos)
     {
       // Single shot up
-      Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency);
+      projectiles.push_back(Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency));
    }
 };

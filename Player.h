@@ -58,7 +58,7 @@ public:
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {
-
+      shoot(weapon);
     }
     //Move in {direction} at {speed}
     //setPosition(x,y);
@@ -67,10 +67,10 @@ public:
     setTextureRect(tRec);
   }
 
-  void draw()
+  void draw(RenderWindow &w)
   {
     tickMove();
-
+    weapon.draw(w);
     // Draw the weapon
     //weapon.draw();
   }
