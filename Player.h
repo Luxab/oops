@@ -51,22 +51,26 @@ public:
   void tickMove()
   {
     IntRect tRec = getTextureRect();
-    if (Keyboard::isKeyPressed(Keyboard::A))
+    if (Keyboard::isKeyPressed(Keyboard::A) ||
+        Keyboard::isKeyPressed(Keyboard::Left))
     {
       movePlayer(-speed,0);
       setTexture(left);
     }
-    if (Keyboard::isKeyPressed(Keyboard::D))
+    if (Keyboard::isKeyPressed(Keyboard::D) ||
+        Keyboard::isKeyPressed(Keyboard::Right))
     {
       movePlayer(speed,0);
       setTexture(right);
     }
-    if (Keyboard::isKeyPressed(Keyboard::S))
+    if (Keyboard::isKeyPressed(Keyboard::S) ||
+        Keyboard::isKeyPressed(Keyboard::Down))
     {
       movePlayer(0,speed);
       setTexture(down);
     }
-    if (Keyboard::isKeyPressed(Keyboard::W))
+    if (Keyboard::isKeyPressed(Keyboard::W) ||
+        Keyboard::isKeyPressed(Keyboard::Up))
     {
       movePlayer(0,-speed);
       setTexture(up);
@@ -88,11 +92,12 @@ public:
   {
     FloatRect bounds = getGlobalBounds();
 
+    /*
     std::cout << "left: " << bounds.left << "\n"
               << "top: " << bounds.top << "\n"
-              << "bnd right: " << boundaries.left + boundaries.width << "\n"
               << "right: " << bounds.left + bounds.width << "\n"
               << "bottom: " << bounds.top + bounds.height << std::endl;
+    */
 
     // Ensure bullet hasn't gone out of bounds
     if (bounds.left - boundaries.left < 5)
