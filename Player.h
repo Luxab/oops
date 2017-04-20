@@ -12,17 +12,23 @@ public:
   float speed; //How fast does it move
   Weapon *weapon; //Player's current weapon
   IntRect boundaries; // Rectangle that defines level boundaries
+  Texture left, right, up, down;
 
   Player()
   {
 
   }
-  Player(Texture &tin, IntRect &rin, int s, int h, FloatRect b) : Sprite(tin,rin)
+  Player(Texture &tin, int s, int h, FloatRect b) : Sprite(tin)
   {
     speed = s;
     health = h;
     boundaries = Rect<int> (b);
-    setPosition(rin.top, rin.left);
+    //setPosition(rin.top, rin.left);
+
+    left.loadFromFile("images/leftsign.png");
+    right.loadFromFile("images/rightsign.png");
+    up.loadFromFile("images/upsign.png");
+    down.loadFromFile("images/downsign.png");
 
     // Default weapon
     weapon = new BBGun();
@@ -45,18 +51,22 @@ public:
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
       move(-speed,0);
+      setTexture(left);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
       move(speed,0);
+      setTexture(right);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
       move(0,speed);
+      setTexture(down);
     }
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
       move(0,-speed);
+      setTexture(up);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {

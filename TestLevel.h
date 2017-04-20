@@ -11,9 +11,9 @@ class TestLevel : public Level
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
-    IntRect playerRectangle(0,0,100,100);
+    //IntRect playerRectangle(0,0,100,100);
     playerTexture.loadFromFile("images/Placeholder.png");
-    p = Player(playerTexture, playerRectangle, 10, 100, background.getGlobalBounds());
+    p = Player(playerTexture, 10, 100, background.getGlobalBounds());
   }
   ~TestLevel()
   {
