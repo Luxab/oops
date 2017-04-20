@@ -48,7 +48,7 @@ class BBGun : public Weapon
       // Set BB characteristics
       potency = 1;
       speed = 0.5;
-      shotTexture.loadFromFile("images/bb.jpg");
+      shotTexture.loadFromFile("images/bb.png");
 
       setWeaponRect();
     }
