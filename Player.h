@@ -11,19 +11,22 @@ public:
   int health; //How much damage can it take
   float speed; //How fast does it move
   Weapon *weapon; //Player's current weapon
+  IntRect boundaries; // Rectangle that defines level boundaries
 
   Player()
   {
 
   }
-  Player(Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
+  Player(Texture &tin, IntRect &rin, int s, int h, FloatRect b) : Sprite(tin,rin)
   {
     speed = s;
     health = h;
+    boundaries = Rect<int> (b);
     setPosition(rin.top, rin.left);
 
     // Default weapon
     weapon = new BBGun();
+    weapon->boundingRect = boundaries;
   }
   ~Player()
   {

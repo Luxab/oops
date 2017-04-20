@@ -13,7 +13,7 @@ public:
   {
     IntRect playerRectangle(0,0,100,100);
     playerTexture.loadFromFile("images/Placeholder.png");
-    p = Player(playerTexture, playerRectangle, 10, 100);
+    p = Player(playerTexture, playerRectangle, 10, 100, background.getGlobalBounds());
   }
   ~TestLevel()
   {

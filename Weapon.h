@@ -2,6 +2,7 @@
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
+#include <unordered_map>
 #include <vector>
 #include <stdlib.h>
 #include <iostream>
@@ -11,11 +12,13 @@ using namespace sf;
 class Weapon
 {
 public:
+  int shotCount; // Incrememnts per shot
   float speed; //How fast does it move
   float potency; //How much damage each shot does
   IntRect size; //Size of each shot
   Texture shotTexture; // What the shot looks like
-  std::vector<Projectile> projectiles;
+  std::unordered_map<int, Projectile*> projectiles;
+  IntRect boundingRect; // If projectiles leave this rect, delete them
 
   Weapon()
   {
@@ -28,11 +31,26 @@ public:
 
   void draw(RenderWindow &win)
   {
+    std::vector<int> toBeDeleted;
     std::cout << projectiles.size() << std::endl;
-    for (int i = 0; i<projectiles.size(); i++)
+    for (auto &shot : projectiles)
     {
-      win.draw(projectiles[i]);
-      projectiles[i].tickMove();
+      std::cout << "draw" << std::endl;
+      win.draw(*shot.second);
+      shot.second->tickMove();
+
+      // Ensure bullet hasn't gone out of bounds
+      if (!boundingRect.intersects(Rect<int>(shot.second->getGlobalBounds())))
+      {
+        // Has gone out of bounds, remove from hashmap
+        toBeDeleted.push_back(shot.first);
+      }
+    }
+
+    // Delete all projectiles that went off-screen
+    for (auto &shotKey : toBeDeleted)
+    {
+      projectiles.erase(shotKey);
     }
   }
 
@@ -68,6 +86,10 @@ class BBGun : public Weapon
     {
       // Single shot up
       std::cout << "pew" << std::endl;
-      projectiles.push_back(Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency));
+
+      // Insert new projectile into projectiles map 
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency);
+      std::pair<int,Projectile*> newShot (shotCount++, proj);
+      projectiles.insert(newShot);
    }
 };

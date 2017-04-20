@@ -36,7 +36,6 @@ public:
   void tickMove()
   {
     //Move in {direction} at {speed}
-    //setPosition(x,y);
     float moveX = sin(moveDirection);
     float moveY = cos(moveDirection);
 
