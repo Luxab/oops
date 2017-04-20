@@ -37,8 +37,8 @@ public:
   {
     //Move in {direction} at {speed}
     //setPosition(x,y);
-    float moveX = cos(moveDirection);
-    float moveY = sin(moveDirection);
+    float moveX = sin(moveDirection);
+    float moveY = cos(moveDirection);
 
     // Scale by the speed
     moveX *= speed;
@@ -46,7 +46,7 @@ public:
 
     // Add to our existing position
     this->posX += moveX;
-    this->posY += moveY;
+    this->posY -= moveY;
 
     setPosition(posX, posY);
   }

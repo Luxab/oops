@@ -32,6 +32,7 @@ public:
     for (int i = 0; i<projectiles.size(); i++)
     {
       win.draw(projectiles[i]);
+      projectiles[i].tickMove();
     }
   }
 
@@ -47,7 +48,7 @@ class BBGun : public Weapon
     {
       // Set BB characteristics
       potency = 1;
-      speed = 0.5;
+      speed = 20;
       shotTexture.loadFromFile("images/bb.png");
 
       setWeaponRect();
