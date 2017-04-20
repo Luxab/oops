@@ -33,6 +33,9 @@ public:
     // Default weapon
     weapon = new BBGun();
     weapon->boundingRect = boundaries;
+
+    // Set position to middle
+    setPosition(boundaries.width/2, boundaries.height/2);
   }
   ~Player()
   {
@@ -50,22 +53,22 @@ public:
     IntRect tRec = getTextureRect();
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
-      move(-speed,0);
+      movePlayer(-speed,0);
       setTexture(left);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
-      move(speed,0);
+      movePlayer(speed,0);
       setTexture(right);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
-      move(0,speed);
+      movePlayer(0,speed);
       setTexture(down);
     }
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
-      move(0,-speed);
+      movePlayer(0,-speed);
       setTexture(up);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
@@ -77,6 +80,39 @@ public:
 
     // Apply changes
     setTextureRect(tRec);
+  }
+
+  // Move player and check boundaries
+  // Returns true if move was successful, false if otherwise
+  bool movePlayer (float x, float y)
+  {
+    FloatRect bounds = getGlobalBounds();
+
+    std::cout << "left: " << bounds.left << "\n"
+              << "top: " << bounds.top << "\n"
+              << "bnd right: " << boundaries.left + boundaries.width << "\n"
+              << "right: " << bounds.left + bounds.width << "\n"
+              << "bottom: " << bounds.top + bounds.height << std::endl;
+
+    // Ensure bullet hasn't gone out of bounds
+    if (bounds.left - boundaries.left < 5)
+        move (1,0);
+    else if (bounds.top  - boundaries.top  < 5)
+        move (0,1);
+    else if (boundaries.left + boundaries.width -
+             bounds.left - bounds.width < 5)
+        move (-1,0);
+    else if (boundaries.top + boundaries.height -
+             bounds.top - bounds.height  < 5)
+        move (0,-1);
+    else {
+        // If not hitting a wall, move
+        move (x,y);
+
+        return true;
+    }
+
+    return false;
   }
 
   void draw(RenderWindow &win)

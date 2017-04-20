@@ -32,7 +32,6 @@ public:
   void draw(RenderWindow &win)
   {
     std::vector<int> toBeDeleted;
-    std::cout << projectiles.size() << std::endl;
     for (auto &shot : projectiles)
     {
       win.draw(*shot.second);
@@ -63,28 +62,46 @@ class BBGun : public Weapon
   public:
     BBGun()
     {
-      // Set BB characteristics
+      // Set characteristics
       potency = 1;
       speed = 20;
       shotTexture.loadFromFile("images/bb.png");
-
-      //setWeaponRect();
     }
     ~BBGun()
     {
 
     }
 
-    // virtual void setWeaponRect()
-    // {
-    //   // Size of each shot
-    //   size = IntRect(0, 0, 92, 92);
-    // }
-
     virtual void shoot(Vector2f initPos)
     {
       // Single shot up
       std::cout << "pew" << std::endl;
+
+      // Insert new projectile into projectiles map 
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      std::pair<int,Projectile*> newShot (shotCount++, proj);
+      projectiles.insert(newShot);
+   }
+};
+
+class SpreadEagle : public Weapon
+{
+  public:
+    SpreadEagle()
+    {
+      // Set characteristics
+      potency = 1;
+      speed = 20;
+      shotTexture.loadFromFile("images/bb.png");
+    }
+    ~SpreadEagle()
+    {
+
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      // Three shots, one up and two to up and side
 
       // Insert new projectile into projectiles map 
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
