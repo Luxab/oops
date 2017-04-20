@@ -16,7 +16,7 @@ public:
   float moveDirection; // In what direction the projectile will move
   float posX, posY;
 
-  Projectile(int xin, int yin, Texture &tin, IntRect &rin, float speed, float moveDir, float potency) : Sprite(tin,rin)
+  Projectile(int xin, int yin, Texture &tin, float speed, float moveDir, float potency) : Sprite(tin)
   {
     // Set characteristics
     this->posX = xin;

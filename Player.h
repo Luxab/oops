@@ -16,11 +16,11 @@ public:
   {
 
   }
-  Player(Texture &tin, IntRect &rin, int s, int h) : Sprite(tin,rin)
+  Player(Texture &tin, int s, int h) : Sprite(tin)
   {
     speed = s;
     health = h;
-    setPosition(rin.top, rin.left);
+    //setPosition(rin.top, rin.left);
 
     // Default weapon
     weapon = new BBGun();

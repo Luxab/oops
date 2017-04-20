@@ -36,7 +36,7 @@ public:
     }
   }
 
-  virtual void setWeaponRect() = 0;
+  // virtual void setWeaponRect() = 0;
 
   virtual void shoot(Vector2f initPos) = 0;
 };
@@ -51,23 +51,23 @@ class BBGun : public Weapon
       speed = 20;
       shotTexture.loadFromFile("images/bb.png");
 
-      setWeaponRect();
+      //setWeaponRect();
     }
     ~BBGun()
     {
 
     }
 
-    virtual void setWeaponRect()
-    {
-      // Size of each shot
-      size = IntRect(0, 0, 92, 92);
-    }
+    // virtual void setWeaponRect()
+    // {
+    //   // Size of each shot
+    //   size = IntRect(0, 0, 92, 92);
+    // }
 
     virtual void shoot(Vector2f initPos)
     {
       // Single shot up
       std::cout << "pew" << std::endl;
-      projectiles.push_back(Projectile(initPos.x, initPos.y, shotTexture, size, speed, 0, potency));
+      projectiles.push_back(Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency));
    }
 };
