@@ -11,6 +11,7 @@ public:
   int health; //How much damage can it take
   float speed; //How fast does it move
   Weapon *weapon; //Player's current weapon
+  Texture left, right, up, down;
 
   Player()
   {
@@ -21,6 +22,11 @@ public:
     speed = s;
     health = h;
     //setPosition(rin.top, rin.left);
+
+    left.loadFromFile("images/leftsign.png");
+    right.loadFromFile("images/rightsign.png");
+    up.loadFromFile("images/upsign.png");
+    down.loadFromFile("images/downsign.png");
 
     // Default weapon
     weapon = new BBGun();
@@ -42,18 +48,22 @@ public:
     if (Keyboard::isKeyPressed(Keyboard::A))
     {
       move(-speed,0);
+      setTexture(left);
     }
     if (Keyboard::isKeyPressed(Keyboard::D))
     {
       move(speed,0);
+      setTexture(right);
     }
     if (Keyboard::isKeyPressed(Keyboard::S))
     {
       move(0,speed);
+      setTexture(down);
     }
     if (Keyboard::isKeyPressed(Keyboard::W))
     {
       move(0,-speed);
+      setTexture(up);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
     {
