@@ -12,6 +12,8 @@ public:
   float speed; //How fast does it move
   Weapon *weapon; //Player's current weapon
   IntRect boundaries; // Rectangle that defines level boundaries
+  float rightSide;
+  float bottomSide;
   Texture left, right, up, down;
 
   Player()
@@ -23,7 +25,8 @@ public:
     speed = s;
     health = h;
     boundaries = Rect<int> (b);
-    //setPosition(rin.top, rin.left);
+    rightSide = boundaries.left+boundaries.width;
+    bottomSide = boundaries.top+boundaries.height;
 
     left.loadFromFile("images/leftsign.png");
     right.loadFromFile("images/rightsign.png");
@@ -91,6 +94,10 @@ public:
   bool movePlayer (float x, float y)
   {
     FloatRect bounds = getGlobalBounds();
+    //bounds -> player bounds
+    //boundaries -> level bounds
+    // float rightSide = boundaries.left+boundaries.width;
+    // float bottomSide = boundaries.top+boundaries.height;
 
     /*
     std::cout << "left: " << bounds.left << "\n"
@@ -98,6 +105,11 @@ public:
               << "right: " << bounds.left + bounds.width << "\n"
               << "bottom: " << bounds.top + bounds.height << std::endl;
     */
+
+    if (bounds.left+x < boundaries.left)
+    {
+
+    }
 
     // Ensure bullet hasn't gone out of bounds
     if (bounds.left - boundaries.left < 5)
