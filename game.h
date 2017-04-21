@@ -5,8 +5,6 @@
 
 #include "MainMenu.h"
 #include "ScoreBoard.h"
-#include "TestLevel.h"
-#include "PauseMenu.h"
 #include "gWindow.h"
 
 using namespace sf;
