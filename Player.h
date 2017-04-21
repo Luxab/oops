@@ -96,6 +96,7 @@ public:
     FloatRect bounds = getGlobalBounds();
     //bounds -> player bounds
     //boundaries -> level bounds
+
     // float rightSide = boundaries.left+boundaries.width;
     // float bottomSide = boundaries.top+boundaries.height;
 
@@ -106,23 +107,25 @@ public:
               << "bottom: " << bounds.top + bounds.height << std::endl;
     */
 
+    // Ensure player hasn't gone out of bounds
     if (bounds.left+x < boundaries.left)
     {
-
+      move(boundaries.left,0);
     }
-
-    // Ensure bullet hasn't gone out of bounds
-    if (bounds.left - boundaries.left < 5)
-        move (1,0);
-    else if (bounds.top  - boundaries.top  < 5)
-        move (0,1);
-    else if (boundaries.left + boundaries.width -
-             bounds.left - bounds.width < 5)
-        move (-1,0);
-    else if (boundaries.top + boundaries.height -
-             bounds.top - bounds.height  < 5)
-        move (0,-1);
-    else {
+    else if (bounds.top+y<boundaries.top)
+    {
+      move(0,boundaries.top);
+    }
+    else if (bounds.left+bounds.width+x > rightSide)
+    {
+      move(rightSide-bounds.left-bounds.width,0);
+    }
+    else if (bounds.top+bounds.height+y > bottomSide)
+    {
+      move(bottomSide-bounds.top-bounds.height,0);
+    }
+    else
+    {
         // If not hitting a wall, move
         move (x,y);
 
