@@ -100,28 +100,32 @@ public:
     // float rightSide = boundaries.left+boundaries.width;
     // float bottomSide = boundaries.top+boundaries.height;
 
-    /*
-    std::cout << "left: " << bounds.left << "\n"
-              << "top: " << bounds.top << "\n"
-              << "right: " << bounds.left + bounds.width << "\n"
-              << "bottom: " << bounds.top + bounds.height << std::endl;
-    */
+
+    // std::cout << "left: " << bounds.left << "\n"
+    //           << "top: " << bounds.top << "\n"
+    //           << "right: " << bounds.left + bounds.width << "\n"
+    //           << "bottom: " << bounds.top + bounds.height << std::endl;
+
 
     // Ensure player hasn't gone out of bounds
     if (bounds.left+x < boundaries.left)
     {
+      std::cout << "left bound" << std::endl;
       move(boundaries.left,0);
     }
     else if (bounds.top+y<boundaries.top)
     {
+      std::cout << "top bound" << std::endl;
       move(0,boundaries.top);
     }
     else if (bounds.left+bounds.width+x > rightSide)
     {
+      std::cout << "right bound" << std::endl;
       move(rightSide-bounds.left-bounds.width,0);
     }
     else if (bounds.top+bounds.height+y > bottomSide)
     {
+      std::cout << "bottom bound" << std::endl;
       move(bottomSide-bounds.top-bounds.height,0);
     }
     else

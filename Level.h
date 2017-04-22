@@ -78,13 +78,16 @@ class TestLevel : public Level
 {
   Player p;
   Texture playerTexture;
+  float ratio = 0.666666666666666666666; // Ratio gameplay:points/text 2/3
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
     //IntRect playerRectangle(0,0,100,100);
     playerTexture.loadFromFile("images/Placeholder.png");
-    p = Player(playerTexture, 10, 100, background.getGlobalBounds());
+    FloatRect bbnd = background.getGlobalBounds();
+    //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
+    p = Player(playerTexture, 10, 100, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
   }
   ~TestLevel()
   {

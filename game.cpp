@@ -1,6 +1,10 @@
 //  Created by Duncan Klug on 4/6/17.
 #include "game.h"
 
+//Aspect ratio: Force 16:9
+//If the ratio is > 16:9, game will size to height.
+//If the ratio is < 16:9, game will size to width.
+
 //Initial game window size
 int resW = 960;
 int resH = 540;
