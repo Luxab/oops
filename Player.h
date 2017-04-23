@@ -2,6 +2,7 @@
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 #include "Weapon.h"
+#include <vector>
 
 using namespace sf;
 
@@ -10,8 +11,8 @@ class HealthBar : public RectangleShape
   int maxHealth;
   int health;
   int x,y,bSize;
-  Color bColor;
   int bWidth, bHeight; //width and height of the background.
+  std::vector<RectangleShape*> outlines;
 
 public:
 
@@ -21,6 +22,15 @@ public:
     health = maxHealth;
     setPosition(location.x,location.y);
     setFillColor(Color(234,0,0));
+    for (int i = 0; i<maxHealth; i++)
+    {
+      RectangleShape *r = new RectangleShape(Vector2f(size.x/maxHealth,size.y));
+      r->setPosition(Vector2f(location.x+i*r->getSize().x,location.y));
+      r->setFillColor(Color(0,0,0,0));
+      r->setOutlineColor(Color(0,0,0));
+      r->setOutlineThickness(2);
+      outlines.push_back(r);
+    }
   }
   ~HealthBar()
   {
@@ -30,7 +40,16 @@ public:
   void takeDamage(RenderWindow &window)
   {
     health--;
-    setSize(Vector2f(getSize().x*(health/maxHealth),getSize().y));
+    setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+  }
+
+  void draw(RenderWindow &win)
+  {
+    win.draw(*this);
+    for (int i = 0; i<outlines.size(); i++)
+    {
+      win.draw(*outlines[i]);
+    }
   }
 };
 
@@ -57,9 +76,9 @@ public:
     rightSide = boundaries.left+boundaries.width;
     bottomSide = boundaries.top+boundaries.height;
 
-    float ratio = .666666666666666666666;
-    Vector2f barLoc(b.left+b.width,0);
-    Vector2f barSize(b.width/ratio,b.height*.05);
+    float ratio = .5;
+    Vector2f barLoc(b.left+b.width+2,2);
+    Vector2f barSize(b.width*ratio,b.height*.05);
     health = new HealthBar(barLoc,barSize,5);
 
     left.loadFromFile("images/leftsign.png");
@@ -177,7 +196,7 @@ public:
   {
     tickMove();
     weapon->draw(win);
-    win.draw(*health);
+    health->draw(win);
 
     // Draw the weapon
     //weapon.draw();
