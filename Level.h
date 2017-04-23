@@ -7,6 +7,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <vector>
 #include "Button.h"
 #include "Projectile.h"
 
@@ -87,7 +88,7 @@ public:
     playerTexture.loadFromFile("images/Placeholder.png");
     FloatRect bbnd = background.getGlobalBounds();
     //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
-    p = Player(playerTexture, 10, 100, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+    p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
   }
   ~TestLevel()
   {

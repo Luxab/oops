@@ -5,10 +5,40 @@
 
 using namespace sf;
 
+class HealthBar : public RectangleShape
+{
+  int maxHealth;
+  int health;
+  int x,y,bSize;
+  Color bColor;
+  int bWidth, bHeight; //width and height of the background.
+
+public:
+
+  HealthBar(Vector2f location = Vector2f(0,0), Vector2f size = Vector2f(100,30), int mh=5) : RectangleShape(size)
+  {
+    maxHealth = mh;
+    health = maxHealth;
+    setPosition(location.x,location.y);
+    setFillColor(Color(234,0,0));
+  }
+  ~HealthBar()
+  {
+
+  }
+
+  void takeDamage(RenderWindow &window)
+  {
+    health--;
+    setSize(Vector2f(getSize().x*(health/maxHealth),getSize().y));
+  }
+};
+
 class Player : public Sprite
 {
 public:
-  int health; //How much damage can it take
+  HealthBar *health;
+  //int health; //How much damage can it take
   float speed; //How fast does it move
   Weapon *weapon; //Player's current weapon
   IntRect boundaries; // Rectangle that defines level boundaries
@@ -20,13 +50,17 @@ public:
   {
 
   }
-  Player(Texture &tin, int s, int h, FloatRect b) : Sprite(tin)
+  Player(Texture &tin, int s, FloatRect b) : Sprite(tin)
   {
     speed = s;
-    health = h;
     boundaries = Rect<int> (b);
     rightSide = boundaries.left+boundaries.width;
     bottomSide = boundaries.top+boundaries.height;
+
+    float ratio = .666666666666666666666;
+    Vector2f barLoc(b.left+b.width,0);
+    Vector2f barSize(b.width/ratio,b.height*.05);
+    health = new HealthBar(barLoc,barSize,5);
 
     left.loadFromFile("images/leftsign.png");
     right.loadFromFile("images/rightsign.png");
@@ -143,6 +177,7 @@ public:
   {
     tickMove();
     weapon->draw(win);
+    win.draw(*health);
 
     // Draw the weapon
     //weapon.draw();
