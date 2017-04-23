@@ -107,28 +107,38 @@ public:
   void tickMove()
   {
     IntRect tRec = getTextureRect();
-    if (Keyboard::isKeyPressed(Keyboard::A) ||
-        Keyboard::isKeyPressed(Keyboard::Left))
+
+    bool lMov =  Keyboard::isKeyPressed(Keyboard::A) ||
+        Keyboard::isKeyPressed(Keyboard::Left);
+    bool rMov = Keyboard::isKeyPressed(Keyboard::D) ||
+        Keyboard::isKeyPressed(Keyboard::Right);
+    bool dMov = Keyboard::isKeyPressed(Keyboard::S) ||
+        Keyboard::isKeyPressed(Keyboard::Down);
+    bool uMov = Keyboard::isKeyPressed(Keyboard::W) ||
+        Keyboard::isKeyPressed(Keyboard::Up);
+
+    float tSpeed = speed;
+    if(lMov+rMov+dMov+uMov>1)
+      tSpeed*=.5;
+
+    if (lMov)
     {
-      movePlayer(-speed,0);
+      movePlayer(-tSpeed,0);
       setTexture(left);
     }
-    if (Keyboard::isKeyPressed(Keyboard::D) ||
-        Keyboard::isKeyPressed(Keyboard::Right))
+    if (rMov)
     {
-      movePlayer(speed,0);
+      movePlayer(tSpeed,0);
       setTexture(right);
     }
-    if (Keyboard::isKeyPressed(Keyboard::S) ||
-        Keyboard::isKeyPressed(Keyboard::Down))
+    if (dMov)
     {
-      movePlayer(0,speed);
+      movePlayer(0,tSpeed);
       setTexture(down);
     }
-    if (Keyboard::isKeyPressed(Keyboard::W) ||
-        Keyboard::isKeyPressed(Keyboard::Up))
+    if (uMov)
     {
-      movePlayer(0,-speed);
+      movePlayer(0,-tSpeed);
       setTexture(up);
     }
     if (Keyboard::isKeyPressed(Keyboard::Space))
