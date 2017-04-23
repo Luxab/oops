@@ -81,10 +81,12 @@ public:
     Vector2f barSize(b.width*ratio,b.height*.05);
     health = new HealthBar(barLoc,barSize,5);
 
-    left.loadFromFile("images/leftsign.png");
-    right.loadFromFile("images/rightsign.png");
-    up.loadFromFile("images/upsign.png");
-    down.loadFromFile("images/downsign.png");
+
+    left.loadFromFile("images/Skateboard_Left.png");
+    right.loadFromFile("images/Skateboard_Right.png");
+    up.loadFromFile("images/Skateboard_Forward.png");
+    down.loadFromFile("images/Skateboard_Forward.png");
+    //setTexture(up);
 
     // Default weapon
     weapon = new BBGun();
@@ -92,6 +94,7 @@ public:
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);
+    setScale(2,2);
   }
   ~Player()
   {
@@ -189,7 +192,7 @@ public:
     else if (bounds.top+bounds.height+y > bottomSide)
     {
       std::cout << "bottom bound" << std::endl;
-      move(bottomSide-bounds.top-bounds.height,0);
+      move(0,bottomSide-bounds.top-bounds.height);
     }
     else
     {

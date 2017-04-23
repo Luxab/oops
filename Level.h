@@ -85,7 +85,7 @@ public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
     //IntRect playerRectangle(0,0,100,100);
-    playerTexture.loadFromFile("images/Placeholder.png");
+    playerTexture.loadFromFile("images/Skateboard_Forward.png");
     FloatRect bbnd = background.getGlobalBounds();
     //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
     p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
