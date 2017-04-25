@@ -15,6 +15,7 @@ public:
   int shotCount; // Incrememnts per shot
   float speed; //How fast does it move
   float potency; //How much damage each shot does
+  float cooldown; // How much time between each shot (milliseconds)
   IntRect size; //Size of each shot
   Texture shotTexture; // What the shot looks like
   std::unordered_map<int, Projectile*> projectiles;
@@ -65,6 +66,7 @@ class BBGun : public Weapon
       // Set characteristics
       potency = 1;
       speed = 20;
+      cooldown = 300;
       shotTexture.loadFromFile("images/bb.png");
     }
     ~BBGun()
@@ -92,6 +94,7 @@ class SpreadEagle : public Weapon
       // Set characteristics
       potency = 1;
       speed = 20;
+      cooldown = 250;
       shotTexture.loadFromFile("images/bb.png");
     }
     ~SpreadEagle()

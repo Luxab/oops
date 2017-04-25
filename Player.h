@@ -64,6 +64,7 @@ public:
   float rightSide;
   float bottomSide;
   Texture left, right, up, down;
+  Clock weaponCooldown;
 
   Player()
   {
@@ -104,7 +105,13 @@ public:
   void shoot (Weapon *w)
   {
     Vector2f pos = getPosition();
-    w->shoot(pos);
+    
+    // Only fire if timer is past cooldown
+    if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
+    {
+        w->shoot(pos);
+        weaponCooldown.restart();
+    }
   }
 
   void tickMove()
@@ -196,10 +203,10 @@ public:
     }
     else
     {
-        // If not hitting a wall, move
-        move (x,y);
+      // If not hitting a wall, move
+      move (x,y);
 
-        return true;
+      return true;
     }
 
     return false;
