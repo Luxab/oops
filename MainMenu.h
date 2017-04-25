@@ -1,5 +1,8 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
+#ifndef MAINMENU_H
+#define MAINMENU_H
+
 #include "Level.h"
 using namespace sf;
 
@@ -109,3 +112,5 @@ public:
   }
 
 };
+
+#endif

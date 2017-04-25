@@ -1,5 +1,8 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -112,3 +115,5 @@ public:
   }
 
 };
+
+#endif

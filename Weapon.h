@@ -1,5 +1,8 @@
 //  Created by Duncan Klug on 4/18/17.
 //	Lab 02 Spring 2017
+#ifndef WEAPON_H
+#define WEAPON_H
+
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include <unordered_map>
@@ -112,3 +115,4 @@ class SpreadEagle : public Weapon
       projectiles.insert(newShot);
    }
 };
+#endif

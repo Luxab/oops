@@ -10,6 +10,7 @@
 #include <vector>
 #include "Button.h"
 #include "Projectile.h"
+#include "Wave.h"
 
 using namespace sf;
 
@@ -75,11 +76,12 @@ public:
 //  Created by Duncan Klug on 4/8/17.
 //  Lab 02 Spring 2017
 #include "Player.h"
+#include "Enemy.h"
 class TestLevel : public Level
 {
   Player p;
   Texture playerTexture;
-  float ratio = 0.666666666666666666666; // Ratio gameplay:points/text 2/3
+  float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
@@ -89,6 +91,9 @@ public:
     FloatRect bbnd = background.getGlobalBounds();
     //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
     p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+
+    // Start first wave
+    startWave();
   }
   ~TestLevel()
   {
@@ -122,6 +127,13 @@ public:
     {
 
     }
+  }
+
+  void startWave ()
+  {
+    WaveOne firstWave;
+    firstWave.setBoundaries(Rect<int>(background.getGlobalBounds()));
+    firstWave.spawnEnemies();
   }
 };
 
