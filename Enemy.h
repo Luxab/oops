@@ -51,6 +51,7 @@ public:
     setTexture(tin);
 
     // Set position to spawn location
+    std::cout << "SPos: " << spawnLoc.x << "," << spawnLoc.y << std::endl;
     setPosition(spawnLoc);
     setScale(2,2);
   }
@@ -73,6 +74,7 @@ public:
 
   void tickMove()
   {
+    return;
     IntRect tRec = getTextureRect();
 
     // Just move down!
@@ -85,6 +87,7 @@ public:
 
   void draw(RenderWindow &win)
   {
+    win.draw(*this);
     tickMove();
     weapon->draw(win);
 
@@ -93,8 +96,8 @@ public:
 
     // Draw health
     Vector2f pos = getPosition();
-    health->setPosition(pos.x, pos.y); // TODO: Perhaps make move()
-    health->draw(win);
+    //health->setPosition(pos.x, pos.y); // TODO: Perhaps make move()
+    //health->draw(win);
   }
 
   bool contains(int mx, int my)

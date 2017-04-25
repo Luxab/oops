@@ -82,12 +82,11 @@ class TestLevel : public Level
   Player p;
   Texture playerTexture;
   float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
-  Button *beginButton;
-  bool waveBegun = 0;
+  bool waitingForNextLevel = 1;
   Font gameFont;
 
   std::vector<Wave*> waves;
-  int currWaveIndex = 0;
+  int currWaveIndex = -1;
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
@@ -101,6 +100,8 @@ public:
 
     // Set up waves
     waves.push_back(new WaveOne);
+
+    readyUpForNextWave();
   }
   ~TestLevel()
   {
@@ -119,32 +120,15 @@ public:
     checkWindowSize();
     window->draw(background); //draw background first!
 
-    if (!waveBegun)
-    {
-      beginButton->draw(*window);
+    waves.at(currWaveIndex)->draw(*window);
 
-      //--------------Mouse Input--------------//
-      Vector2i mousepos = Mouse::getPosition(*window);
-      float mouseX = mousepos.x;
-      float mouseY = mousepos.y;
-      if (Mouse::isButtonPressed(Mouse::Left))
-      {
-        //std::cout << x << "; " << y << std::endl;
-        if (beginButton->contains(mouseX,mouseY))
-        {
-          waveBegun = 1;
-          startWave();
-        }
-      }
-      else
-      {
-        beginButton->checkHover(mouseX,mouseY);
-      }
-    }
-    else
+    window->draw(p); //draw the player
+    p.draw(*window); //let the player draw
+
+    if (waitingForNextLevel && Keyboard::isKeyPressed(Keyboard::Space))
     {
-      window->draw(p); //draw the player
-      p.draw(*window); //let the player draw
+        startWave();
+        waitingForNextLevel = 0;
     }
   }
 
@@ -158,23 +142,28 @@ public:
     return currWaveIndex;
   }
 
-  void startNextWave ()
+  void readyUpForNextWave ()
   {
-    // Find index of current wave
-    if (currWaveIndex + 1 >= waves.size())
+    waitingForNextLevel = 1;
+    currWaveIndex++;
+
+    if (currWaveIndex >= waves.size())
         // Next wave not found
         // You won!
         std::cout << "No next wave found, you musta won!!!!" << std::endl;
-    else 
-    {
-        // Start next wave
-        currWaveIndex++;
-        waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
-        waves.at(currWaveIndex)->spawnEnemies();
-        std::cout << "Welcome to wave " << currWaveIndex << std::endl;
-    }
+
+    // TODO: Show this on screen instead
+    std::cout << "Press space to start!" << std::endl;
   }
 
+  void startWave ()
+  {
+    // Find index of current wave
+    // Start wave
+    waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
+    waves.at(currWaveIndex)->spawnEnemies();
+    std::cout << "Welcome to wave " << currWaveIndex << std::endl;
+  }
 };
 
 //  Created by Duncan Klug on 4/8/17.

@@ -29,8 +29,7 @@ class Wave
       std::vector<int> toBeDeleted;
       for (auto &enemy : enemies)
       {
-        win.draw(*enemy.second);
-        enemy.second->tickMove();
+        enemy.second->draw(win);
 
         /*
         // If enemy is colliding with a player bullet, kill them
@@ -57,15 +56,12 @@ class Wave
         boundaries = b;
     }
 
-    virtual void spawnEnemies ()
-    {
-
-    }
+    virtual void spawnEnemies () = 0;
 };
 
 class WaveOne : public Wave
 {
-  
+
   public:
     WaveOne ()
     {
@@ -79,7 +75,8 @@ class WaveOne : public Wave
     void spawnEnemies ()
     {
       // Insert new projectile into projectiles map
-      WigWam *w1 = new WigWam(boundaries, Vector2f(20,20));
+      WigWam *w1 = new WigWam(boundaries, Vector2f(200,200));
+      w1->setWeapon(new BBGun);
       std::pair<int,Enemy*> newEnemy (enemyCount++, (Enemy*)w1);
       enemies.insert(newEnemy);
     }
