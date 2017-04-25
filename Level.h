@@ -82,13 +82,17 @@ class TestLevel : public Level
   Player p;
   Texture playerTexture;
   float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
+  Button *beginButton;
+  bool waveBegun = 0;
+  Font gameFont;
 
   std::vector<Wave*> waves;
   int currWaveIndex = 0;
 
 public:
-  TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
+  TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
   {
+    gameFont = fin;
     //IntRect playerRectangle(0,0,100,100);
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
     FloatRect bbnd = background.getGlobalBounds();
@@ -114,21 +118,33 @@ public:
   {
     checkWindowSize();
     window->draw(background); //draw background first!
-    //BGTexture->loadFromFile("MMBG.png");
-    window->draw(p);
-    p.draw(*window);
 
-    //--------------Mouse Input--------------//
-    Vector2i mousepos = Mouse::getPosition(*window);
-    float mouseX = mousepos.x;
-    float mouseY = mousepos.y;
-    if (Mouse::isButtonPressed(Mouse::Left))
+    if (!waveBegun)
     {
-      //*levelIndex = 0;
+      beginButton->draw(*window);
+
+      //--------------Mouse Input--------------//
+      Vector2i mousepos = Mouse::getPosition(*window);
+      float mouseX = mousepos.x;
+      float mouseY = mousepos.y;
+      if (Mouse::isButtonPressed(Mouse::Left))
+      {
+        //std::cout << x << "; " << y << std::endl;
+        if (beginButton->contains(mouseX,mouseY))
+        {
+          waveBegun = 1;
+          startWave();
+        }
+      }
+      else
+      {
+        beginButton->checkHover(mouseX,mouseY);
+      }
     }
     else
     {
-
+      window->draw(p); //draw the player
+      p.draw(*window); //let the player draw
     }
   }
 

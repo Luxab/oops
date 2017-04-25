@@ -12,7 +12,7 @@ IntRect boundaries;
 std::unordered_map<int, Enemy*> enemies;
 int enemyCount; // Increments per enemy added
 
-class Wave 
+class Wave
 {
   public:
     Wave ()
@@ -31,7 +31,7 @@ class Wave
       {
         win.draw(*enemy.second);
         enemy.second->tickMove();
-  
+
         /*
         // If enemy is colliding with a player bullet, kill them
         if (!boundingRect.intersects(Rect<int>(enemy.second->getGlobalBounds())))
@@ -44,7 +44,7 @@ class Wave
         }
         */
       }
-  
+
       // Delete all projectiles that went off-screen
       for (auto &enemyKey : toBeDeleted)
       {
@@ -78,7 +78,7 @@ class WaveOne : public Wave
 
     void spawnEnemies ()
     {
-      // Insert new projectile into projectiles map 
+      // Insert new projectile into projectiles map
       WigWam *w1 = new WigWam(boundaries, Vector2f(20,20));
       std::pair<int,Enemy*> newEnemy (enemyCount++, (Enemy*)w1);
       enemies.insert(newEnemy);

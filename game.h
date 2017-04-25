@@ -74,7 +74,7 @@ public:
 
     levels["main"]   = new MainMenu(window,event,changeLevel,gameFont);
     levels["scores"] = new ScoreBoard(window,event,changeLevel,gameFont);
-    levels["test"]   = new TestLevel(window,event,changeLevel);
+    levels["test"]   = new TestLevel(window,event,changeLevel,gameFont);
     levels["pause"]  = new PauseMenu(window,event,changeLevel,gameFont);
 
     currLevel = levels["main"];
