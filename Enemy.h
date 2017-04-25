@@ -62,7 +62,7 @@ public:
   void shoot (Weapon *w)
   {
     Vector2f pos = getPosition();
-    
+
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
     {
@@ -108,7 +108,7 @@ public:
   }
 };
 
-class WigWam
+class WigWam: public Enemy
 {
 public:
   WigWam(IntRect b, Vector2f spawnLoc)
