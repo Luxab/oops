@@ -116,12 +116,13 @@ public:
 class WigWam
 {
   Enemy *enemy;
+  Texture eTexture;
 
 public:
   WigWam(IntRect b, Vector2f spawnLoc)
   {
-    Texture eTexture;
-    eTexture.loadFromFile("images/Skateboard_Forward.png");
+    //Texture eTexture;
+    eTexture.loadFromFile("images/bb.png");
 
     enemy = new Enemy(eTexture, 1, 5, STRAIGHT_DOWN, new BBGun(), b, spawnLoc);
   }
