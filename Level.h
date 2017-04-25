@@ -84,6 +84,7 @@ class TestLevel : public Level
   float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
   bool waitingForNextLevel = 1;
   Font gameFont;
+  RectangleShape *boundingLine; //line at 2/3rds screen width
 
   std::vector<Wave*> waves;
   int currWaveIndex = -1;
@@ -96,6 +97,10 @@ public:
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
     FloatRect bbnd = background.getGlobalBounds();
     //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
+    boundingLine = new RectangleShape(Vector2f(0,bbnd.height));
+    boundingLine->setPosition(bbnd.width*ratio,0);
+    boundingLine->setOutlineColor(Color(0,0,0));
+    boundingLine->setOutlineThickness(2);
     p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
@@ -119,6 +124,8 @@ public:
   {
     checkWindowSize();
     window->draw(background); //draw background first!
+
+    window->draw(*boundingLine);
 
     waves.at(currWaveIndex)->draw(*window);
 
