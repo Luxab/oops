@@ -54,6 +54,7 @@ public:
     // Set position to spawn location
     std::cout << "SPos: " << spawnLoc.x << "," << spawnLoc.y << std::endl;
     initialPos = spawnLoc;
+    std::cout << "IPos: " << initialPos.x << "," << initialPos.y << std::endl;
     setPosition(initialPos);
     setScale(2,2);
   }
@@ -69,7 +70,6 @@ public:
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
     {
-      std::cout << "pos: " << initialPos.x << "," << initialPos.y << std::endl;
       w->shoot(pos);
       weaponCooldown.restart();
     }
@@ -77,7 +77,6 @@ public:
 
   void tickMove()
   {
-    return;
     IntRect tRec = getTextureRect();
 
     // Just move down!
@@ -91,8 +90,8 @@ public:
   void draw(RenderWindow &win)
   {
     win.draw(*this);
-    tickMove();
     weapon->draw(win);
+    tickMove();
 
     // Try to shoot every goddamn second
     shoot(weapon);
@@ -114,19 +113,26 @@ public:
   }
 };
 
-class WigWam: public Enemy
+class WigWam
 {
+  Enemy *enemy;
+
 public:
   WigWam(IntRect b, Vector2f spawnLoc)
   {
     Texture eTexture;
-    eTexture.loadFromFile("images/bb.png");
+    eTexture.loadFromFile("images/Skateboard_Forward.png");
 
-    Enemy(eTexture, 1, 5, STRAIGHT_DOWN, new BBGun(), b, spawnLoc);
+    enemy = new Enemy(eTexture, 1, 5, STRAIGHT_DOWN, new BBGun(), b, spawnLoc);
   }
   ~WigWam()
   {
 
+  }
+
+  Enemy* getEnemyPtr ()
+  {
+    return enemy;
   }
 
 };
