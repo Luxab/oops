@@ -12,9 +12,9 @@ using namespace sf;
 
 typedef enum MOVE_TYPE
 {
-    STRAIGHT_DOWN,
-    ZIG_ZAG,
-    LOOP_DE_LOOP
+  STRAIGHT_DOWN,
+  ZIG_ZAG,
+  LOOP_DE_LOOP
 } MOVE_TYPE;
 
 Texture EnemyTexture; // How it look n stuff
@@ -29,6 +29,7 @@ public:
   IntRect boundaries; // Rectangle that defines level boundaries
   Clock weaponCooldown;
   MOVE_TYPE moveType;
+  Vector2f initialPos;
 
   Enemy()
   {
@@ -52,7 +53,8 @@ public:
 
     // Set position to spawn location
     std::cout << "SPos: " << spawnLoc.x << "," << spawnLoc.y << std::endl;
-    setPosition(spawnLoc);
+    initialPos = spawnLoc;
+    setPosition(initialPos);
     setScale(2,2);
   }
   ~Enemy()
@@ -62,13 +64,14 @@ public:
 
   void shoot (Weapon *w)
   {
-    Vector2f pos = getPosition();
+    Vector2f pos = initialPos;
 
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
     {
-        w->shoot(pos);
-        weaponCooldown.restart();
+      std::cout << "pos: " << initialPos.x << "," << initialPos.y << std::endl;
+      w->shoot(pos);
+      weaponCooldown.restart();
     }
   }
 
