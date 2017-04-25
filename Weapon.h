@@ -70,7 +70,7 @@ class BBGun : public Weapon
       potency = 1;
       speed = 20;
       cooldown = 300;
-      shotTexture.loadFromFile("images/bb.png");
+      shotTexture.loadFromFile("images/bullet.png");
     }
     ~BBGun()
     {
@@ -82,8 +82,9 @@ class BBGun : public Weapon
       // Single shot up
       std::cout << "pew" << std::endl;
 
-      // Insert new projectile into projectiles map 
+      // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (shotCount++, proj);
       projectiles.insert(newShot);
    }
@@ -109,7 +110,7 @@ class SpreadEagle : public Weapon
     {
       // Three shots, one up and two to up and side
 
-      // Insert new projectile into projectiles map 
+      // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
       std::pair<int,Projectile*> newShot (shotCount++, proj);
       projectiles.insert(newShot);
