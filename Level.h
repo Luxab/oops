@@ -83,6 +83,9 @@ class TestLevel : public Level
   Texture playerTexture;
   float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
 
+  std::vector<Wave*> waves;
+  int currWaveIndex = 0;
+
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl) : Level(win,ev,cl)
   {
@@ -92,8 +95,8 @@ public:
     //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
     p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
-    // Start first wave
-    startWave();
+    // Set up waves
+    waves.push_back(new WaveOne);
   }
   ~TestLevel()
   {
@@ -129,12 +132,33 @@ public:
     }
   }
 
-  void startWave ()
+  void setCurrentWaveIndex (int wave)
   {
-    WaveOne firstWave;
-    firstWave.setBoundaries(Rect<int>(background.getGlobalBounds()));
-    firstWave.spawnEnemies();
+    currWaveIndex = wave;
   }
+
+  int getCurrentWave ()
+  {
+    return currWaveIndex;
+  }
+
+  void startNextWave ()
+  {
+    // Find index of current wave
+    if (currWaveIndex + 1 >= waves.size())
+        // Next wave not found
+        // You won!
+        std::cout << "No next wave found, you musta won!!!!" << std::endl;
+    else 
+    {
+        // Start next wave
+        currWaveIndex++;
+        waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
+        waves.at(currWaveIndex)->spawnEnemies();
+        std::cout << "Welcome to wave " << currWaveIndex << std::endl;
+    }
+  }
+
 };
 
 //  Created by Duncan Klug on 4/8/17.
