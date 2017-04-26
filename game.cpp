@@ -49,10 +49,6 @@ void play()
 {
   g.window.clear();
 
-  // Start main level
-  TestLevel *tl = (TestLevel*) g.levels["test"];
-  tl->getCurrentWave();
-
   while (g.window.isOpen())
   {
     g.window.clear();

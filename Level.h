@@ -15,6 +15,10 @@
 using namespace sf;
 
 typedef void (*changeLevel)(std::string);
+typedef std::unordered_map<int, Projectile*> proj_map;
+typedef std::unordered_map<int, Enemy*> enemy_map;
+
+#define PLAYER_SPEED 10
 
 class Level
 {
@@ -69,6 +73,7 @@ public:
   virtual void draw()
   {
     //All levels must be drawn
+    std::cout << "This called?" << std::endl;
   }
 
 };
@@ -86,26 +91,33 @@ class TestLevel : public Level
   Font gameFont;
   RectangleShape *boundingLine; //line at 2/3rds screen width
 
+  // Keep track of player/enemy projectiles
+  proj_map *playerProjectiles = new std::unordered_map<int, Projectile*>;
+  proj_map *enemyProjectiles = new std::unordered_map<int, Projectile*>;
+  enemy_map *enemies = new std::unordered_map<int, Enemy*>;
+
   std::vector<Wave*> waves;
   int currWaveIndex = -1;
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
   {
+    // Set up level characteristics
     gameFont = fin;
-    //IntRect playerRectangle(0,0,100,100);
-    playerTexture.loadFromFile("images/Skateboard_Forward.png");
     FloatRect bbnd = background.getGlobalBounds();
-    //FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height)
+
+    // Create right, black boundary line
     boundingLine = new RectangleShape(Vector2f(0,bbnd.height));
     boundingLine->setPosition(bbnd.width*ratio,0);
     boundingLine->setOutlineColor(Color(0,0,0));
     boundingLine->setOutlineThickness(2);
-    p = Player(playerTexture, 10, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+
+    // Create player
+    playerTexture.loadFromFile("images/Skateboard_Forward.png");
+    p = Player(playerTexture, playerProjectiles, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
-    waves.push_back(new WaveOne);
-
+    waves.push_back(new WaveOne(enemyProjectiles, enemies));
     readyUpForNextWave();
   }
   ~TestLevel()
@@ -128,6 +140,31 @@ public:
     window->draw(*boundingLine);
 
     waves.at(currWaveIndex)->draw(*window);
+
+    // TODO: Check that none of the player/enemy projectiles have gone off screen
+    std::vector<int> toBeDeleted;
+    for (auto &enemyPair : *enemies)
+    {
+      enemyPair.second->getEnemyPtr()->draw(*window);
+
+      /*
+      // If enemy is colliding with a player bullet, kill them
+      if (!boundingRect.intersects(Rect<int>(enemy.second->getGlobalBounds())))
+      {
+        // If collided, remove from hashmap
+        toBeDeleted.push_back(shot.first);
+
+        // Increase player score
+        ...
+      }
+      */
+    }
+
+      // Delete all projectiles that went off-screen
+      for (auto &enemyKey : toBeDeleted)
+      {
+        enemies->erase(enemyKey);
+      }
 
     window->draw(p); //draw the player
     p.draw(*window); //let the player draw

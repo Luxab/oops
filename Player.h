@@ -22,12 +22,13 @@ public:
   float bottomSide;
   Texture left, right, up, down;
   Clock weaponCooldown;
+  std::unordered_map<int, Projectile*> projectiles;
 
   Player()
   {
 
   }
-  Player(Texture &tin, int s, FloatRect b) : Sprite(tin)
+  Player(Texture &tin, std::unordered_map<int, Projectile*> *p, int s, FloatRect b) : Sprite(tin)
   {
     speed = s;
     boundaries = Rect<int> (b);
@@ -39,7 +40,6 @@ public:
     Vector2f barSize(b.width*ratio,b.height*.05);
     health = new HealthBar(barLoc,barSize,5);
 
-
     left.loadFromFile("images/Skateboard_Left.png");
     right.loadFromFile("images/Skateboard_Right.png");
     up.loadFromFile("images/Skateboard_Forward.png");
@@ -47,8 +47,7 @@ public:
     //setTexture(up);
 
     // Default weapon
-    weapon = new BBGun();
-    weapon->boundingRect = boundaries;
+    weapon = new BBGun(boundaries, p);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);

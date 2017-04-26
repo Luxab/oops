@@ -5,10 +5,10 @@
 
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
-#include <unordered_map>
 #include <vector>
 #include <stdlib.h>
 #include <iostream>
+#include <unordered_map>
 
 using namespace sf;
 
@@ -21,12 +21,13 @@ public:
   float cooldown; // How much time between each shot (milliseconds)
   IntRect size; //Size of each shot
   Texture shotTexture; // What the shot looks like
-  std::unordered_map<int, Projectile*> projectiles;
+  std::unordered_map<int, Projectile*> *projectiles;
   IntRect boundingRect; // If projectiles leave this rect, delete them
 
-  Weapon()
+  Weapon(IntRect b, std::unordered_map<int,Projectile*> *p)
   {
-
+    boundingRect = b;
+    projectiles = p;
   }
   ~Weapon()
   {
@@ -36,7 +37,7 @@ public:
   void draw(RenderWindow &win)
   {
     std::vector<int> toBeDeleted;
-    for (auto &shot : projectiles)
+    for (auto &shot : *projectiles)
     {
       win.draw(*shot.second);
       shot.second->tickMove();
@@ -45,6 +46,7 @@ public:
       if (!boundingRect.intersects(Rect<int>(shot.second->getGlobalBounds())))
       {
         // Has gone out of bounds, remove from hashmap
+        std::cout << "deleted!" << std::endl;
         toBeDeleted.push_back(shot.first);
       }
     }
@@ -52,7 +54,7 @@ public:
     // Delete all projectiles that went off-screen
     for (auto &shotKey : toBeDeleted)
     {
-      projectiles.erase(shotKey);
+      projectiles->erase(shotKey);
     }
   }
 
@@ -64,7 +66,7 @@ public:
 class BBGun : public Weapon
 {
   public:
-    BBGun()
+    BBGun(IntRect b, std::unordered_map<int, Projectile*> *p) : Weapon (b, p)
     {
       // Set characteristics
       potency = 1;
@@ -86,14 +88,14 @@ class BBGun : public Weapon
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
       proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (shotCount++, proj);
-      projectiles.insert(newShot);
+      projectiles->insert(newShot);
    }
 };
 
 class SpreadEagle : public Weapon
 {
   public:
-    SpreadEagle()
+    SpreadEagle(IntRect b, std::unordered_map<int, Projectile*> *p) : Weapon (b, p)
     {
       // Set characteristics
       potency = 1;
@@ -113,7 +115,7 @@ class SpreadEagle : public Weapon
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
       std::pair<int,Projectile*> newShot (shotCount++, proj);
-      projectiles.insert(newShot);
+      projectiles->insert(newShot);
    }
 };
 #endif

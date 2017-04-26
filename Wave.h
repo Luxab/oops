@@ -7,9 +7,13 @@
 #include "Enemy.h"
 #include <unordered_map>
 
+typedef std::unordered_map<int, Enemy*> enemy_map;
+typedef std::unordered_map<int, Projectile*> proj_map;
+
 Clock spawnerClock;
 IntRect boundaries;
-std::unordered_map<int, Enemy*> enemies;
+enemy_map *enemies;
+proj_map *projectiles;
 int enemyCount; // Increments per enemy added
 
 class Wave
@@ -26,30 +30,8 @@ class Wave
 
     void draw(RenderWindow &win)
     {
-      std::vector<int> toBeDeleted;
-      for (auto &enemy : enemies)
-      {
-        ((WigWam*) enemy.second)->getEnemyPtr()->draw(win);
 
-        /*
-        // If enemy is colliding with a player bullet, kill them
-        if (!boundingRect.intersects(Rect<int>(enemy.second->getGlobalBounds())))
-        {
-          // If collided, remove from hashmap
-          toBeDeleted.push_back(shot.first);
-
-          // Increase player score
-          ...
-        }
-        */
-      }
-
-      // Delete all projectiles that went off-screen
-      for (auto &enemyKey : toBeDeleted)
-      {
-        enemies.erase(enemyKey);
-      }
-  }
+    }
 
     void setBoundaries (IntRect b)
     {
@@ -63,9 +45,10 @@ class WaveOne : public Wave
 {
 
   public:
-    WaveOne ()
+    WaveOne (proj_map *p, enemy_map *e)
     {
-
+      projectiles = p;
+      enemies = e;
     }
     ~WaveOne ()
     {
@@ -75,9 +58,9 @@ class WaveOne : public Wave
     void spawnEnemies ()
     {
       // Insert new projectile into projectiles map
-      WigWam *w1 = new WigWam(boundaries, Vector2f(200,200));
+      WigWam *w1 = new WigWam(boundaries, Vector2f(200,200), projectiles);
       std::pair<int,Enemy*> newEnemy (enemyCount++, (Enemy*)w1);
-      enemies.insert(newEnemy);
+      enemies->insert(newEnemy);
     }
 
     void draw()

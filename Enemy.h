@@ -10,6 +10,8 @@
 
 using namespace sf;
 
+typedef std::unordered_map<int, Projectile*> proj_map;
+
 typedef enum MOVE_TYPE
 {
   STRAIGHT_DOWN,
@@ -89,11 +91,12 @@ public:
 
   void draw(RenderWindow &win)
   {
-    win.draw(*this);
+    std::cout << "I'm drawing!" << std::endl;
+    //win.draw(*this);
     weapon->draw(win);
     tickMove();
 
-    // Try to shoot every goddamn second
+    // Try to shoot every goddamn frame
     shoot(weapon);
 
     // Draw health
@@ -111,6 +114,11 @@ public:
   {
     weapon = w;
   }
+
+  virtual Enemy* getEnemyPtr()
+  {
+
+  }
 };
 
 class WigWam
@@ -119,19 +127,19 @@ class WigWam
   Texture eTexture;
 
 public:
-  WigWam(IntRect b, Vector2f spawnLoc)
+  WigWam(IntRect b, Vector2f spawnLoc, proj_map *p)
   {
     //Texture eTexture;
     eTexture.loadFromFile("images/bb.png");
 
-    enemy = new Enemy(eTexture, 1, 5, STRAIGHT_DOWN, new BBGun(), b, spawnLoc);
+    enemy = new Enemy(eTexture, 1, 5, STRAIGHT_DOWN, new BBGun(b, p), b, spawnLoc);
   }
   ~WigWam()
   {
 
   }
 
-  Enemy* getEnemyPtr ()
+  virtual Enemy* getEnemyPtr ()
   {
     return enemy;
   }
