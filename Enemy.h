@@ -10,8 +10,6 @@
 
 using namespace sf;
 
-typedef std::unordered_map<int, Projectile*> proj_map;
-
 typedef enum MOVE_TYPE
 {
   STRAIGHT_DOWN,

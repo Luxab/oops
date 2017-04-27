@@ -7,9 +7,6 @@
 #include "Enemy.h"
 #include <unordered_map>
 
-typedef std::unordered_map<int, Enemy*> enemy_map;
-typedef std::unordered_map<int, Projectile*> proj_map;
-
 Clock spawnerClock;
 IntRect boundaries;
 enemy_map *enemies;

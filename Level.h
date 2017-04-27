@@ -15,8 +15,6 @@
 using namespace sf;
 
 typedef void (*changeLevel)(std::string);
-typedef std::unordered_map<int, Projectile*> proj_map;
-typedef std::unordered_map<int, Enemy*> enemy_map;
 
 #define PLAYER_SPEED 10
 
@@ -92,9 +90,9 @@ class TestLevel : public Level
   RectangleShape *boundingLine; //line at 2/3rds screen width
 
   // Keep track of player/enemy projectiles
-  proj_map *playerProjectiles = new std::unordered_map<int, Projectile*>;
-  proj_map *enemyProjectiles = new std::unordered_map<int, Projectile*>;
-  enemy_map *enemies = new std::unordered_map<int, Enemy*>;
+  proj_map *playerProjectiles = new proj_map;
+  proj_map *enemyProjectiles = new proj_map;
+  enemy_map *enemies = new enemy_map;
 
   std::vector<Wave*> waves;
   int currWaveIndex = -1;

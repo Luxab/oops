@@ -5,6 +5,7 @@
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 #include <math.h> // sin,cos
+#include "definitions.h"
 
 using namespace sf;
 

@@ -21,10 +21,10 @@ public:
   float cooldown; // How much time between each shot (milliseconds)
   IntRect size; //Size of each shot
   Texture shotTexture; // What the shot looks like
-  std::unordered_map<int, Projectile*> *projectiles;
+  proj_map *projectiles;
   IntRect boundingRect; // If projectiles leave this rect, delete them
 
-  Weapon(IntRect b, std::unordered_map<int,Projectile*> *p)
+  Weapon(IntRect b, proj_map *p)
   {
     boundingRect = b;
     projectiles = p;
@@ -66,7 +66,7 @@ public:
 class BBGun : public Weapon
 {
   public:
-    BBGun(IntRect b, std::unordered_map<int, Projectile*> *p) : Weapon (b, p)
+    BBGun(IntRect b, proj_map *p) : Weapon (b, p)
     {
       // Set characteristics
       potency = 1;
@@ -95,7 +95,7 @@ class BBGun : public Weapon
 class SpreadEagle : public Weapon
 {
   public:
-    SpreadEagle(IntRect b, std::unordered_map<int, Projectile*> *p) : Weapon (b, p)
+    SpreadEagle(IntRect b, proj_map *p) : Weapon (b, p)
     {
       // Set characteristics
       potency = 1;
