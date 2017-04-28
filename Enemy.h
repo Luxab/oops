@@ -49,6 +49,7 @@ public:
     weapon = w;
     speed = s;
     boundaries = Rect<int> (b);
+    moveType = m;
 
     // Health
     float ratio = .5;
@@ -87,6 +88,10 @@ public:
     // Just move down
     switch (moveType) {
         case STRAIGHT_DOWN:
+            move (0,speed);
+            //health->move(0,speed);
+            break;
+        default: // Default is STRAIGHT_DOWN
             move (0,speed);
             //health->move(0,speed);
             break;
