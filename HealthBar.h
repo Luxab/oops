@@ -14,7 +14,6 @@ class MovingHealthBar : public RectangleShape
   int health;
   int x,y,bSize;
   int bWidth, bHeight; //width and height of the background.
-  std::vector<RectangleShape*> outlines;
 
 public:
 
@@ -24,15 +23,6 @@ public:
     health = maxHealth;
     setPosition(location.x,location.y);
     setFillColor(Color(234,0,0)); // red
-    for (int i = 0; i<maxHealth; i++)
-    {
-      RectangleShape *r = new RectangleShape(Vector2f(size.x/maxHealth,size.y));
-      r->setPosition(Vector2f(location.x+i*r->getSize().x,location.y));
-      r->setFillColor(Color(0,0,0,0));
-      r->setOutlineColor(Color(0,0,0));
-      r->setOutlineThickness(2);
-      outlines.push_back(r);
-    }
   }
   ~MovingHealthBar()
   {
@@ -43,15 +33,6 @@ public:
   {
     health--;
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
-  }
-
-  void draw(RenderWindow &win)
-  {
-    win.draw(*this);
-    for (int i = 0; i<outlines.size(); i++)
-    {
-      win.draw(*outlines[i]);
-    }
   }
 };
 

@@ -52,9 +52,10 @@ public:
     moveType = m;
 
     // Health
-    float ratio = .5;
-    Vector2f barLoc(b.left+b.width+2,2);
-    Vector2f barSize(b.width*ratio,b.height*.05);
+    //float ratio = .5;
+    FloatRect eB = getGlobalBounds();
+    Vector2f barSize(eB.width,10);
+    Vector2f barLoc(eB.left,eB.top-barSize.y);
     health = new MovingHealthBar(barLoc,barSize,h);
 
     // Set position to spawn location
@@ -103,7 +104,7 @@ public:
     // Workaround to appease vtable gods
     Sprite toDraw = *this;
     win.draw(toDraw);
-    //health->draw(win);
+    win.draw(*health);
     weapon->draw(win);
     tickMove();
 
