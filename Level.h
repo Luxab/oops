@@ -97,6 +97,10 @@ class TestLevel : public Level
   int currWaveIndex = -1;               // Current wave that we're on
   int currScore = 0;                    // Keep track of current player score
 
+  Text startingText;                    // Shows "Hit space to start!" text
+  Text score;                           // Displays your score at the right
+  Text combo;                           // Shows combos
+
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
   {
@@ -110,6 +114,9 @@ public:
     boundingLine->setPosition(bbnd.width*ratio,0);
     boundingLine->setOutlineColor(Color(0,0,0));
     boundingLine->setOutlineThickness(2);
+
+    // Show score and starting text
+    showText();
 
     // Create player
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
@@ -137,6 +144,9 @@ public:
     window->draw(background); //draw background first!
 
     window->draw(*boundingLine);
+    window->draw(startingText);
+    window->draw(score);
+    window->draw(combo);
 
     waves.at(currWaveIndex)->draw(*window);
 
@@ -155,7 +165,8 @@ public:
         // Increase player score
         currScore += enemyPair.second->score;
 
-        std::cout << "Score is now: " << currScore << std::endl;
+        std::string scoreString = "Score:\n" + std::to_string(currScore);
+        score.setString(scoreString);
       }
     }
 
@@ -170,6 +181,8 @@ public:
     {
       window->draw(p); //draw the player
       p.draw(*window); //let the player draw
+    } else {
+      gameOver();
     }
 
     if (waitingForNextLevel && Keyboard::isKeyPressed(Keyboard::Space))
@@ -177,6 +190,30 @@ public:
         startWave();
         waitingForNextLevel = 0;
     }
+  }
+
+  void showText()
+  {
+    startingText.setFont(gameFont);
+    score.setFont(gameFont);
+    combo.setFont(gameFont);
+
+    startingText.setString("Press space to start!");
+    score.setString("Score: \n0");
+    combo.setString("Combo: \n1x");
+
+    startingText.setCharacterSize(50);
+    score.setCharacterSize(50);
+    combo.setCharacterSize(50);
+
+    startingText.setColor(Color::White);
+    score.setColor(Color::White);
+    combo.setColor(Color::White);
+
+    FloatRect bbnd = background.getGlobalBounds();
+    startingText.setPosition(Vector2f(bbnd.width/12, bbnd.height/2));
+    score.setPosition(Vector2f(bbnd.width - 300, 50));
+    combo.setPosition(Vector2f(score.getPosition().x, score.getPosition().y + 150));
   }
 
   void setCurrentWaveIndex (int wave)
@@ -198,18 +235,26 @@ public:
         // Next wave not found
         // You won!
         std::cout << "No next wave found, you musta won!!!!" << std::endl;
-
-    // TODO: Show this on screen instead
-    std::cout << "Press space to start!" << std::endl;
   }
 
   void startWave ()
   {
+    // Remove starting text
+    startingText.setString("");
+
     // Find index of current wave
     // Start wave
     waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
     waves.at(currWaveIndex)->spawnEnemies();
     std::cout << "Welcome to wave " << currWaveIndex << std::endl;
+  }
+
+  // You lose
+  void gameOver()
+  {
+    startingText.setPosition(Vector2f(background.getGlobalBounds().width/6, 
+                                      50));
+    startingText.setString("Game over!");
   }
 };
 

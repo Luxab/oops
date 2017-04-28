@@ -65,6 +65,8 @@ public:
   virtual void shoot(Vector2f initPos) = 0;
 };
 
+// -------------------- Player Weaponry -------------------- //
+
 class BBGun : public Weapon
 {
   public:
@@ -115,6 +117,36 @@ class SpreadEagle : public Weapon
 
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+      projectiles->insert(newShot);
+   }
+};
+
+// -------------------- Enemy Weaponry -------------------- //
+
+class PeaShooter : public Weapon
+{
+  public:
+    PeaShooter(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+      // Set characteristics
+      potency = 1;
+      speed = 20;
+      cooldown = 300;
+      shotTexture.loadFromFile("images/bullet.png");
+    }
+    ~PeaShooter()
+    {
+
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      // Single shot down
+
+      // Insert new projectile into projectiles map
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
    }

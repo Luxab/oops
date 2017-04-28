@@ -168,7 +168,7 @@ class WigWam : public Enemy
 {
 public:
   WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, e, 1, 1, STRAIGHT_DOWN, new BBGun(b, ep), b, spawnLoc)
+      : Enemy(ep, pp, e, 1, 1, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
   {
     enemyTexture.loadFromFile("images/bb.png");
 

@@ -14,15 +14,15 @@ class Player : public Sprite
 {
 public:
   HealthBar *health;
-  //int health; //How much damage can it take
-  float speed; //How fast does it move
-  Weapon *weapon; //Player's current weapon
-  IntRect boundaries; // Rectangle that defines level boundaries
+  //int health;                         // How much damage can it take
+  float speed;                          // How fast does it move
+  Weapon *weapon;                       // Player's current weapon
+  IntRect boundaries;                   // Rectangle that defines level boundaries
   float rightSide;
   float bottomSide;
   Texture left, right, up, down;
   Clock weaponCooldown;
-  proj_map *enemyProjectiles;
+  proj_map *enemyProjectiles;           // Keep track of all enemy projectiles on screen
   proj_map *playerProjectiles;
   enemy_map *enemies;
   bool dead = false;
