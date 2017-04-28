@@ -82,19 +82,20 @@ public:
 class TestLevel : public Level
 {
   Player p;
-  Texture playerTexture;
-  float ratio = (float) 2 / 3; // Ratio gameplay:points/text 2/3
-  bool waitingForNextLevel = 1;
-  Font gameFont;
-  RectangleShape *boundingLine; //line at 2/3rds screen width
+  Texture playerTexture;                // What the player looks like
+  float ratio = (float) 2 / 3;          // Ratio gameplay:points/text 2/3
+  bool waitingForNextLevel = 1;         // Check whether we are waiting for next level
+  Font gameFont;                        // Font this level is using
+  RectangleShape *boundingLine;         // Line at 2/3rds screen width
 
   // Keep track of player/enemy projectiles
   proj_map *playerProjectiles = new proj_map;
   proj_map *enemyProjectiles = new proj_map;
   enemy_map *enemies = new enemy_map;
 
-  std::vector<Wave*> waves;
-  int currWaveIndex = -1;
+  std::vector<Wave*> waves;             // Keep track of all possible waves
+  int currWaveIndex = -1;               // Current wave that we're on
+  int currScore = 0;                    // Keep track of current player score
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
@@ -145,17 +146,17 @@ public:
     {
       enemyPair.second->draw(*window);
 
-      /*
-      // If enemy is colliding with a player bullet, kill them
-      if (!boundingRect.intersects(Rect<int>(enemy.second->getGlobalBounds())))
+      // If enemy is dead, remove them from screen
+      if (enemyPair.second->isDead())
       {
         // If collided, remove from hashmap
-        toBeDeleted.push_back(shot.first);
+        toBeDeleted.push_back(enemyPair.first);
 
         // Increase player score
-        ...
+        currScore += enemyPair.second->score;
+
+        std::cout << "Score is now: " << currScore << std::endl;
       }
-      */
     }
 
     // Delete all projectiles that went off-screen

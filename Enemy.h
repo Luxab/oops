@@ -21,6 +21,7 @@ class Enemy : public Sprite
 {
 public:
   MovingHealthBar *health;
+  float score;                  // How many points do we get for killing it
   float speed;                  // How fast does it move
   Weapon *weapon;               // Enemy's current weapon
   IntRect boundaries;           // Rectangle that defines level boundaries
@@ -32,6 +33,7 @@ public:
   proj_map *enemyProjectiles;   // Keep track of all enemy projectiles on screen
   proj_map *playerProjectiles;  // Keep track of player projectiles. If we hit, we die
   enemy_map *enemies;           // Keep track of all spawned enemies on screen
+  bool dead = false;            // Keep track of enemy's life state
 
   Enemy()
   {
@@ -140,13 +142,19 @@ public:
 
   void loseHealth(RenderWindow &win, int amt)
   {
-    //health->takeDamage(win, amt);
+    health->takeDamage(win, amt);
     if (health->getCurrentHealth() <= 0)
         killSelf();
   }
 
+  bool isDead()
+  {
+    return dead;
+  }
+
   void killSelf()
   {
+    dead = true;
     std::cout << "Enemy ded!" << std::endl;
   }
 
@@ -160,11 +168,15 @@ class WigWam : public Enemy
 {
 public:
   WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, e, 1, 5, STRAIGHT_DOWN, new BBGun(b, ep), b, spawnLoc)
+      : Enemy(ep, pp, e, 1, 1, STRAIGHT_DOWN, new BBGun(b, ep), b, spawnLoc)
   {
     enemyTexture.loadFromFile("images/bb.png");
+
     // Set texture
     setTexture(enemyTexture);
+
+    // Set score for killing
+    score = 100;
   }
   ~WigWam()
   {
