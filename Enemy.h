@@ -87,7 +87,8 @@ public:
     // Just move down
     switch (moveType) {
         case STRAIGHT_DOWN:
-            move (0,-speed);
+            move (0,speed);
+            //health->move(0,speed);
             break;
     }
   }
@@ -97,10 +98,8 @@ public:
     // Workaround to appease vtable gods
     Sprite toDraw = *this;
     win.draw(toDraw);
-
-    std::cout << "Here?" << std::endl;
+    //health->draw(win);
     weapon->draw(win);
-    std::cout << "Hereeeee?" << std::endl;
     tickMove();
 
     // Try to shoot every goddamn frame
