@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include <unordered_map>
+#include <vector>
 
 Clock spawnerClock;                 // Spawn enemies on a timer
 IntRect boundaries;                 // Boundaries of play area
@@ -55,11 +56,23 @@ class WaveOne : public Wave
 
     void spawnEnemies ()
     {
-      // TODO: Enemy needs to be a parent to all these types yoo
+      std::vector<Enemy*> enemiesToSpawn;
+
       // Insert new projectile into projectiles map
-      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(200,200));
-      std::pair<int,Enemy*> newEnemy (enemies->size(), w1);
-      enemies->insert(newEnemy);
+      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(100,100));
+      enemiesToSpawn.push_back(w1);
+
+      WigWam *w2 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(250,300));
+      enemiesToSpawn.push_back(w2);
+
+      WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(400,100));
+      enemiesToSpawn.push_back(w3);
+
+      for (auto &enemy : enemiesToSpawn)
+      {
+        std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
+        enemies->insert(enemyPair);
+      }
     }
 
     void draw()
