@@ -29,7 +29,6 @@ public:
   Vector2f initialPos;          // Where the enemy spawns
   Texture enemyTexture;         // How it look n stuff
 
-
   proj_map *enemyProjectiles;   // Keep track of all enemy projectiles on screen
   proj_map *playerProjectiles;  // Keep track of player projectiles. If we hit, we die
   enemy_map *enemies;           // Keep track of all spawned enemies on screen

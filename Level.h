@@ -158,14 +158,18 @@ public:
       */
     }
 
-      // Delete all projectiles that went off-screen
-      for (auto &enemyKey : toBeDeleted)
-      {
-        enemies->erase(enemyKey);
-      }
+    // Delete all projectiles that went off-screen
+    for (auto &enemyKey : toBeDeleted)
+    {
+      enemies->erase(enemyKey);
+    }
 
-    window->draw(p); //draw the player
-    p.draw(*window); //let the player draw
+    // Don't draw player if they're dead
+    if (!p.isDead())
+    {
+      window->draw(p); //draw the player
+      p.draw(*window); //let the player draw
+    }
 
     if (waitingForNextLevel && Keyboard::isKeyPressed(Keyboard::Space))
     {

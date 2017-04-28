@@ -25,7 +25,7 @@ public:
   proj_map *enemyProjectiles;
   proj_map *playerProjectiles;
   enemy_map *enemies;
-  RenderWindow *win;
+  bool dead = false;
 
   Player()
   {
@@ -215,8 +215,14 @@ public:
         killSelf();
   }
 
+  bool isDead()
+  {
+    return dead;
+  }
+
   void killSelf()
   {
+    dead = true;
     std::cout << "You ded!" << std::endl;
   }
 

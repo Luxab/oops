@@ -32,6 +32,10 @@ public:
   void takeDamage(RenderWindow &window, int damageAmount)
   {
     health-= damageAmount;
+
+    if (health < 0)
+      health = 0;
+
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
   }
 

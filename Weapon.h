@@ -49,7 +49,6 @@ public:
       if (!boundingRect.intersects(Rect<int>(shot.second->getGlobalBounds())))
       {
         // Has gone out of bounds, remove from hashmap
-        std::cout << "deleted!" << std::endl;
         toBeDeleted.push_back(shot.first);
       }
     }
@@ -85,7 +84,6 @@ class BBGun : public Weapon
     virtual void shoot(Vector2f initPos)
     {
       // Single shot up
-      std::cout << "pew" << std::endl;
 
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
