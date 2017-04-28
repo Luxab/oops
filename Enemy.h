@@ -20,7 +20,7 @@ typedef enum MOVE_TYPE
 class Enemy : public Sprite
 {
 public:
-  EnemyHealthBar *health;
+  MovingHealthBar *health;
   float speed;                  // How fast does it move
   Weapon *weapon;               // Enemy's current weapon
   IntRect boundaries;           // Rectangle that defines level boundaries
@@ -38,7 +38,7 @@ public:
   {
 
   }
-  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, int h, int s, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc) : Sprite(tin)
+  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, int h, int s, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc)
   {
     // Projectile tracking
     playerProjectiles = pp;
@@ -54,10 +54,7 @@ public:
     float ratio = .5;
     Vector2f barLoc(b.left+b.width+2,2);
     Vector2f barSize(b.width*ratio,b.height*.05);
-    health = new EnemyHealthBar(barLoc,barSize,h);
-
-    // Set texture
-    setTexture(tin);
+    health = new MovingHealthBar(barLoc,barSize,h);
 
     // Set position to spawn location
     std::cout << "SPos: " << spawnLoc.x << "," << spawnLoc.y << std::endl;
@@ -129,10 +126,12 @@ public:
 class WigWam : public Enemy
 {
 public:
-  WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc) 
-      : Enemy(ep, pp, e, 1, 5, STRAIGHT_DOWN, new BBGun(b, ep), b, spawnLoc);
+  WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc)
+      : Enemy(ep, pp, e, 1, 5, STRAIGHT_DOWN, new BBGun(b, ep), b, spawnLoc)
   {
     enemyTexture.loadFromFile("images/bb.png");
+    // Set texture
+    setTexture(enemyTexture);
   }
   ~WigWam()
   {
