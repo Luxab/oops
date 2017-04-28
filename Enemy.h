@@ -72,7 +72,7 @@ public:
 
   void shoot (Weapon *w)
   {
-    Vector2f pos = initialPos;
+    Vector2f pos = getPosition();
 
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)

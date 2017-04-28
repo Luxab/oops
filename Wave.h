@@ -58,7 +58,6 @@ class WaveOne : public Wave
     {
       std::vector<Enemy*> enemiesToSpawn;
 
-      // Insert new projectile into projectiles map
       WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(100,100));
       enemiesToSpawn.push_back(w1);
 
@@ -68,6 +67,7 @@ class WaveOne : public Wave
       WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(400,100));
       enemiesToSpawn.push_back(w3);
 
+      // Create pairs for each enemy and insert into maps
       for (auto &enemy : enemiesToSpawn)
       {
         std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
