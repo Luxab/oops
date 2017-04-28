@@ -15,14 +15,13 @@ using namespace sf;
 class Weapon
 {
 public:
-  int shotCount; // Incrememnts per shot
-  float speed; //How fast does it move
-  float potency; //How much damage each shot does
-  float cooldown; // How much time between each shot (milliseconds)
-  IntRect size; //Size of each shot
-  Texture shotTexture; // What the shot looks like
-  proj_map *projectiles;
-  IntRect boundingRect; // If projectiles leave this rect, delete them
+  float speed;                  // How fast the shot travels
+  float potency;                // How much damage each shot does
+  float cooldown;               // How much time between each shot (milliseconds)
+  IntRect size;                 // Size of each shot
+  Texture shotTexture;          // What the shot looks like
+  IntRect boundingRect;         // If projectiles leave this rect, delete them
+  proj_map *projectiles;        // Keeps track of all projectiles on screen
 
   Weapon(IntRect b, proj_map *p)
   {
@@ -37,9 +36,13 @@ public:
   void draw(RenderWindow &win)
   {
     std::vector<int> toBeDeleted;
-    for (auto &shot : *projectiles)
+    for (std::pair<int, Projectile*> shot : *projectiles)
     {
-      win.draw(*shot.second);
+      // Workaround to appease vtable gods
+      Projectile * blah = shot.second;
+      Sprite toDraw = *blah;
+      win.draw(toDraw);
+
       shot.second->tickMove();
 
       // Ensure bullet hasn't gone out of bounds
@@ -87,7 +90,7 @@ class BBGun : public Weapon
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
       proj->setScale(Vector2f(.1,.1));
-      std::pair<int,Projectile*> newShot (shotCount++, proj);
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
    }
 };
@@ -114,7 +117,7 @@ class SpreadEagle : public Weapon
 
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
-      std::pair<int,Projectile*> newShot (shotCount++, proj);
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
    }
 };

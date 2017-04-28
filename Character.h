@@ -1,7 +1,7 @@
 //  Created by Duncan Klug on 4/18/17.
 //	Lab 02 Spring 2017
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef CHARACTER_H
+#define CHARACTER_H
 
 #include <SFML/Graphics.hpp>
 #include "Weapon.h"
@@ -17,10 +17,13 @@ typedef enum MOVE_TYPE
   LOOP_DE_LOOP
 } MOVE_TYPE;
 
-class Enemy : public Sprite
+// Needs to basically be what enemy was,
+// While enemy needs to become a wrapper
+// Like the Weapon class is.
+class Character : public Sprite
 {
 public:
-  EnemyHealthBar *health;
+  MovingHealthBar *health;
   float speed;                  // How fast does it move
   Weapon *weapon;               // Enemy's current weapon
   IntRect boundaries;           // Rectangle that defines level boundaries
@@ -29,16 +32,11 @@ public:
   Vector2f initialPos;          // Where the enemy spawns
   Texture enemyTexture;         // How it look n stuff
 
-
-  proj_map *enemyProjectiles;   // Keep track of all enemy projectiles on screen
-  proj_map *playerProjectiles;  // Keep track of player projectiles. If we hit, we die
-  enemy_map *enemies;           // Keep track of all spawned enemies on screen
-
-  Enemy()
+  Character()
   {
 
   }
-  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, int h, int s, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc) : Sprite(tin)
+  Character(proj_map *ep, proj_map *pp, enemy_map *e, int h, int s, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc) : Sprite(tin)
   {
     // Projectile tracking
     playerProjectiles = pp;

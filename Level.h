@@ -3,13 +3,15 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <stdlib.h>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+
+#include <stdlib.h>
+#include <iostream>
 #include <vector>
-#include "Button.h"
+
 #include "Projectile.h"
+#include "Button.h"
 #include "Wave.h"
 
 using namespace sf;
@@ -71,13 +73,10 @@ public:
   virtual void draw()
   {
     //All levels must be drawn
-    std::cout << "This called?" << std::endl;
   }
 
 };
 
-//  Created by Duncan Klug on 4/8/17.
-//  Lab 02 Spring 2017
 #include "Player.h"
 #include "Enemy.h"
 class TestLevel : public Level
@@ -112,10 +111,10 @@ public:
 
     // Create player
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
-    p = Player(playerTexture, playerProjectiles, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+    p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
-    waves.push_back(new WaveOne(enemyProjectiles, enemies));
+    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, enemies));
     readyUpForNextWave();
   }
   ~TestLevel()
@@ -141,9 +140,9 @@ public:
 
     // TODO: Check that none of the player/enemy projectiles have gone off screen
     std::vector<int> toBeDeleted;
-    for (auto &enemyPair : *enemies)
+    for (std::pair<int, Enemy*> enemyPair : *enemies)
     {
-      enemyPair.second->getEnemyPtr()->draw(*window);
+      enemyPair.second->draw(*window);
 
       /*
       // If enemy is colliding with a player bullet, kill them
@@ -208,8 +207,6 @@ public:
   }
 };
 
-//  Created by Duncan Klug on 4/8/17.
-//	Lab 02 Spring 2017
 class PauseMenu : public Level
 {
   Font gameFont;

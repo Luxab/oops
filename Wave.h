@@ -7,11 +7,11 @@
 #include "Enemy.h"
 #include <unordered_map>
 
-Clock spawnerClock;
-IntRect boundaries;
-enemy_map *enemies;
-proj_map *projectiles;
-int enemyCount; // Increments per enemy added
+Clock spawnerClock;                 // Spawn enemies on a timer
+IntRect boundaries;                 // Boundaries of play area
+proj_map *enemyProjectiles;         // Keep track of enemy projectiles
+proj_map *playerProjectiles;        // Keep track of player projectiles
+enemy_map *enemies;                 // Keep track of all enemies on screen
 
 class Wave
 {
@@ -42,9 +42,10 @@ class WaveOne : public Wave
 {
 
   public:
-    WaveOne (proj_map *p, enemy_map *e)
+    WaveOne (proj_map *pp, proj_map *ep, enemy_map *e)
     {
-      projectiles = p;
+      playerProjectiles = pp;
+      enemyProjectiles = ep;
       enemies = e;
     }
     ~WaveOne ()
@@ -54,9 +55,10 @@ class WaveOne : public Wave
 
     void spawnEnemies ()
     {
+      // TODO: Enemy needs to be a parent to all these types yoo
       // Insert new projectile into projectiles map
-      WigWam *w1 = new WigWam(boundaries, Vector2f(200,200), projectiles);
-      std::pair<int,Enemy*> newEnemy (enemyCount++, (Enemy*)w1);
+      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(200,200));
+      std::pair<int,Enemy*> newEnemy (enemies->size(), w1);
       enemies->insert(newEnemy);
     }
 

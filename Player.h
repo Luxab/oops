@@ -22,14 +22,22 @@ public:
   float bottomSide;
   Texture left, right, up, down;
   Clock weaponCooldown;
-  std::unordered_map<int, Projectile*> projectiles;
+  proj_map *enemyProjectiles;
+  proj_map *playerProjectiles;
+  enemy_map *enemies;
 
   Player()
   {
 
   }
-  Player(Texture &tin, std::unordered_map<int, Projectile*> *p, int s, FloatRect b) : Sprite(tin)
+  Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, int s, FloatRect b) : Sprite(tin)
   {
+    // Projectile tracking
+    playerProjectiles = pp;
+    enemyProjectiles = ep;
+    enemies = e;
+
+    // Player characteristics
     speed = s;
     boundaries = Rect<int> (b);
     rightSide = boundaries.left+boundaries.width;
@@ -47,7 +55,7 @@ public:
     //setTexture(up);
 
     // Default weapon
-    weapon = new BBGun(boundaries, p);
+    weapon = new BBGun(boundaries, playerProjectiles);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);

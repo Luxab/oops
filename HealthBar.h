@@ -8,7 +8,7 @@
 
 using namespace sf;
 
-class EnemyHealthBar : public RectangleShape
+class MovingHealthBar : public RectangleShape
 {
   int maxHealth;
   int health;
@@ -18,7 +18,7 @@ class EnemyHealthBar : public RectangleShape
 
 public:
 
-  EnemyHealthBar(Vector2f location = Vector2f(0,0), Vector2f size = Vector2f(100,30), int mh=5) : RectangleShape(size)
+  MovingHealthBar (Vector2f location = Vector2f(0,0), Vector2f size = Vector2f(100,30), int mh=5) : RectangleShape(size)
   {
     maxHealth = mh;
     health = maxHealth;
@@ -34,7 +34,7 @@ public:
       outlines.push_back(r);
     }
   }
-  ~EnemyHealthBar()
+  ~MovingHealthBar()
   {
 
   }
