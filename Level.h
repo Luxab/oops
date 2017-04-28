@@ -38,7 +38,7 @@ public:
     resH = 600;
     background.setSize(Vector2f(resW,resH));
     background.setPosition(0,0);
-    background.setFillColor(Color(255,255,255));
+    background.setFillColor(Color(255,255,255)); // white
   }
   Level(RenderWindow &win, Event &ev, changeLevel cl)
   {
@@ -47,7 +47,7 @@ public:
     resH = win.getSize().y;
     background.setSize(Vector2f(resW,resH));
     background.setPosition(0,0);
-    background.setFillColor(Color(255,255,255));
+    background.setFillColor(Color(255,255,255)); // white
     window = &win;
     event = &ev;
     this->cl = cl;
@@ -102,6 +102,7 @@ public:
     // Set up level characteristics
     gameFont = fin;
     FloatRect bbnd = background.getGlobalBounds();
+    background.setFillColor(Color(28,64,93)); // dark blue
 
     // Create right, black boundary line
     boundingLine = new RectangleShape(Vector2f(0,bbnd.height));

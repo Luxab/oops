@@ -29,10 +29,15 @@ public:
 
   }
 
-  void takeDamage(RenderWindow &window)
+  void takeDamage(RenderWindow &window, int damageAmount)
   {
-    health--;
+    health-= damageAmount;
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+  }
+
+  int getCurrentHealth()
+  {
+    return health;
   }
 };
 
@@ -67,10 +72,15 @@ public:
 
   }
 
-  void takeDamage(RenderWindow &window)
+  void takeDamage(RenderWindow &window, int damageAmount)
   {
-    health--;
+    health-= damageAmount;
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+  }
+
+  int getCurrentHealth()
+  {
+    return health;
   }
 
   void draw(RenderWindow &win)

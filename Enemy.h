@@ -72,6 +72,7 @@ public:
 
   void shoot (Weapon *w)
   {
+    // Fire from our current position
     Vector2f pos = getPosition();
 
     // Only fire if timer is past cooldown
@@ -99,7 +100,7 @@ public:
     }
   }
 
-  void checkProjectiles ()
+  void checkProjectiles (RenderWindow &win)
   {
     for (std::pair<int, Projectile*> shot : *playerProjectiles)
     {
@@ -107,7 +108,7 @@ public:
       Projectile *shotObj = shot.second;
       if (shotObj->contains(getGlobalBounds()))
       {
-        killSelf();
+        loseHealth(win, 1);
       }
     }
   }
@@ -115,7 +116,7 @@ public:
   void draw(RenderWindow &win)
   {
     // Check if we've run into any player projectiles
-    checkProjectiles();
+    checkProjectiles(win);
 
     // Workaround to appease vtable gods
     Sprite toDraw = *this;
@@ -138,7 +139,14 @@ public:
     return getGlobalBounds().intersects(rect);
   }
 
-  bool killSelf()
+  void loseHealth(RenderWindow &win, int amt)
+  {
+    //health->takeDamage(win, amt);
+    if (health->getCurrentHealth() <= 0)
+        killSelf();
+  }
+
+  void killSelf()
   {
     std::cout << "Enemy ded!" << std::endl;
   }

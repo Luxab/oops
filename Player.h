@@ -25,6 +25,7 @@ public:
   proj_map *enemyProjectiles;
   proj_map *playerProjectiles;
   enemy_map *enemies;
+  RenderWindow *win;
 
   Player()
   {
@@ -176,7 +177,7 @@ public:
     return false;
   }
 
-  void checkProjectiles ()
+  void checkProjectiles (RenderWindow &win)
   {
     for (std::pair<int, Projectile*> shot : *enemyProjectiles)
     {
@@ -184,7 +185,7 @@ public:
       Projectile *shotObj = shot.second;
       if (shotObj->contains(getGlobalBounds()))
       {
-        killSelf();
+        loseHealth(win,1);
       }
     }
   }
@@ -192,7 +193,7 @@ public:
   void draw(RenderWindow &win)
   {
     // Check if we've run into any enemy projectiles
-    checkProjectiles();
+    checkProjectiles(win);
 
     tickMove();
     weapon->draw(win);
@@ -207,7 +208,14 @@ public:
     return getGlobalBounds().intersects(rect);
   }
 
-  bool killSelf()
+  void loseHealth(RenderWindow &win, int amt)
+  {
+    health->takeDamage(win, amt);
+    if (health->getCurrentHealth() <= 0)
+        killSelf();
+  }
+
+  void killSelf()
   {
     std::cout << "You ded!" << std::endl;
   }
