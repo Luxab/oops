@@ -51,9 +51,9 @@ public:
     setPosition(posX, posY);
   }
 
-  bool contains(int mx, int my)
+  bool contains(FloatRect rect)
   {
-    return getTextureRect().contains(mx,my);
+    return getGlobalBounds().intersects(rect);
   }
 };
 

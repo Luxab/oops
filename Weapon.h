@@ -39,8 +39,8 @@ public:
     for (std::pair<int, Projectile*> shot : *projectiles)
     {
       // Workaround to appease vtable gods
-      Projectile * blah = shot.second;
-      Sprite toDraw = *blah;
+      Projectile * shotObj = shot.second;
+      Sprite toDraw = *shotObj;
       win.draw(toDraw);
 
       shot.second->tickMove();

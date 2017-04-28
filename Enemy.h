@@ -98,8 +98,24 @@ public:
     }
   }
 
+  void checkProjectiles ()
+  {
+    for (std::pair<int, Projectile*> shot : *playerProjectiles)
+    {
+      // Workaround to appease vtable gods
+      Projectile *shotObj = shot.second;
+      if (shotObj->contains(getGlobalBounds()))
+      {
+        killSelf();
+      }
+    }
+  }
+
   void draw(RenderWindow &win)
   {
+    // Check if we've run into any player projectiles
+    checkProjectiles();
+
     // Workaround to appease vtable gods
     Sprite toDraw = *this;
     win.draw(toDraw);
@@ -116,9 +132,14 @@ public:
     //health->draw(win);
   }
 
-  bool contains(int mx, int my)
+  bool contains(FloatRect rect)
   {
-    return getTextureRect().contains(mx,my);
+    return getGlobalBounds().intersects(rect);
+  }
+
+  bool killSelf()
+  {
+    std::cout << "Enemy ded!" << std::endl;
   }
 
   void setWeapon(Weapon *w)
