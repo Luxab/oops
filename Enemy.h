@@ -108,7 +108,7 @@ public:
     {
       // Workaround to appease vtable gods
       Projectile *shotObj = shot.second;
-      if (shotObj->contains(getGlobalBounds()))
+      if (shotObj && shotObj->contains(getGlobalBounds()))
       {
         // Destroy bullet
         // TODO: Maybe a special gun could pass through enemies?

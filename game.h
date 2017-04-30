@@ -1,5 +1,8 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
+#ifndef GAME_H
+#define GAME_H
+
 #include <unordered_map>
 #include <string>
 
@@ -82,3 +85,4 @@ public:
 
   void play();
 };
+#endif

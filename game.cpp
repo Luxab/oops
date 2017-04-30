@@ -1,4 +1,7 @@
 //  Created by Duncan Klug on 4/6/17.
+#ifndef GAME_CPP
+#define GAME_CPP
+
 #include "game.h"
 
 //Aspect ratio: Force 16:9
@@ -78,3 +81,5 @@ int main()
   play();
   return 0;
 }
+
+#endif
