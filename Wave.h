@@ -42,7 +42,9 @@ class Wave
 
     bool waveIsFinished ()
     {
-      return finishedSpawning;
+      // Wave is finished when all enemies are dead and there
+      // are no more to spawn
+      return finishedSpawning && (enemies->size() <= 0);
     }
 };
 
@@ -72,6 +74,50 @@ class WaveOne : public Wave
       enemiesToSpawn.push_back(w2);
 
       WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(400,100));
+      enemiesToSpawn.push_back(w3);
+
+      // Create pairs for each enemy and insert into maps
+      for (auto &enemy : enemiesToSpawn)
+      {
+        std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
+        enemies->insert(enemyPair);
+      }
+
+      finishedSpawning = true;
+    }
+
+    void draw()
+    {
+
+    }
+};
+
+class WaveTwo : public Wave
+{
+
+  public:
+    WaveTwo (proj_map *pp, proj_map *ep, enemy_map *e)
+    {
+      playerProjectiles = pp;
+      enemyProjectiles = ep;
+      enemies = e;
+    }
+    ~WaveTwo ()
+    {
+
+    }
+
+    void spawnEnemies ()
+    {
+      std::vector<Enemy*> enemiesToSpawn;
+
+      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(0,100));
+      enemiesToSpawn.push_back(w1);
+
+      WigWam *w2 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(150,300));
+      enemiesToSpawn.push_back(w2);
+
+      WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(200,100));
       enemiesToSpawn.push_back(w3);
 
       // Create pairs for each enemy and insert into maps

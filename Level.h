@@ -95,7 +95,7 @@ class TestLevel : public Level
   enemy_map *enemies = new enemy_map;
 
   std::vector<Wave*> waves;             // Keep track of all possible waves
-  int currWaveIndex = 0;               // Current wave that we're on
+  int currWaveIndex = -1;               // Current wave that we're on
   int currScore = 0;                    // Keep track of current player score
 
   Text statusText;                      // Shows "Hit space to start!" text
@@ -125,6 +125,8 @@ public:
 
     // Set up waves
     waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, enemies));
+    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, enemies));
+
     readyUpForNextWave();
   }
   ~TestLevel()
@@ -187,7 +189,6 @@ public:
     }
 
     // Check for end of wave
-    std::cout << currWaveIndex << std::endl;
     if (!gameIsOver && !waitingForNextLevel && waves[currWaveIndex]->waveIsFinished())
     {
       readyUpForNextWave();
@@ -237,12 +238,18 @@ public:
   void readyUpForNextWave ()
   {
     waitingForNextLevel = true;
+    statusText.setString("Press space to start!");
 
     if (currWaveIndex + 1 >= waves.size())
     {
       // Next wave not found
       // You won!
       std::cout << "No next wave found, you musta won!!!!" << std::endl;
+      gameOver();
+      statusText.setString("You won!");
+    } else {
+        // Go to next wave
+        currWaveIndex++;
     }
   }
 

@@ -14,7 +14,8 @@ typedef enum MOVE_TYPE
 {
   STRAIGHT_DOWN,
   ZIG_ZAG,
-  LOOP_DE_LOOP
+  LOOP_DE_LOOP,
+  TRACK_PLAYER
 } MOVE_TYPE;
 
 class Enemy : public Sprite
@@ -39,7 +40,7 @@ public:
   {
 
   }
-  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, int h, int s, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc)
+  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc)
   {
     // Projectile tracking
     playerProjectiles = pp;
@@ -47,8 +48,9 @@ public:
     enemies = e;
 
     std::cout << "Spawning enemy!" << std::endl;
-    weapon = w;
-    speed = s;
+    // Default enemy values, should be override in derived enemy classes
+    weapon = new PeaShooter(b, ep);
+    speed = 1;
     boundaries = Rect<int> (b);
     moveType = m;
 
@@ -57,14 +59,10 @@ public:
     FloatRect eB = getGlobalBounds();
     Vector2f barSize(eB.width,10);
     Vector2f barLoc(eB.left,eB.top-barSize.y);
-    health = new MovingHealthBar(barLoc,barSize,h);
+    health = new MovingHealthBar(barLoc,barSize,1);
 
     // Set position to spawn location
-    std::cout << "SPos: " << spawnLoc.x << "," << spawnLoc.y << std::endl;
-    initialPos = spawnLoc;
-    std::cout << "IPos: " << initialPos.x << "," << initialPos.y << std::endl;
-    setPosition(initialPos);
-    setScale(2,2);
+    setPosition(spawnLoc);
   }
   ~Enemy()
   {
@@ -111,6 +109,10 @@ public:
       Projectile *shotObj = shot.second;
       if (shotObj->contains(getGlobalBounds()))
       {
+        // Destroy bullet
+        // TODO: Maybe a special gun could pass through enemies?
+        playerProjectiles->erase(shot.first);
+
         loseHealth(win, 1);
       }
     }
@@ -144,7 +146,9 @@ public:
 
   void loseHealth(RenderWindow &win, int amt)
   {
+    // Take some damage
     health->takeDamage(win, amt);
+
     if (health->getCurrentHealth() <= 0)
         killSelf();
   }
@@ -165,12 +169,20 @@ class WigWam : public Enemy
 {
 public:
   WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, e, 1, 1, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
+      : Enemy(ep, pp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
   {
     enemyTexture.loadFromFile("images/bb.png");
 
     // Set texture
     setTexture(enemyTexture);
+
+    // Size of the enemy
+    setScale(2,2);
+
+    // Characteristics
+    speed = 1;
+    health->setMaxHealth(3);
+    weapon = new PeaShooter(b, ep); 
 
     // Set score for killing
     score = 100;

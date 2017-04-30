@@ -43,6 +43,12 @@ public:
   {
     return health;
   }
+
+  void setMaxHealth(int h)
+  {
+    maxHealth = h;
+    health = h;
+  }
 };
 
 class HealthBar : public RectangleShape
