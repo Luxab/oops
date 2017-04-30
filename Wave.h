@@ -10,11 +10,12 @@
 
 Clock spawnerClock;                 // Spawn enemies on a timer
 IntRect boundaries;                 // Boundaries of play area
-proj_map *enemyProjectiles;         // Keep track of enemy projectiles
-proj_map *playerProjectiles;        // Keep track of player projectiles
-enemy_map *enemies;                 // Keep track of all enemies on screen
+proj_map *ep;                       // Keep track of enemy projectiles
+proj_map *pp;                       // Keep track of player projectiles
+int_vec  *dp;                       // Keep track of dead projectiles
+enemy_map *e;                       // Keep track of all enemies on screen
 
-bool finishedSpawning = false;          // Set to true when wave is finished
+bool finishedSpawning = false;      // Set to true when wave is finished
 
 class Wave
 {
@@ -44,7 +45,7 @@ class Wave
     {
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
-      return finishedSpawning && (enemies->size() <= 0);
+      return finishedSpawning && (e->size() <= 0);
     }
 };
 
@@ -52,11 +53,12 @@ class WaveOne : public Wave
 {
 
   public:
-    WaveOne (proj_map *pp, proj_map *ep, enemy_map *e)
+    WaveOne (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein)
     {
-      playerProjectiles = pp;
-      enemyProjectiles = ep;
-      enemies = e;
+      pp = ppin;
+      ep = epin;
+      dp = dpin;
+      e  = ein;
     }
     ~WaveOne ()
     {
@@ -67,20 +69,20 @@ class WaveOne : public Wave
     {
       std::vector<Enemy*> enemiesToSpawn;
 
-      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(100,100));
+      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(100,100));
       enemiesToSpawn.push_back(w1);
 
-      WigWam *w2 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(250,300));
+      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(250,300));
       enemiesToSpawn.push_back(w2);
 
-      WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(400,100));
+      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
       enemiesToSpawn.push_back(w3);
 
       // Create pairs for each enemy and insert into maps
       for (auto &enemy : enemiesToSpawn)
       {
-        std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
-        enemies->insert(enemyPair);
+        std::pair<int,Enemy*> enemyPair (e->size(), enemy);
+        e->insert(enemyPair);
       }
 
       finishedSpawning = true;
@@ -96,11 +98,12 @@ class WaveTwo : public Wave
 {
 
   public:
-    WaveTwo (proj_map *pp, proj_map *ep, enemy_map *e)
+    WaveTwo (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein)
     {
-      playerProjectiles = pp;
-      enemyProjectiles = ep;
-      enemies = e;
+      pp = ppin;
+      ep = epin;
+      dp = dpin;
+      e  = ein;
     }
     ~WaveTwo ()
     {
@@ -111,20 +114,20 @@ class WaveTwo : public Wave
     {
       std::vector<Enemy*> enemiesToSpawn;
 
-      WigWam *w1 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(0,100));
+      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(0,100));
       enemiesToSpawn.push_back(w1);
 
-      WigWam *w2 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(150,300));
+      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(150,300));
       enemiesToSpawn.push_back(w2);
 
-      WigWam *w3 = new WigWam(boundaries, enemyProjectiles, playerProjectiles, enemies, Vector2f(200,100));
+      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,100));
       enemiesToSpawn.push_back(w3);
 
       // Create pairs for each enemy and insert into maps
       for (auto &enemy : enemiesToSpawn)
       {
-        std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
-        enemies->insert(enemyPair);
+        std::pair<int,Enemy*> enemyPair (e->size(), enemy);
+        e->insert(enemyPair);
       }
 
       finishedSpawning = true;

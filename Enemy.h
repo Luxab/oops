@@ -22,29 +22,31 @@ class Enemy : public Sprite
 {
 public:
   MovingHealthBar *health;
-  float score;                  // How many points do we get for killing it
-  float speed;                  // How fast does it move
-  Weapon *weapon;               // Enemy's current weapon
-  IntRect boundaries;           // Rectangle that defines level boundaries
-  Clock weaponCooldown;         // Only fire after cooldown
-  MOVE_TYPE moveType;           // Which pattern enemy moves in
-  Vector2f initialPos;          // Where the enemy spawns
-  Texture enemyTexture;         // How it look n stuff
+  float score;                      // How many points do we get for killing it
+  float speed;                      // How fast does it move
+  Weapon *weapon;                   // Enemy's current weapon
+  IntRect boundaries;               // Rectangle that defines level boundaries
+  Clock weaponCooldown;             // Only fire after cooldown
+  MOVE_TYPE moveType;               // Which pattern enemy moves in
+  Vector2f initialPos;              // Where the enemy spawns
+  Texture enemyTexture;             // How it look n stuff
 
-  proj_map *enemyProjectiles;   // Keep track of all enemy projectiles on screen
-  proj_map *playerProjectiles;  // Keep track of player projectiles. If we hit, we die
-  enemy_map *enemies;           // Keep track of all spawned enemies on screen
-  bool dead = false;            // Keep track of enemy's life state
+  proj_map *enemyProjectiles;       // Keep track of all enemy projectiles on screen
+  proj_map *playerProjectiles;      // Keep track of player projectiles. If hit, lose health
+  int_vec  *deadProjectiles;        // Player projectiles that have hit us. To be removed
+  enemy_map *enemies;               // Keep track of all spawned enemies on screen
+  bool dead = false;                // Keep track of enemy's life state
 
   Enemy()
   {
 
   }
-  Enemy(proj_map *ep, proj_map *pp, enemy_map *e, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc)
+  Enemy(proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, MOVE_TYPE m, Weapon *w, IntRect b, Vector2f spawnLoc)
   {
     // Projectile tracking
     playerProjectiles = pp;
     enemyProjectiles = ep;
+    deadProjectiles = dp;
     enemies = e;
 
     std::cout << "Spawning enemy!" << std::endl;
@@ -106,20 +108,16 @@ public:
   {
     for (std::pair<int, Projectile*> shot : *playerProjectiles)
     {
-      // Ensure this shot hasn't already been dereferenced
-      if (playerProjectiles->find(shot.first) != playerProjectiles->end())
-      {
         // Workaround to appease vtable gods
         Projectile *shotObj = shot.second;
         if (shotObj && shotObj->contains(getGlobalBounds()))
         {
           // Destroy bullet
           // TODO: Maybe a special gun could pass through enemies?
-          playerProjectiles->erase(shot.first);
+          deadProjectiles->push_back(shot.first);
 
           loseHealth(win, 1);
         }
-      }
     }
   }
 
@@ -173,8 +171,8 @@ public:
 class WigWam : public Enemy
 {
 public:
-  WigWam(IntRect b, proj_map *ep, proj_map *pp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
+  WigWam(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+      : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
   {
     enemyTexture.loadFromFile("images/bb.png");
 

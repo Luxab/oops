@@ -93,6 +93,7 @@ class TestLevel : public Level
   // Keep track of player/enemy projectiles
   proj_map *playerProjectiles = new proj_map;
   proj_map *enemyProjectiles = new proj_map;
+  int_vec  *deadProjectiles = new int_vec;
   enemy_map *enemies = new enemy_map;
 
   std::vector<Wave*> waves;             // Keep track of all possible waves
@@ -125,8 +126,8 @@ public:
     p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
-    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, enemies));
-    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, enemies));
+    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
+    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
 
     readyUpForNextWave();
   }
@@ -155,7 +156,7 @@ public:
     waves.at(currWaveIndex)->draw(*window);
 
     // TODO: Check that none of the player/enemy projectiles have gone off screen
-    std::vector<int> toBeDeleted;
+    int_vec toBeDeleted;
     for (std::pair<int, Enemy*> enemyPair : *enemies)
     {
       enemyPair.second->draw(*window);
@@ -179,6 +180,15 @@ public:
     {
       enemies->erase(enemyKey);
     }
+
+    // Delete all dead projectiles
+    for (auto &projKey: *deadProjectiles)
+    {
+      playerProjectiles->erase(projKey);
+    }
+
+    // Delete all dead projectiles
+    deadProjectiles->clear();
 
     // Don't draw player if they're dead
     if (!p.isDead())
