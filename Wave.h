@@ -14,6 +14,8 @@ proj_map *enemyProjectiles;         // Keep track of enemy projectiles
 proj_map *playerProjectiles;        // Keep track of player projectiles
 enemy_map *enemies;                 // Keep track of all enemies on screen
 
+bool finishedSpawning = false;          // Set to true when wave is finished
+
 class Wave
 {
   public:
@@ -37,6 +39,11 @@ class Wave
     }
 
     virtual void spawnEnemies () = 0;
+
+    bool waveIsFinished ()
+    {
+      return finishedSpawning;
+    }
 };
 
 class WaveOne : public Wave
@@ -73,6 +80,8 @@ class WaveOne : public Wave
         std::pair<int,Enemy*> enemyPair (enemies->size(), enemy);
         enemies->insert(enemyPair);
       }
+
+      finishedSpawning = true;
     }
 
     void draw()

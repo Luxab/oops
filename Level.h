@@ -84,7 +84,8 @@ class TestLevel : public Level
   Player p;
   Texture playerTexture;                // What the player looks like
   float ratio = (float) 2 / 3;          // Ratio gameplay:points/text 2/3
-  bool waitingForNextLevel = 1;         // Check whether we are waiting for next level
+  bool waitingForNextLevel = true;      // Check whether we are waiting for next level
+  bool gameIsOver = false;              // Track whether the game is over
   Font gameFont;                        // Font this level is using
   RectangleShape *boundingLine;         // Line at 2/3rds screen width
 
@@ -94,10 +95,10 @@ class TestLevel : public Level
   enemy_map *enemies = new enemy_map;
 
   std::vector<Wave*> waves;             // Keep track of all possible waves
-  int currWaveIndex = -1;               // Current wave that we're on
+  int currWaveIndex = 0;               // Current wave that we're on
   int currScore = 0;                    // Keep track of current player score
 
-  Text startingText;                    // Shows "Hit space to start!" text
+  Text statusText;                      // Shows "Hit space to start!" text
   Text score;                           // Displays your score at the right
   Text combo;                           // Shows combos
 
@@ -144,7 +145,7 @@ public:
     window->draw(background); //draw background first!
 
     window->draw(*boundingLine);
-    window->draw(startingText);
+    window->draw(statusText);
     window->draw(score);
     window->draw(combo);
 
@@ -185,33 +186,40 @@ public:
       gameOver();
     }
 
-    if (waitingForNextLevel && Keyboard::isKeyPressed(Keyboard::Space))
+    // Check for end of wave
+    std::cout << currWaveIndex << std::endl;
+    if (!gameIsOver && !waitingForNextLevel && waves[currWaveIndex]->waveIsFinished())
     {
-        startWave();
-        waitingForNextLevel = 0;
+      readyUpForNextWave();
+    }
+
+    if (!gameIsOver && waitingForNextLevel && Keyboard::isKeyPressed(Keyboard::Space))
+    {
+      startWave();
+      waitingForNextLevel = false;
     }
   }
 
   void showText()
   {
-    startingText.setFont(gameFont);
+    statusText.setFont(gameFont);
     score.setFont(gameFont);
     combo.setFont(gameFont);
 
-    startingText.setString("Press space to start!");
+    statusText.setString("Press space to start!");
     score.setString("Score: \n0");
     combo.setString("Combo: \n1x");
 
-    startingText.setCharacterSize(50);
+    statusText.setCharacterSize(50);
     score.setCharacterSize(50);
     combo.setCharacterSize(50);
 
-    startingText.setColor(Color::White);
+    statusText.setColor(Color::White);
     score.setColor(Color::White);
     combo.setColor(Color::White);
 
     FloatRect bbnd = background.getGlobalBounds();
-    startingText.setPosition(Vector2f(bbnd.width/12, bbnd.height/2));
+    statusText.setPosition(Vector2f(bbnd.width/12, bbnd.height/2));
     score.setPosition(Vector2f(bbnd.width - 300, 50));
     combo.setPosition(Vector2f(score.getPosition().x, score.getPosition().y + 150));
   }
@@ -228,33 +236,36 @@ public:
 
   void readyUpForNextWave ()
   {
-    waitingForNextLevel = 1;
-    currWaveIndex++;
+    waitingForNextLevel = true;
 
-    if (currWaveIndex >= waves.size())
-        // Next wave not found
-        // You won!
-        std::cout << "No next wave found, you musta won!!!!" << std::endl;
+    if (currWaveIndex + 1 >= waves.size())
+    {
+      // Next wave not found
+      // You won!
+      std::cout << "No next wave found, you musta won!!!!" << std::endl;
+    }
   }
 
   void startWave ()
   {
-    // Remove starting text
-    startingText.setString("");
+    // Show wave text
+    statusText.setString("Welcome to Wave " + std::to_string(currWaveIndex + 1));
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/12, 
+                                      50));
 
     // Find index of current wave
     // Start wave
     waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
     waves.at(currWaveIndex)->spawnEnemies();
-    std::cout << "Welcome to wave " << currWaveIndex << std::endl;
   }
 
   // You lose
   void gameOver()
   {
-    startingText.setPosition(Vector2f(background.getGlobalBounds().width/6, 
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 
                                       50));
-    startingText.setString("Game over!");
+    statusText.setString("Game over!");
+    gameIsOver = true;
   }
 };
 

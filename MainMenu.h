@@ -49,7 +49,7 @@ public:
   {
     window->clear();
     //Initializes the buttons on the main menu.
-    titleBanner= new Button(0,0,gameFont,"Game Template Title",(.075*resW));
+    titleBanner= new Button(0,0,gameFont,"Tony Phawk: The Last Ride",(.075*resW));
     titleBanner->centerWidth(resW);
 
     playButton = new Button(0,resH/5,gameFont,"Play", (.06*resW));

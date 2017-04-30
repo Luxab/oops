@@ -56,7 +56,7 @@ public:
     //setTexture(up);
 
     // Default weapon
-    weapon = new BBGun(boundaries, playerProjectiles);
+    weapon = new SpreadEagle(boundaries, playerProjectiles);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);
@@ -148,22 +148,18 @@ public:
     // Ensure player hasn't gone out of bounds
     if (bounds.left+x < boundaries.left)
     {
-      std::cout << "left bound" << std::endl;
       move(boundaries.left,0);
     }
     else if (bounds.top+y<boundaries.top)
     {
-      std::cout << "top bound" << std::endl;
       move(0,boundaries.top);
     }
     else if (bounds.left+bounds.width+x > rightSide)
     {
-      std::cout << "right bound" << std::endl;
       move(rightSide-bounds.left-bounds.width,0);
     }
     else if (bounds.top+bounds.height+y > bottomSide)
     {
-      std::cout << "bottom bound" << std::endl;
       move(0,bottomSide-bounds.top-bounds.height);
     }
     else

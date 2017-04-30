@@ -116,9 +116,20 @@ class SpreadEagle : public Weapon
       // Three shots, one up and two to up and side
 
       // Insert new projectile into projectiles map
-      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
-      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
-      projectiles->insert(newShot);
+      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      proj1->setScale(Vector2f(.1,.1));
+      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+      projectiles->insert(newShot1);
+
+      Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI/4, potency);
+      proj2->setScale(Vector2f(.1,.1));
+      std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
+      projectiles->insert(newShot2);
+
+      Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, -M_PI/4, potency);
+      proj3->setScale(Vector2f(.1,.1));
+      std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
+      projectiles->insert(newShot3);
    }
 };
 

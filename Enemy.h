@@ -74,7 +74,9 @@ public:
   void shoot (Weapon *w)
   {
     // Fire from our current position
-    Vector2f pos = getPosition();
+    Vector2f pos;
+    pos.x = getPosition().x + getGlobalBounds().width/2;
+    pos.y = getPosition().y + getGlobalBounds().height;
 
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
@@ -156,11 +158,6 @@ public:
   {
     dead = true;
     std::cout << "Enemy ded!" << std::endl;
-  }
-
-  void setWeapon(Weapon *w)
-  {
-    weapon = w;
   }
 };
 
