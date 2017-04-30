@@ -107,7 +107,7 @@ public:
     for (std::pair<int, Projectile*> shot : *playerProjectiles)
     {
       // Ensure this shot hasn't already been dereferenced
-      if (shot)
+      if (playerProjectiles->find(shot.first) != playerProjectiles->end())
       {
         // Workaround to appease vtable gods
         Projectile *shotObj = shot.second;
