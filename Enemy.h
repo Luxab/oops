@@ -63,6 +63,7 @@ public:
 
     // Set position to spawn location
     setPosition(spawnLoc);
+    setScale(2,2);
   }
   ~Enemy()
   {

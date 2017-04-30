@@ -1,5 +1,8 @@
 //  Created by Duncan Klug on 4/6/17.
 //	Lab 02 Spring 2017
+#ifndef SCOREBOARD_H
+#define SCOREBOARD_H
+
 #include "Level.h"
 #include <vector>
 #include <fstream>
@@ -84,4 +87,10 @@ public:
     }
   }
 
+  void writeNewScore (int score)
+  {
+    
+  }
+
 };
+#endif

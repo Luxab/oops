@@ -13,6 +13,7 @@
 #include "Projectile.h"
 #include "Button.h"
 #include "Wave.h"
+//#include "ScoreBoard.h"
 
 using namespace sf;
 
@@ -273,6 +274,8 @@ public:
                                       50));
     statusText.setString("Game over!");
     gameIsOver = true;
+
+    //writeNewScore(currScore);
   }
 };
 
