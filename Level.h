@@ -428,6 +428,8 @@ public:
     Button *backButton;
     Button *nameButton;
     std::string nameString;
+    Time holdUp;
+    bool enoughIsEnough;
 
   public:
     int pLevelIndex;
@@ -442,6 +444,8 @@ public:
 
       nameButton = new Button(0,resH/4,gameFont,"Your Name",(.06*resW));
       nameButton->centerWidth(resW);
+
+      holdUp = levelClock.getElapsedTime();
     }
     ~VictoryScreen()
     {
@@ -464,25 +468,43 @@ public:
       {
         cl("scores");
       }
-      else if(Keyboard::isKeyPressed(Keyboard::BackSpace) && nameString.size()!=0)
+      //wait before allowing another input.
+      if(levelClock.getElapsedTime().asSeconds()-holdUp.asSeconds()>.2)
       {
-        nameString.pop_back();
+        holdUp = levelClock.getElapsedTime();
+        enoughIsEnough = true;
       }
-      else if (nameString.size()<3)
+
+      if(enoughIsEnough)
       {
-        char c = 65;
-        //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
-        for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
+        if(Keyboard::isKeyPressed(Keyboard::BackSpace) && nameString.size()!=0)
         {
-          if (Keyboard::isKeyPressed(static_cast<Keyboard::Key>(keyLoop)))
+          nameString.pop_back();
+          enoughIsEnough = false;
+        }
+        else if (nameString.size()<3)
+        {
+          char c = 65;
+          //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
+          for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
           {
-            nameString.push_back(c);
+            if (Keyboard::isKeyPressed(static_cast<Keyboard::Key>(keyLoop)))
+            {
+              nameString.push_back(c);
+              enoughIsEnough = false;
+              break;
+            }
+            c++;
           }
-          c++;
+        }
+        if(!enoughIsEnough)
+        {
+          nameButton->setText(nameString);
+          nameButton->centerWidth(resW);
         }
       }
-      nameButton->setText(nameString);
-      nameButton->centerWidth(resW);
+
+
 
       nameButton->draw(*window);
 
