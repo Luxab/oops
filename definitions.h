@@ -1,3 +1,11 @@
-#define int_vec std::vector<int> 
-#define proj_map std::unordered_map<int, Projectile*> 
-#define enemy_map std::unordered_map<int, Enemy*>
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
+class Projectile;
+class Enemy;
+
+typedef std::vector<int> int_vec;
+typedef std::unordered_map<int, Projectile*> proj_map;
+typedef std::unordered_map<int, Enemy*> enemy_map;
+
+#endif
