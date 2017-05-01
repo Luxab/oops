@@ -46,6 +46,18 @@ public:
 
   }
 
+  void setText(String s)
+  {
+    bText = Text(s,bFont,bSize);
+    textRegion = bText.getLocalBounds();
+    bWidth = textRegion.width+bSpacing*2;
+    bHeight = textRegion.height+bSpacing*2;
+
+    setSize(Vector2f(bWidth,bHeight));
+    setPosition(x-bSpacing,y);
+    bText.setPosition(x,y);
+  }
+
   bool contains(int mx, int my)
   {
     return (mx>x-bSpacing && mx<x+bWidth-bSpacing && my>y && my<y+bHeight);

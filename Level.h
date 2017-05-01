@@ -79,6 +79,56 @@ public:
 
 };
 
+class PauseMenu : public Level
+{
+  Font gameFont;
+
+  // Buttons
+  Button *backButton;
+
+public:
+  int pLevelIndex;
+
+  PauseMenu(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
+  {
+    gameFont = fin;
+
+    // Display a back button
+    backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
+    backButton->setY(resH-backButton->getHeight());
+  }
+  ~PauseMenu()
+  {
+
+  }
+
+//--------------------------------IMPLEMENTATION-----------------------------------//
+  void resize()
+  {
+    // Display a back button
+    backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
+    backButton->setY(resH-backButton->getHeight());
+  }
+
+  void draw()
+  {
+    checkWindowSize();
+    backButton->draw(*window);
+
+    //--------------Mouse Input--------------//
+    Vector2i mousepos = Mouse::getPosition(*window);
+    float mouseX = mousepos.x;
+    float mouseY = mousepos.y;
+    if (Mouse::isButtonPressed(Mouse::Left))
+    {
+      if(backButton->contains(mouseX,mouseY))
+        cl("main");
+    }
+    else
+      backButton->checkHover(mouseX,mouseY);
+  }
+};
+
 #include "Player.h"
 #include "Enemy.h"
 class TestLevel : public Level
@@ -270,7 +320,7 @@ public:
   {
     // Show wave text
     statusText.setString("Welcome to Wave " + std::to_string(currWaveIndex + 1));
-    statusText.setPosition(Vector2f(background.getGlobalBounds().width/12, 
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/12,
                                       50));
 
     // Find index of current wave
@@ -313,7 +363,7 @@ public:
         for (int i = 0; scoreiss >> scoreStr; i++)
         {
           if (i == 2)
-            break; // We got our score 
+            break; // We got our score
         }
 
         // Convert score to int and insert it and
@@ -347,7 +397,7 @@ public:
 
     // Write new list of scores
     std::ofstream outTextScores(scoreFileName);
-    for (int i = 0; i < scoreVec.size();) 
+    for (int i = 0; i < scoreVec.size();)
     {
       outTextScores << ++i << ": " << nameVec.at(i) << " " << scoreVec.at(i) << std::endl;
     }
@@ -355,69 +405,96 @@ public:
     // Release file descriptor
     outTextScores.close();
   }
-
   // You lose
   void gameOver()
   {
-    statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/6,
                                       50));
     statusText.setString("Game over!");
     gameIsOver = true;
 
     writeNewScore(currScore);
+    cl("victory");
   }
 };
 
-class PauseMenu : public Level
-{
-  Font gameFont;
+//---------------------------------------------------------------------------------------------------//
 
-  // Buttons
-  Button *backButton;
-
-public:
-  int pLevelIndex;
-
-  PauseMenu(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
+  class VictoryScreen : public Level
   {
-    gameFont = fin;
+    Font gameFont;
 
-    // Display a back button
-    backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
-    backButton->setY(resH-backButton->getHeight());
-  }
-  ~PauseMenu()
-  {
+    // Buttons
+    Button *backButton;
+    Button *nameButton;
+    std::string nameString;
 
-  }
+  public:
+    int pLevelIndex;
 
-//--------------------------------IMPLEMENTATION-----------------------------------//
-  void resize()
-  {
-    // Display a back button
-    backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
-    backButton->setY(resH-backButton->getHeight());
-  }
-
-  void draw()
-  {
-    checkWindowSize();
-    backButton->draw(*window);
-
-    //--------------Mouse Input--------------//
-    Vector2i mousepos = Mouse::getPosition(*window);
-    float mouseX = mousepos.x;
-    float mouseY = mousepos.y;
-    if (Mouse::isButtonPressed(Mouse::Left))
+    VictoryScreen(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
     {
-      if(backButton->contains(mouseX,mouseY))
-        cl("main");
-    }
-    else
-      backButton->checkHover(mouseX,mouseY);
-  }
+      gameFont = fin;
 
-};
+      // Display a back button
+      backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
+      backButton->setY(resH-backButton->getHeight());
+
+      nameButton = new Button(0,resH/4,gameFont,"Your Name",(.06*resW));
+      nameButton->centerWidth(resW);
+    }
+    ~VictoryScreen()
+    {
+
+    }
+
+    void resize()
+    {
+      // Display a back button
+      backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
+      backButton->setY(resH-backButton->getHeight());
+    }
+
+    void draw()
+    {
+      checkWindowSize();
+      backButton->draw(*window);
+
+      window->pollEvent(*event);
+      if (event->type == sf::Event::TextEntered)
+      {
+        if(event->KeyPressed == Keyboard::Return)
+        {
+          cl("scores");
+        }
+        if(event->KeyPressed == sf::Keyboard::BackSpace && nameString.size()!=0)
+        {
+          nameString.pop_back();
+        }
+        else if (event->text.unicode < 128 && event->text.unicode>31 && nameString.size()<3)
+        {
+          nameString.push_back((char)event->text.unicode);
+          //std::cout << nameString << std::endl;
+        }
+        nameButton->setText(nameString);
+        nameButton->centerWidth(resW);
+      }
+
+      nameButton->draw(*window);
+
+      //--------------Mouse Input--------------//
+      Vector2i mousepos = Mouse::getPosition(*window);
+      float mouseX = mousepos.x;
+      float mouseY = mousepos.y;
+      if (Mouse::isButtonPressed(Mouse::Left))
+      {
+        if(backButton->contains(mouseX,mouseY))
+          cl("main");
+      }
+      else
+        backButton->checkHover(mouseX,mouseY);
+    }
+  };
 
 
 #endif
