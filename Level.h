@@ -460,25 +460,29 @@ public:
       checkWindowSize();
       backButton->draw(*window);
 
-      window->pollEvent(*event);
-      if (event->type == sf::Event::TextEntered)
+      if(Keyboard::isKeyPressed(Keyboard::Return))
       {
-        if(event->KeyPressed == Keyboard::Return)
-        {
-          cl("scores");
-        }
-        if(event->KeyPressed == sf::Keyboard::BackSpace && nameString.size()!=0)
-        {
-          nameString.pop_back();
-        }
-        else if (event->text.unicode < 128 && event->text.unicode>31 && nameString.size()<3)
-        {
-          nameString.push_back((char)event->text.unicode);
-          //std::cout << nameString << std::endl;
-        }
-        nameButton->setText(nameString);
-        nameButton->centerWidth(resW);
+        cl("scores");
       }
+      else if(Keyboard::isKeyPressed(Keyboard::BackSpace) && nameString.size()!=0)
+      {
+        nameString.pop_back();
+      }
+      else if (nameString.size()<3)
+      {
+        char c = 65;
+        //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
+        for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
+        {
+          if (Keyboard::isKeyPressed(static_cast<Keyboard::Key>(keyLoop)))
+          {
+            nameString.push_back(c);
+          }
+          c++;
+        }
+      }
+      nameButton->setText(nameString);
+      nameButton->centerWidth(resW);
 
       nameButton->draw(*window);
 
