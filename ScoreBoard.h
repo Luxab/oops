@@ -39,13 +39,14 @@ public:
 
     std::ifstream textScores("scores.txt");
 
-    for (int i = 0; i<9; i++)
+    if (!textScores)
     {
-      if(textScores.eof())
-      {
-        break;
-      }
+      std::cout << "Scores do not exist yet" << std::endl;
+      return;
+    }
 
+    for (int i = 0; !textScores.eof(); i++)
+    {
       std::string s;
       std::getline(textScores,s);
 
@@ -85,11 +86,6 @@ public:
     {
       backButton->checkHover(mouseX,mouseY);
     }
-  }
-
-  void writeNewScore (int score)
-  {
-    
   }
 
 };
