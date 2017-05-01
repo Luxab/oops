@@ -1,9 +1,6 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-#include <vector>
-#include <map>
-
 class Projectile;
 class Enemy;
 
