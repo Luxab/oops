@@ -36,6 +36,7 @@ public:
   int_vec  *deadProjectiles;        // Player projectiles that have hit us. To be removed
   enemy_map *enemies;               // Keep track of all spawned enemies on screen
   bool dead = false;                // Keep track of enemy's life state
+  bool deathProcess = false;        // Starts the death animation if true
 
   Enemy()
   {
@@ -153,7 +154,7 @@ public:
     health->takeDamage(win, amt);
 
     if (health->getCurrentHealth() <= 0)
-        killSelf();
+        deathAnimation();
   }
 
   bool isDead()
@@ -161,10 +162,9 @@ public:
     return dead;
   }
 
-  void killSelf()
+  virtual void deathAnimation()
   {
     dead = true;
-    std::cout << "Enemy ded!" << std::endl;
   }
 };
 
@@ -213,6 +213,7 @@ public:
     walk1.loadFromFile("images/skel_walk1.png");
     walk2.loadFromFile("images/skel_walk2.png");
     deadTexture.loadFromFile("images/skel_death.png");
+    setTexture(walk1);
   }
 
   void walkAnimation()
@@ -232,11 +233,12 @@ public:
     }
   }
 
-  void deathAnimation()
+  virtual void deathAnimation()
   {
     if (aClock.getElapsedTime().asSeconds()<.5)
     {
       setTexture(deadTexture);
+      deathProcess = true;
     }
     else
     {
@@ -244,15 +246,11 @@ public:
     }
   }
 
-  void killSelf()
-  {
-    deathProcess = true;
-    std::cout << "Skeltal dead" << std::endl;
-  }
-
   virtual void draw(RenderWindow &win)
   {
-    std::cout << "asd" << std::endl;
+    // Check if we've run into any player projectiles
+    checkProjectiles(win);
+
     if (!deathProcess)
     {
       walkAnimation();
@@ -265,7 +263,7 @@ public:
     // Workaround to appease vtable gods
     Sprite toDraw = *this;
     win.draw(toDraw);
-    //tickMove();
+    tickMove();
   }
 };
 

@@ -86,6 +86,7 @@ public:
   {
     health-= damageAmount;
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+    std::cout << "Health left: " << health << "/" << maxHealth << std::endl;
   }
 
   int getCurrentHealth()

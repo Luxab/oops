@@ -224,7 +224,7 @@ class Sniper : public Weapon
     virtual void shoot(Vector2f initPos)
     {
         // One shot down, as in PeaShooter
-        Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+        Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
         proj->setScale(Vector2f(.2, .2));
         std::pair<int,Projectile*> newShot (projectiles->size(), proj);
         projectiles->insert(newShot);
@@ -251,7 +251,7 @@ class WideGun : public Weapon
     {
 
         // Three projectiles, straight down
-        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
         proj1->setScale(Vector2f(.6, .6));
         std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
         projectiles->insert(newShot1);
@@ -278,34 +278,15 @@ class Shotter : public Weapon
     virtual void shoot(Vector2f initPos)
     {
         // Five Projectiles at angles
-        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
-        proj1->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
-        projectiles->insert(newShot1);
-
-        Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(3.0/4.0), potency);
-        proj2->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
-        projectiles->insert(newShot2);
-
-        Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-3.0/4.0), potency);
-        proj3->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
-        projectiles->insert(newShot3);
-
-        // NOTE: More than 3 projectiles causes crash upon dying
-
-/*
-        Projectile *proj4 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(5.0/6.0), potency);
-        proj4->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot4 (projectiles->size(), proj4);
-        projectiles->insert(newShot4);
-
-        Projectile *proj5 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-5.0/6.0), potency);
-        proj5->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot5 (projectiles->size(), proj5);
-        projectiles->insert(newShot5);
-*/
+        int bulletAmt = 6;
+        double scale = 0.1;
+        for (int i = 0; i < bulletAmt; i++)
+        {
+            Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, -(M_PI/2) + (2*i/M_PI), potency);
+            proj->setScale(Vector2f(scale, scale));
+            std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+            projectiles->insert(newShot);
+        }
     }
 };
 

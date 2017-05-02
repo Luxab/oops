@@ -56,7 +56,7 @@ public:
     //setTexture(up);
 
     // Default weapon
-    weapon = new SpreadEagle(boundaries, playerProjectiles);
+    weapon = new Shotter(boundaries, playerProjectiles);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);
@@ -175,11 +175,20 @@ public:
 
   void checkProjectiles (RenderWindow &win)
   {
-    for (std::pair<int, Projectile*> shot : *enemyProjectiles)
+    for (std::pair<int, Projectile*> shotPair : *enemyProjectiles)
     {
       // Workaround to appease vtable gods
-      Projectile *shotObj = shot.second;
-      if (shotObj->contains(getGlobalBounds()))
+      Projectile *shot = shotPair.second;
+      if (shot->contains(getGlobalBounds()))
+      {
+        loseHealth(win,1);
+      }
+    }
+
+    for (std::pair<int, Enemy*> enemyPair : *enemies)
+    {
+      Enemy *enemy = enemyPair.second;
+      if (enemy->contains(getGlobalBounds()))
       {
         loseHealth(win,1);
       }
