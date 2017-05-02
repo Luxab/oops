@@ -121,7 +121,7 @@ public:
     }
   }
 
-  void draw(RenderWindow &win)
+  virtual void draw(RenderWindow &win)
   {
     // Check if we've run into any player projectiles
     checkProjectiles(win);
@@ -200,9 +200,9 @@ class Skeltal : public Enemy
 {
   bool walk = 1;
   bool deathProcess = 0;
-  Texture *walk1;
-  Texture *walk2;
-  Texture *deadTexture;
+  Texture walk1;
+  Texture walk2;
+  Texture deadTexture;
 public:
   Clock aClock;
   bool death;
@@ -210,24 +210,9 @@ public:
       : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
   {
     //setPosition(spawnLoc);
-    walk1->loadFromFile("images/skel_walk1.png");
-    walk2->loadFromFile("images/skel_walk2.png");
-    deadTexture->loadFromFile("images/skel_death.png");
-  }
-
-  void tickMove(Vector2f playerLoc)
-  {
-    // Just move down
-    switch (moveType) {
-        case STRAIGHT_DOWN:
-            move (0,speed);
-            //health->move(0,speed);
-            break;
-        default: // Default is STRAIGHT_DOWN
-            move (0,speed);
-            //health->move(0,speed);
-            break;
-    }
+    walk1.loadFromFile("images/skel_walk1.png");
+    walk2.loadFromFile("images/skel_walk2.png");
+    deadTexture.loadFromFile("images/skel_death.png");
   }
 
   void walkAnimation()
@@ -236,11 +221,11 @@ public:
     {
       if (walk)
       {
-        setTexture(*walk1);
+        setTexture(walk1);
       }
       else
       {
-        setTexture(*walk2);
+        setTexture(walk2);
       }
       walk = !walk;
       aClock.restart();
@@ -251,7 +236,7 @@ public:
   {
     if (aClock.getElapsedTime().asSeconds()<.5)
     {
-      setTexture(*deadTexture);
+      setTexture(deadTexture);
     }
     else
     {
@@ -265,8 +250,9 @@ public:
     std::cout << "Skeltal dead" << std::endl;
   }
 
-  void draw(RenderWindow &win)
+  virtual void draw(RenderWindow &win)
   {
+    std::cout << "asd" << std::endl;
     if (!deathProcess)
     {
       walkAnimation();
