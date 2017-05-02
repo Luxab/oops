@@ -20,6 +20,9 @@ using namespace sf;
 
 typedef void (*changeLevel)(std::string);
 
+// Global
+int currScore = 0;                    // Keep track of current player score
+
 #define PLAYER_SPEED 10
 
 class Level
@@ -60,6 +63,11 @@ public:
   }
 
   virtual void resize()
+  {
+
+  }
+  
+  virtual void didAppear()
   {
 
   }
@@ -134,7 +142,6 @@ public:
 class TestLevel : public Level
 {
   Player p;
-  std::string playerName = "Harambe";   // Name of the player, used for high scores
   Texture playerTexture;                // What the player looks like
   float ratio = (float) 2 / 3;          // Ratio gameplay:points/text 2/3
   bool waitingForNextLevel = true;      // Check whether we are waiting for next level
@@ -150,11 +157,10 @@ class TestLevel : public Level
 
   std::vector<Wave*> waves;             // Keep track of all possible waves
   int currWaveIndex = -1;               // Current wave that we're on
-  int currScore = 0;                    // Keep track of current player score
 
   Text statusText;                      // Shows "Hit space to start!" text
-  Text score;                           // Displays your score at the right
   Text combo;                           // Shows combos
+  Text score;                           // Displays your score at the right
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
@@ -329,82 +335,6 @@ public:
     waves.at(currWaveIndex)->spawnEnemies();
   }
 
-  void writeNewScore (int newScore)
-  {
-    std::string scoreFileName = "scores.txt";
-    std::ifstream textScores(scoreFileName);
-    std::vector<std::string> nameVec;   // Store current names
-    int_vec scoreVec;                   // Store current scores
-
-    if (textScores)
-    {
-      // Read through score lines
-      while (!textScores.eof())
-      {
-        std::string str, scoreStr, name;
-        std::getline(textScores,str);
-
-        // Get score from current score lines
-        //
-
-        // TODO: For inputting name: https://en.sfml-dev.org/forums/index.php?topic=2269.0
-
-        std::istringstream nameiss(str);
-        std::istringstream scoreiss(str);
-
-        // Store name
-        for (int i = 0; nameiss >> name; i++)
-        {
-          if (i == 1)
-            break; // We got our name
-        }
-
-        // Store score
-        for (int i = 0; scoreiss >> scoreStr; i++)
-        {
-          if (i == 2)
-            break; // We got our score
-        }
-
-        // Convert score to int and insert it and
-        // corresponding name into vector
-        scoreVec.push_back(atoi(scoreStr.c_str()));
-        nameVec.push_back(name);
-      }
-    }
-
-    // Insert score into vector at proper position
-    std::vector<int>::iterator scoreIt = std::lower_bound(scoreVec.begin(), scoreVec.end(), currScore, std::greater<int>());
-    std::vector<std::string>::iterator nameIt = nameVec.begin() + (scoreVec.begin() - scoreIt);
-    scoreVec.insert(scoreIt, currScore);
-    nameVec.insert(nameIt, playerName);
-
-    // Remove extraneous 0 score that appears for some reason
-    if (textScores)
-      scoreVec.pop_back();
-
-    // If high score list is comprised of 10 or more people, cut off last person
-    // it doesn't grow
-    if (scoreVec.size() >= 10)
-    {
-      scoreVec.pop_back();
-      nameVec.pop_back();
-    }
-
-    // Remove old list of scores
-    if (textScores)
-      remove(scoreFileName.c_str());
-
-    // Write new list of scores
-    std::ofstream outTextScores(scoreFileName);
-    for (int i = 0; i < scoreVec.size();)
-    {
-      outTextScores << ++i << ": " << nameVec.at(i) << " " << scoreVec.at(i) << std::endl;
-    }
-
-    // Release file descriptor
-    outTextScores.close();
-  }
   // You lose
   void gameOver()
   {
@@ -413,23 +343,22 @@ public:
     statusText.setString("Game over!");
     gameIsOver = true;
 
-    writeNewScore(currScore);
     cl("victory");
   }
 };
 
 //---------------------------------------------------------------------------------------------------//
 
-  class VictoryScreen : public Level
-  {
-    Font gameFont;
+class VictoryScreen : public Level
+{
+  Font gameFont;
 
-    // Buttons
-    Button *backButton;
-    Button *nameButton;
-    std::string nameString;
-    Time holdUp;
-    bool enoughIsEnough;
+  // Buttons
+  Button *backButton;
+  Button *nameButton;
+  Time holdUp;
+  bool enoughIsEnough;
+  std::string nameString;   // Name of the player, used for high scores
 
   public:
     int pLevelIndex;
@@ -466,6 +395,7 @@ public:
 
       if(Keyboard::isKeyPressed(Keyboard::Return))
       {
+        writeNewScore(currScore);
         cl("scores");
       }
       //wait before allowing another input.
@@ -504,8 +434,6 @@ public:
         }
       }
 
-
-
       nameButton->draw(*window);
 
       //--------------Mouse Input--------------//
@@ -520,7 +448,78 @@ public:
       else
         backButton->checkHover(mouseX,mouseY);
     }
-  };
 
+    void writeNewScore (int newScore)
+    {
+      std::string scoreFileName = "scores.txt";
+      std::ifstream textScores(scoreFileName);
+      std::vector<std::string> nameVec;   // Store current names
+      int_vec scoreVec;                   // Store current scores
+  
+      if (textScores)
+      {
+        // Read through score lines
+        while (!textScores.eof())
+        {
+          std::string str, scoreStr, name;
+          std::getline(textScores,str);
+  
+          // Get score from current score lines
+          //
+  
+          std::istringstream nameiss(str);
+          std::istringstream scoreiss(str);
+  
+          // Store name
+          for (int i = 0; nameiss >> name; i++)
+          {
+            if (i == 1)
+              break; // We got our name
+          }
+  
+          // Store score
+          for (int i = 0; scoreiss >> scoreStr; i++)
+          {
+            if (i == 2)
+              break; // We got our score
+          }
+  
+          // Convert score to int and insert it and
+          // corresponding name into vector
+          scoreVec.push_back(atoi(scoreStr.c_str()));
+          nameVec.push_back(name);
+        }
+      }
+
+      // Insert score into vector at proper position
+      std::vector<int>::iterator scoreIt = std::lower_bound(scoreVec.begin(), scoreVec.end(), currScore, std::greater<int>());
+      std::vector<std::string>::iterator nameIt = nameVec.begin() + (scoreVec.begin() - scoreIt);
+      scoreVec.insert(scoreIt, currScore);
+      nameVec.insert(nameIt, nameString);
+  
+      // If high score list is comprised of 10 or more people, cut off last person
+      // it doesn't grow
+      if (scoreVec.size() >= 10)
+      {
+        scoreVec.pop_back();
+      }
+
+      // Remove old list of scores
+      if (textScores)
+        remove(scoreFileName.c_str());
+
+      // Write new list of scores
+      std::ofstream outTextScores(scoreFileName);
+      for (int i = 0; i < scoreVec.size();i++)
+      {
+        // Remove all zeros from score list
+        if (scoreVec.at(i) != 0)
+            outTextScores << i+1 << ": " << nameVec.at(i) << " " << scoreVec.at(i) << std::endl;
+      }
+  
+      // Release file descriptor
+      outTextScores.close();
+    }
+};
 
 #endif

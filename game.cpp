@@ -23,6 +23,7 @@ void changeLevelFunc (std::string levelName)
 {
   g.window.clear();
   g.currLevel = g.levels[levelName];
+  g.currLevel->didAppear();
 }
 
 // Pause or escape depending on current level

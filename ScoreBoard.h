@@ -29,6 +29,12 @@ public:
 
 //---------------------------------------------------------------------------------//
 
+  // Called when screen appears
+  void didAppear()
+  {
+    drawButtons();
+  }
+
   void drawButtons()
   {
     titleBanner= new Button(0,resH/12,gameFont,"Scores",(.06*resW));
@@ -49,6 +55,9 @@ public:
     {
       std::string s;
       std::getline(textScores,s);
+
+      if (s == "")
+        continue;
 
       Button b = *(new Button(0,(i+3)*resH/12,gameFont,s,(.03*resW)));
       b.centerWidth(resW);
