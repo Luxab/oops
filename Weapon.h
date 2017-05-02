@@ -133,6 +133,32 @@ class SpreadEagle : public Weapon
    }
 };
 
+// Very large bullet
+class LargeBullet : public Weapon
+{
+  public:
+    LargeBullet(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+        potency = 3;
+        speed = 20;
+        cooldown = 750;
+        shotTexture.loadFromFile("images/bullet.png");
+    }
+    ~LargeBullet()
+    {
+        // Do nothing
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      proj1->setScale(Vector2f(.3,.3));
+      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+      projectiles->insert(newShot1);
+
+    }
+};
+
 // -------------------- Enemy Weaponry -------------------- //
 
 class PeaShooter : public Weapon
@@ -162,4 +188,109 @@ class PeaShooter : public Weapon
       projectiles->insert(newShot);
    }
 };
+
+// Sniper has higher damage and speed, but much longer cooldown than the PeaShooter
+class Sniper : public Weapon
+{
+  public:
+    Sniper(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+        potency = 10;
+        speed = 40;
+        cooldown = 1000;
+        shotTexture.loadFromFile("images/bullet.png");
+    }
+    ~Sniper()
+    {
+        // Do nothing
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+        // One shot down, as in PeaShooter
+        Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+        proj->setScale(Vector2f(.2, .2));
+        std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+        projectiles->insert(newShot);
+    }
+};
+
+// Wide Bullet Gun
+class WideGun : public Weapon
+{
+  public:
+    WideGun(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+        potency = 1;
+        speed = 2;
+        cooldown = 3000;
+        shotTexture.loadFromFile("images/bullet.png");
+    }
+    ~WideGun()
+    {
+        // Do nothing
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+
+        // Three projectiles, straight down
+        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+        proj1->setScale(Vector2f(.6, .6));
+        std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+        projectiles->insert(newShot1);
+    }
+
+};
+
+// Shotgun for enemies
+class Shotter : public Weapon
+{
+  public:
+    Shotter(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+        potency = 1;
+        speed = 2;
+        cooldown = 3000;
+        shotTexture.loadFromFile("images/bullet.png");
+    }
+    ~Shotter()
+    {
+        // Do nothing
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+        // Five Projectiles at angles
+        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+        proj1->setScale(Vector2f(.1, .1));
+        std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+        projectiles->insert(newShot1);
+
+        Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(3.0/4.0), potency);
+        proj2->setScale(Vector2f(.1, .1));
+        std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
+        projectiles->insert(newShot2);
+
+        Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-3.0/4.0), potency);
+        proj3->setScale(Vector2f(.1, .1));
+        std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
+        projectiles->insert(newShot3);
+
+        // NOTE: More than 3 projectiles causes crash upon dying
+
+/*
+        Projectile *proj4 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(5.0/6.0), potency);
+        proj4->setScale(Vector2f(.1, .1));
+        std::pair<int,Projectile*> newShot4 (projectiles->size(), proj4);
+        projectiles->insert(newShot4);
+
+        Projectile *proj5 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-5.0/6.0), potency);
+        proj5->setScale(Vector2f(.1, .1));
+        std::pair<int,Projectile*> newShot5 (projectiles->size(), proj5);
+        projectiles->insert(newShot5);
+*/
+    }
+};
+
 #endif
