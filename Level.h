@@ -352,13 +352,14 @@ public:
 class VictoryScreen : public Level
 {
   Font gameFont;
+  Text enterInitialsText;
 
   // Buttons
   Button *backButton;
   Button *nameButton;
   Time holdUp;
   bool enoughIsEnough;
-  std::string nameString;   // Name of the player, used for high scores
+  std::string nameString = "";   // Name of the player, used for high scores
 
   public:
     int pLevelIndex;
@@ -367,12 +368,22 @@ class VictoryScreen : public Level
     {
       gameFont = fin;
 
+      // "Enter your initials" text
+      enterInitialsText.setFont(gameFont);
+      enterInitialsText.setString("Enter your initials");
+      enterInitialsText.setCharacterSize(60);
+      enterInitialsText.setColor(Color::White);
+  
+      FloatRect bbnd = background.getGlobalBounds();
+      enterInitialsText.setPosition(Vector2f(bbnd.width/4, 20));
+
       // Display a back button
       backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
       backButton->setY(resH-backButton->getHeight());
 
-      nameButton = new Button(0,resH/4,gameFont,"Your Name",(.06*resW));
+      nameButton = new Button(0,resH/4,gameFont,"_ _ _",(.06*resW));
       nameButton->centerWidth(resW);
+      nameButton->setColor(Color(0,0,0,0));
 
       holdUp = levelClock.getElapsedTime();
     }
@@ -392,6 +403,7 @@ class VictoryScreen : public Level
     {
       checkWindowSize();
       backButton->draw(*window);
+      window->draw(enterInitialsText);
 
       if(Keyboard::isKeyPressed(Keyboard::Return))
       {
@@ -414,6 +426,12 @@ class VictoryScreen : public Level
         }
         else if (nameString.size()<3)
         {
+          if (nameString.size() == 0)
+          {
+            nameButton->setText("_ _ _");
+            nameButton->centerWidth(resW);
+          }
+
           char c = 65;
           //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
           for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
@@ -486,14 +504,17 @@ class VictoryScreen : public Level
   
           // Convert score to int and insert it and
           // corresponding name into vector
-          scoreVec.push_back(atoi(scoreStr.c_str()));
-          nameVec.push_back(name);
+          if (name != "" && scoreStr != "")
+          {
+            scoreVec.push_back(atoi(scoreStr.c_str()));
+            nameVec.push_back(name);
+          }
         }
       }
 
       // Insert score into vector at proper position
       std::vector<int>::iterator scoreIt = std::lower_bound(scoreVec.begin(), scoreVec.end(), currScore, std::greater<int>());
-      std::vector<std::string>::iterator nameIt = nameVec.begin() + (scoreVec.begin() - scoreIt);
+      std::vector<std::string>::iterator nameIt = nameVec.begin() + (scoreIt - scoreVec.begin());
       scoreVec.insert(scoreIt, currScore);
       nameVec.insert(nameIt, nameString);
   

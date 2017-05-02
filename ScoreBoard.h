@@ -37,6 +37,9 @@ public:
 
   void drawButtons()
   {
+    // Remove any old buttons
+    scores.clear();
+
     titleBanner= new Button(0,resH/12,gameFont,"Scores",(.06*resW));
     titleBanner->centerWidth(resW);
 
@@ -59,9 +62,10 @@ public:
       if (s == "")
         continue;
 
-      Button b = *(new Button(0,(i+3)*resH/12,gameFont,s,(.03*resW)));
-      b.centerWidth(resW);
-      scores.push_back(b);
+      Button *b = new Button(0,(i+3)*resH/12,gameFont,s,(.03*resW));
+      b->setColor(Color(0,0,0,0));
+      b->centerWidth(resW);
+      scores.push_back(*b);
     }
   }
 

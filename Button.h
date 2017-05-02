@@ -126,6 +126,11 @@ public:
     window.draw(bText);
   }
 
+  void setColor (Color newColor)
+  {
+    setFillColor(newColor);
+  }
+
 };
 
 #endif
