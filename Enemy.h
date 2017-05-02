@@ -196,6 +196,93 @@ public:
   }
 };
 
+class Skeltal : public Enemy
+{
+  bool walk = 1;
+  bool deathProcess = 0;
+  Texture *walk1;
+  Texture *walk2;
+  Texture *deadTexture;
+public:
+  Clock aClock;
+  bool death;
+  Skeltal(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+      : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
+  {
+    //setPosition(spawnLoc);
+    walk1->loadFromFile("images/skel_walk1.png");
+    walk2->loadFromFile("images/skel_walk2.png");
+    deadTexture->loadFromFile("images/skel_death.png");
+  }
+
+  void tickMove(Vector2f playerLoc)
+  {
+    // Just move down
+    switch (moveType) {
+        case STRAIGHT_DOWN:
+            move (0,speed);
+            //health->move(0,speed);
+            break;
+        default: // Default is STRAIGHT_DOWN
+            move (0,speed);
+            //health->move(0,speed);
+            break;
+    }
+  }
+
+  void walkAnimation()
+  {
+    if (aClock.getElapsedTime().asSeconds()>.5)
+    {
+      if (walk)
+      {
+        setTexture(*walk1);
+      }
+      else
+      {
+        setTexture(*walk2);
+      }
+      walk = !walk;
+      aClock.restart();
+    }
+  }
+
+  void deathAnimation()
+  {
+    if (aClock.getElapsedTime().asSeconds()<.5)
+    {
+      setTexture(*deadTexture);
+    }
+    else
+    {
+      dead = 1;
+    }
+  }
+
+  void killSelf()
+  {
+    deathProcess = true;
+    std::cout << "Skeltal dead" << std::endl;
+  }
+
+  void draw(RenderWindow &win)
+  {
+    if (!deathProcess)
+    {
+      walkAnimation();
+    }
+    else
+    {
+      deathAnimation();
+    }
+
+    // Workaround to appease vtable gods
+    Sprite toDraw = *this;
+    win.draw(toDraw);
+    //tickMove();
+  }
+};
+
 // Sniper
 class SnipeHunt : public Enemy
 {

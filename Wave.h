@@ -69,7 +69,7 @@ class WaveOne : public Wave
     {
       std::vector<Enemy*> enemiesToSpawn;
 
-      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      Skeltal *w1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
       enemiesToSpawn.push_back(w1);
 
       WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(250,300));
