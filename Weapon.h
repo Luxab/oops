@@ -139,9 +139,9 @@ class LargeBullet : public Weapon
   public:
     LargeBullet(IntRect b, proj_map *p) : Weapon (b, p)
     {
-        potency = 5;
+        potency = 3;
         speed = 20;
-        cooldown = 250;
+        cooldown = 750;
         shotTexture.loadFromFile("images/bullet.png");
     }
     ~LargeBullet()
@@ -152,7 +152,7 @@ class LargeBullet : public Weapon
     virtual void shoot(Vector2f initPos)
     {
       Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
-      proj1->setScale(Vector2f(.1,.1));
+      proj1->setScale(Vector2f(.3,.3));
       std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
       projectiles->insert(newShot1);
 
