@@ -69,7 +69,7 @@ public:
   }
   ~Enemy()
   {
-
+      // Do Nothing
   }
 
   void shoot (Weapon *w)
@@ -185,15 +185,83 @@ public:
     // Characteristics
     speed = 1;
     health->setMaxHealth(3);
-    weapon = new PeaShooter(b, ep); 
+    weapon = new PeaShooter(b, ep);
 
     // Set score for killing
     score = 100;
   }
   ~WigWam()
   {
-
+      // Do Nothing
   }
+};
 
+// Sniper
+class SnipeHunt : public Enemy
+{
+  public:
+  SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+      : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new Sniper(b, ep), b, spawnLoc)
+    {
+        enemyTexture.loadFromFile("images/bb.png");
+        setTexture(enemyTexture);
+        setScale(2, 2);
+
+        speed = 1;
+        health->setMaxHealth(3);
+        weapon = new Sniper(b, ep);
+
+       score = 100;
+   }
+   ~SnipeHunt()
+   {
+       // Do Nothing
+   }
+};
+
+// Big Bullet
+class BigGuns : public Enemy
+{
+  public:
+    BigGuns(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+        : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new WideGun(b, ep), b, spawnLoc)
+    {
+        enemyTexture.loadFromFile("images/bb.png");
+        setTexture(enemyTexture);
+        setScale(2, 2);
+
+        speed = 1;
+        health->setMaxHealth(3);
+        weapon = new WideGun(b, ep);
+
+        score = 100;
+    }
+    ~BigGuns()
+    {
+        // Do Nothing
+    }
+};
+
+// Shotgun
+class RunGun : public Enemy
+{
+  public:
+    RunGun(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+        : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new Shotter(b, ep), b, spawnLoc)
+    {
+        enemyTexture.loadFromFile("images/bb.png");
+        setTexture(enemyTexture);
+        setScale(2, 2);
+
+        speed = 1;
+        health->setMaxHealth(3);
+        weapon = new Shotter(b, ep);
+
+        score = 100;
+    }
+    ~RunGun()
+    {
+        // Do Nothing
+    }
 };
 #endif
