@@ -25,6 +25,7 @@ public:
     this->speed = speed;
     this->potency = potency;
     this->moveDirection = moveDir;
+    this->rotate(moveDir);
 
     // Set initial position
     setPosition(xin,yin);

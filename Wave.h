@@ -72,9 +72,6 @@ class WaveOne : public Wave
       Skeltal *w1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
       enemiesToSpawn.push_back(w1);
 
-      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(250,300));
-      enemiesToSpawn.push_back(w2);
-
       WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
       enemiesToSpawn.push_back(w3);
 
