@@ -138,4 +138,44 @@ class WaveTwo : public Wave
 
     }
 };
+
+// Test for the other enemy types
+class WaveThree : public Wave
+{
+  public:
+    WaveThree (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein)
+    {
+        pp = ppin;
+        ep = epin;
+        dp = dpin;
+        e = ein;
+    }
+    ~WaveThree()
+    {
+        // Do Nothing
+    }
+
+    void spawnEnemies()
+    {
+        std::vector<Enemy*> enemiesToSpawn;
+
+      SnipeHunt *s1 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,100));
+      enemiesToSpawn.push_back(s1);
+
+      BigGuns *b1 = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,300));
+      enemiesToSpawn.push_back(b1);
+
+      RunGun *r1 = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,100));
+      enemiesToSpawn.push_back(r1);
+
+      for(auto &enemy : enemiesToSpawn)
+      {
+          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
+          e->insert(enemyPair);
+      }
+
+       finishedSpawning = true;
+    }
+};
+
 #endif
