@@ -4,6 +4,7 @@
 #define WEAPON_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Projectile.h"
 #include <vector>
 #include <stdlib.h>
@@ -23,10 +24,15 @@ public:
   IntRect boundingRect;         // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
+  Sound shotSound;              // Sound that plays when weapon is shot
+  SoundBuffer shotSoundBuffer;  // Buffer for shot sound
+
   Weapon(IntRect b, proj_map *p)
   {
     boundingRect = b;
     projectiles = p;
+
+    shotSound.setBuffer(shotSoundBuffer);
   }
   ~Weapon()
   {
@@ -105,6 +111,7 @@ class SpreadEagle : public Weapon
       speed = 20;
       cooldown = 250;
       shotTexture.loadFromFile("images/bb.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~SpreadEagle()
     {
@@ -130,6 +137,8 @@ class SpreadEagle : public Weapon
       proj3->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
+
+      shotSound.play();
    }
 };
 
