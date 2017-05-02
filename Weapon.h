@@ -3,8 +3,11 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include <SFML/Graphics.hpp>
+#ifndef __WIN32__
 #include <SFML/Audio.hpp>
+#endif
+
+#include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include <vector>
 #include <stdlib.h>
@@ -24,8 +27,10 @@ public:
   IntRect boundingRect;         // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
+#ifndef __WIN32__
   Sound shotSound;              // Sound that plays when weapon is shot
   SoundBuffer shotSoundBuffer;  // Buffer for shot sound
+#endif
 
   Weapon(IntRect b, proj_map *p)
   {
@@ -138,7 +143,9 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
+#ifndef __WIN32__
       shotSound.play();
+#endif
    }
 };
 
