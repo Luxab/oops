@@ -85,6 +85,7 @@ class PauseMenu : public Level
 
   // Buttons
   Button *backButton;
+  Button *pauseNotif;
 
 public:
   int pLevelIndex;
@@ -96,6 +97,8 @@ public:
     // Display a back button
     backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
     backButton->setY(resH-backButton->getHeight());
+    pauseNotif = new Button(0,resH/5,gameFont,"Game Paused",.06*resW);
+    pauseNotif->centerWidth(resW);
   }
   ~PauseMenu()
   {
@@ -114,6 +117,7 @@ public:
   {
     checkWindowSize();
     backButton->draw(*window);
+    pauseNotif->draw(*window);
 
     //--------------Mouse Input--------------//
     Vector2i mousepos = Mouse::getPosition(*window);
