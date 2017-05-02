@@ -190,6 +190,7 @@ public:
     // Set up waves
     waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
     waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
+    waves.push_back(new WaveThree(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
 
     readyUpForNextWave();
   }
