@@ -16,6 +16,8 @@
 #include "Button.h"
 #include "Wave.h"
 
+#define MAX_WAVES 97
+
 using namespace sf;
 
 typedef void (*changeLevel)(std::string);
@@ -195,6 +197,12 @@ public:
     waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
     waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
     waves.push_back(new WaveThree(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+
+    float difficulty = 25;
+    for(int w = 0; w < MAX_WAVES; w++) {
+      waves.push_back(new WaveProcedural(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups, difficulty));
+      difficulty *= 2;
+    }
 
     readyUpForNextWave();
   }

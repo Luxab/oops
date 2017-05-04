@@ -211,4 +211,87 @@ class WaveThree : public Wave
     }
 };
 
+class WaveProcedural : public Wave
+{
+  float difficulty;
+  public:
+    WaveProcedural (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin, float difficulty)
+    {
+      pp = ppin;
+      ep = epin;
+      dp = dpin;
+      e = ein;
+      p = pin;
+      this->difficulty = difficulty;
+    }
+    ~WaveProcedural()
+    {
+      // Do Nothing
+    }
+
+    void spawnEnemies()
+    {
+      std::vector<Enemy*> enemiesToSpawn;
+
+      int d = 0;
+      while(d <= difficulty) {
+        SnipeHunt *sh = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,100));
+        if(sh->score <= difficulty-d) {
+          enemiesToSpawn.push_back(sh);
+	  d += sh->score;
+        }
+	else {
+	  delete sh;
+	  break;
+	}
+        BigGuns *bg = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,300));
+        if(bg->score <= difficulty-d) {
+          enemiesToSpawn.push_back(bg);
+	  d += bg->score;
+        }
+	else {
+          delete bg;
+	  break;
+	}
+
+        RunGun *rg = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,100));
+        if(rg->score <= difficulty-d) {
+          enemiesToSpawn.push_back(rg);
+	  d += rg->score;
+        }
+	else {
+          delete rg;
+	  break;
+	}
+
+        Skeltal *s = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+        if(s->score <= difficulty-d) {
+          enemiesToSpawn.push_back(s);
+	  d += s->score;
+        }
+        else {
+          delete s;
+	  break;
+	}
+
+        WigWam *ww = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
+        if(ww->score <= difficulty-d) {
+          enemiesToSpawn.push_back(ww);
+	  d += ww->score;
+        }
+        else {
+          delete ww;
+	  break;
+	}
+      }
+
+      for(auto &enemy : enemiesToSpawn)
+      {
+          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
+          e->insert(enemyPair);
+      }
+
+       finishedSpawning = true;
+    }
+};
 #endif
