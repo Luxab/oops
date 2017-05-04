@@ -252,7 +252,7 @@ class WigWam : public Enemy
       weapon = new PeaShooter(b, ep);
 
       // Set score for killing
-      score = 100;
+      score = 25;
     }
     // Destructor
     ~WigWam()
