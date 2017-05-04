@@ -232,10 +232,12 @@ class WaveProcedural : public Wave
     void spawnEnemies()
     {
       std::vector<Enemy*> enemiesToSpawn;
+      std::uniform_real_distribution<float> randx(0, 400);
+      std::uniform_real_distribution<float> randy(100, 500);
 
       int d = 0;
       while(d <= difficulty) {
-        SnipeHunt *sh = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,100));
+        SnipeHunt *sh = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(sh->score <= difficulty-d) {
           enemiesToSpawn.push_back(sh);
 	  d += sh->score;
@@ -244,7 +246,7 @@ class WaveProcedural : public Wave
 	  delete sh;
 	  break;
 	}
-        BigGuns *bg = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,300));
+        BigGuns *bg = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(bg->score <= difficulty-d) {
           enemiesToSpawn.push_back(bg);
 	  d += bg->score;
@@ -254,7 +256,7 @@ class WaveProcedural : public Wave
 	  break;
 	}
 
-        RunGun *rg = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,100));
+        RunGun *rg = new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(rg->score <= difficulty-d) {
           enemiesToSpawn.push_back(rg);
 	  d += rg->score;
@@ -264,7 +266,7 @@ class WaveProcedural : public Wave
 	  break;
 	}
 
-        Skeltal *s = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+        Skeltal *s = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(s->score <= difficulty-d) {
           enemiesToSpawn.push_back(s);
 	  d += s->score;
@@ -274,7 +276,7 @@ class WaveProcedural : public Wave
 	  break;
 	}
 
-        WigWam *ww = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
+        WigWam *ww = new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(ww->score <= difficulty-d) {
           enemiesToSpawn.push_back(ww);
 	  d += ww->score;
