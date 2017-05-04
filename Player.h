@@ -257,6 +257,7 @@ public:
   void killSelf()
   {
     dead = true;
+    deathSound.play();
     std::cout << "You ded!" << std::endl;
   }
 
