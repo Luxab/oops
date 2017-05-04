@@ -3,11 +3,8 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#ifndef __WIN32__
-#include <SFML/Audio.hpp>
-#endif
-
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Projectile.h"
 #include <vector>
 #include <stdlib.h>
@@ -27,10 +24,8 @@ public:
   IntRect boundingRect;         // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
-#ifndef __WIN32__
   Sound shotSound;              // Sound that plays when weapon is shot
   SoundBuffer shotSoundBuffer;  // Buffer for shot sound
-#endif
 
   Weapon(IntRect b, proj_map *p)
   {
