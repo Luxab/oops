@@ -25,7 +25,6 @@ class Game : RenderWindow
 {
   int resW, resH; //Screen resolution
 
-  Font gameFont;
   //Levels:
   //mainMenu and scoreboard are special because they need gameFont
   //testLevel doesn't need anything extra in contructor
@@ -33,11 +32,13 @@ class Game : RenderWindow
 
 public:
   void (*changeLevel)(std::string);
+  void (*startNewGame)();
   void (*onResizeWindow)();
 
   Event event;
   gWindow window;
   Vector2u winSize;
+  Font gameFont;
 
   // Current level that is shown on screen
   Level *currLevel;
@@ -75,9 +76,8 @@ public:
     window.setResizeFunction(onResizeWindow);
     window.setFramerateLimit(60);
 
-    levels["main"]   = new MainMenu(window,event,changeLevel,gameFont);
+    levels["main"]   = new MainMenu(window,event,changeLevel,startNewGame,gameFont);
     levels["scores"] = new ScoreBoard(window,event,changeLevel,gameFont);
-    levels["test"]   = new TestLevel(window,event,changeLevel,gameFont);
     levels["pause"]  = new PauseMenu(window,event,changeLevel,gameFont);
     levels["victory"] = new VictoryScreen(window,event,changeLevel,gameFont);
 
