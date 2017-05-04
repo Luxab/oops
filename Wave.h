@@ -20,7 +20,7 @@ enemy_map *e;                       // Keep track of all enemies on screen
 pow_map *p;                         // Keep track of all powerups
 
 std::vector<PowerUp*> wavePowerUps; // Fill this vector with all powerups you'd like to spawn during a given wave
-double powerUpCooldown = 5000;      // How often to spawn powerups. Can be changed
+double powerUpCooldown = 10000;     // How often to spawn powerups. Can be changed
 
 bool finishedSpawning = false;      // Set to true when wave is finished
 float ratio = (float) 2 / 3;        // 2/3 ratio for spawning behind boundary line
