@@ -7,6 +7,7 @@
 #include "Weapon.h"
 #include "HealthBar.h"
 #include <vector>
+#include <cmath> // For LOOP_DE_LOOP
 
 using namespace sf;
 
@@ -27,6 +28,7 @@ public:
   Weapon *weapon;                   // Enemy's current weapon
   IntRect boundaries;               // Rectangle that defines level boundaries
   Clock weaponCooldown;             // Only fire after cooldown
+  Clock movementClock;              // Used for LOOP_DE_LOOP MOVE_TYPE
   MOVE_TYPE moveType;               // Which pattern enemy moves in
   Vector2f initialPos;              // Where the enemy spawns
   Texture enemyTexture;             // How it look n stuff
@@ -39,7 +41,8 @@ public:
   bool deathProcess = false;        // Starts the death animation if true
   float ratio = (float) 2 / 3;      // Ratio for boundary lines
 
-  bool mvDirect = false;            // For Zig-Zag: false if moving left, true if moving right
+  bool mvDirect = false;            // For ZIG_ZAG: false if moving left, true if moving right
+  int cirRad = 50;                  // Radius of circle for LOOP_DE_LOOP
 
   Enemy()
   {
@@ -95,6 +98,10 @@ public:
   {
     IntRect tRec = getTextureRect();
 
+    // Cannot initialize new variables inside the switch statement, so doing so here
+    float cenX, cenY, xPosCir, yPosCir;
+    float x1,y1,x2,y2,movebyX,movebyY,theta1,theta2;
+
     // Just move down
     switch (moveType) {
         case STRAIGHT_DOWN:
@@ -124,6 +131,36 @@ public:
             {
                 move(speed, 0); // Move to the right
             }
+            break;
+        case LOOP_DE_LOOP:
+            // We want to move along the tangent of a circle on which we are starting at the rightmost point
+            // We need our current location relative to the center of the circle we are on
+
+            // Grab the center of the circle the enemy is orbiting around
+            cenX = initialPos.x - cirRad;
+            cenY = initialPos.y;
+
+            // Make is a circle with with (0,0) at center
+            xPosCir = getPosition().x - cenX;
+            yPosCir = getPosition().y - cenY;
+
+            // This is the offset for the current position and the next position
+            theta1 = 2.0f * M_PI * movementClock.getElapsedTime().asMilliseconds() / 360.0f;
+            theta2 = 2.0f * M_PI * (movementClock.getElapsedTime().asMilliseconds() + 10) / 360.0f;
+
+            // x1, y1 is current location relative to circle center, while x2 and y2 are location we want to move to
+            x1 = cirRad * cosf(theta1) + initialPos.x;
+            y1 = cirRad * sinf(theta1) + initialPos.y;
+            x2 = cirRad * cosf(theta2) + initialPos.x;
+            y2 = cirRad * sinf(theta2) + initialPos.y;
+
+            // Movement offset for move
+            movebyX = x2 - x1;
+            movebyY = y2 - y1;
+
+            // Move along the tangent to the circle
+            move(movebyX, movebyY);
+
             break;
         default: // Default is STRAIGHT_DOWN
             move (0,speed);
@@ -195,32 +232,35 @@ public:
   }
 };
 
+// Basic enemy
 class WigWam : public Enemy
 {
-public:
-  WigWam(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new PeaShooter(b, ep), b, spawnLoc)
-  {
-    enemyTexture.loadFromFile("images/bb.png");
+  public:
+    // Constructor
+    WigWam(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+        : Enemy(ep, pp, dp, e, LOOP_DE_LOOP, new PeaShooter(b, ep), b, spawnLoc)
+    {
+      enemyTexture.loadFromFile("images/bb.png");
 
-    // Set texture
-    setTexture(enemyTexture);
+      // Set texture
+      setTexture(enemyTexture);
 
-    // Size of the enemy
-    setScale(2,2);
+      // Size of the enemy
+      setScale(2,2);
 
-    // Characteristics
-    speed = 1;
-    health->setMaxHealth(3);
-    weapon = new PeaShooter(b, ep);
+      // Characteristics
+      speed = 1;
+      health->setMaxHealth(3);
+      weapon = new PeaShooter(b, ep);
 
-    // Set score for killing
-    score = 100;
-  }
-  ~WigWam()
-  {
-      // Do Nothing
-  }
+      // Set score for killing
+      score = 25;
+    }
+    // Destructor
+    ~WigWam()
+    {
+        // Do Nothing
+    }
 };
 
 class Skeltal : public Enemy
@@ -241,6 +281,7 @@ public:
     walk2.loadFromFile("images/skel_walk2.png");
     deadTexture.loadFromFile("images/skel_death.png");
     setTexture(walk1);
+    score = 50;
   }
 
   void walkAnimation()
@@ -299,29 +340,32 @@ public:
 class SnipeHunt : public Enemy
 {
   public:
-  SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, dp, e, ZIG_ZAG, new Sniper(b, ep), b, spawnLoc)
-    {
-        enemyTexture.loadFromFile("images/bb.png");
-        setTexture(enemyTexture);
-        setScale(2, 2);
+    // Constructor
+    SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+        : Enemy(ep, pp, dp, e, ZIG_ZAG, new Sniper(b, ep), b, spawnLoc)
+      {
+          enemyTexture.loadFromFile("images/bb.png");
+          setTexture(enemyTexture);
+          setScale(2, 2);
 
-        speed = 1;
-        health->setMaxHealth(3);
-        weapon = new Sniper(b, ep);
+          speed = 1;
+          health->setMaxHealth(3);
+          weapon = new Sniper(b, ep);
 
-       score = 100;
-   }
-   ~SnipeHunt()
-   {
-       // Do Nothing
-   }
+         score = 100;
+     }
+     // Destructor
+     ~SnipeHunt()
+     {
+         // Do Nothing
+     }
 };
 
 // Big Bullet
 class BigGuns : public Enemy
 {
   public:
+    // Constructor
     BigGuns(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new WideGun(b, ep), b, spawnLoc)
     {
@@ -335,6 +379,7 @@ class BigGuns : public Enemy
 
         score = 100;
     }
+    // Destructor
     ~BigGuns()
     {
         // Do Nothing
@@ -345,6 +390,7 @@ class BigGuns : public Enemy
 class RunGun : public Enemy
 {
   public:
+    // Constructor
     RunGun(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new Shotter(b, ep), b, spawnLoc)
     {
@@ -358,7 +404,33 @@ class RunGun : public Enemy
 
         score = 100;
     }
+    // Destructor
     ~RunGun()
+    {
+        // Do Nothing
+    }
+};
+
+// Moves in Circle while using shotter shotgun
+class CircleShot : public Enemy
+{
+  public:
+    // Constructor
+    CircleShot(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+        : Enemy(ep, pp, dp, e, LOOP_DE_LOOP, new Shotter(b, ep), b, spawnLoc)
+    {
+        enemyTexture.loadFromFile("images/bb.png");
+        setTexture(enemyTexture);
+        setScale(2, 2);
+
+        speed = 1;
+        health->setMaxHealth(2); // Slightly lower health than normal
+        weapon = new Shotter(b, ep);
+
+        score = 100;
+    }
+    // Destructor
+    ~CircleShot()
     {
         // Do Nothing
     }
