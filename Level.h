@@ -19,6 +19,7 @@
 using namespace sf;
 
 typedef void (*changeLevel)(std::string);
+typedef void (*startNewGame)();
 
 // Global
 int currScore = 0;                    // Keep track of current player score
@@ -33,6 +34,7 @@ protected:
   Event *event;
   RectangleShape background;
   changeLevel cl;
+  startNewGame sng;
 
 public:
   Clock levelClock;

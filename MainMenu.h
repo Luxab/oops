@@ -19,10 +19,11 @@ class MainMenu : public Level
   Button *quitButton;
 
 public:
-  MainMenu(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win, ev, cl)
+  MainMenu(RenderWindow &win, Event &ev, changeLevel cl, startNewGame sng,Font fin) : Level(win, ev, cl)
   {
     gameFont = fin;
     initLevel();
+    this->sng = sng;
   }
   ~MainMenu()
   {
@@ -99,6 +100,7 @@ public:
       }
       if (playButton->contains(mouseX,mouseY))
       {
+        sng();
         cl("test");
       }
     }

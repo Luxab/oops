@@ -26,6 +26,11 @@ void changeLevelFunc (std::string levelName)
   g.currLevel->didAppear();
 }
 
+void startNewGameFunc()
+{
+  g.levels["test"] = new TestLevel(g.window,g.event,g.changeLevel,g.gameFont);
+}
+
 // Pause or escape depending on current level
 void escapePressed()
 {
@@ -75,6 +80,7 @@ int main()
 {
   // Set address value of change level func pointer
   g.changeLevel = changeLevelFunc;
+  g.startNewGame = startNewGameFunc;
   g.onResizeWindow = onResizeWindowFunc;
 
   g.setup();
