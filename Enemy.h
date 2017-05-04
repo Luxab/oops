@@ -101,22 +101,26 @@ public:
             //health->move(0,speed);
             break;
         case ZIG_ZAG:
+            // Check if we are hitting the boundary
             if (getPosition().x > boundaries.left + boundaries.width)
             {
+                // Checks right boundary - note that this is not the black bar currently
                 mvDirect = !mvDirect;
             }
             else if (getPosition().x < boundaries.left)
             {
+                // Check left boundary
                 mvDirect = !mvDirect;
             }
 
+            // Choose our movement direction
             if (mvDirect == false)
             {
-                move(-speed, 0);
+                move(-speed, 0); // Move to the left
             }
             else
             {
-                move(speed, 0);
+                move(speed, 0); // Move to the right
             }
             break;
         default: // Default is STRAIGHT_DOWN
@@ -289,6 +293,7 @@ public:
 };
 
 // Sniper
+// Moves in a zig-zag pattern
 class SnipeHunt : public Enemy
 {
   public:
