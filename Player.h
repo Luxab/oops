@@ -61,7 +61,7 @@ public:
     transparent.loadFromFile("images/transparent.png");
 
     // Default weapon
-    weapon = new BBGun(boundaries, playerProjectiles);
+    weapon = new SpreadEagle(boundaries, playerProjectiles);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);
