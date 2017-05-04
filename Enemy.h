@@ -279,6 +279,7 @@ public:
     walk2.loadFromFile("images/skel_walk2.png");
     deadTexture.loadFromFile("images/skel_death.png");
     setTexture(walk1);
+    score = 50;
   }
 
   void walkAnimation()
