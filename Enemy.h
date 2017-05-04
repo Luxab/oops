@@ -37,6 +37,7 @@ public:
   enemy_map *enemies;               // Keep track of all spawned enemies on screen
   bool dead = false;                // Keep track of enemy's life state
   bool deathProcess = false;        // Starts the death animation if true
+  float ratio = (float) 2 / 3;      // Ratio for boundary lines
 
   bool mvDirect = false;            // For Zig-Zag: false if moving left, true if moving right
 
@@ -102,7 +103,8 @@ public:
             break;
         case ZIG_ZAG:
             // Check if we are hitting the boundary
-            if (getPosition().x > boundaries.left + boundaries.width)
+            if (getPosition().x > boundaries.left + boundaries.width * ratio
+                    - getGlobalBounds().width)
             {
                 // Checks right boundary - note that this is not the black bar currently
                 mvDirect = !mvDirect;

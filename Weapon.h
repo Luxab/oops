@@ -21,7 +21,7 @@ public:
   float cooldown;               // How much time between each shot (milliseconds)
   IntRect size;                 // Size of each shot
   Texture shotTexture;          // What the shot looks like
-  IntRect boundingRect;         // If projectiles leave this rect, delete them
+  IntRect boundaries;           // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
   Sound shotSound;              // Sound that plays when weapon is shot
@@ -29,7 +29,7 @@ public:
 
   Weapon(IntRect b, proj_map *p)
   {
-    boundingRect = b;
+    boundaries = b;
     projectiles = p;
 
     shotSound.setBuffer(shotSoundBuffer);
@@ -52,7 +52,7 @@ public:
       shot.second->tickMove();
 
       // Ensure bullet hasn't gone out of bounds
-      if (!boundingRect.intersects(Rect<int>(shot.second->getGlobalBounds())))
+      if (!boundaries.intersects(Rect<int>(shot.second->getGlobalBounds())))
       {
         // Has gone out of bounds, remove from hashmap
         toBeDeleted.push_back(shot.first);
@@ -138,7 +138,6 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
-      std::cout << "Sound!" << std::endl;
       shotSound.play();
    }
 };
