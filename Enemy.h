@@ -213,7 +213,7 @@ public:
     weapon = new PeaShooter(b, ep);
 
     // Set score for killing
-    score = 100;
+    score = 25;
   }
   ~WigWam()
   {
@@ -239,6 +239,7 @@ public:
     walk2.loadFromFile("images/skel_walk2.png");
     deadTexture.loadFromFile("images/skel_death.png");
     setTexture(walk1);
+    score = 50;
   }
 
   void walkAnimation()
