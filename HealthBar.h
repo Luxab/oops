@@ -55,7 +55,8 @@ class HealthBar : public RectangleShape
 {
   int maxHealth;
   int health;
-  int x,y,bSize;
+  int x,y;
+  Vector2f bSize;
   int bWidth, bHeight; //width and height of the background.
   std::vector<RectangleShape*> outlines;
 
@@ -65,6 +66,7 @@ public:
   {
     maxHealth = mh;
     health = maxHealth;
+    bSize = size;
     setPosition(location.x,location.y);
     setFillColor(Color(234,0,0)); // red
     for (int i = 0; i<maxHealth; i++)
@@ -85,7 +87,7 @@ public:
   void takeDamage(int damageAmount)
   {
     health-= damageAmount;
-    setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+    setSize(Vector2f(bSize.x*((float)health/(float)maxHealth),bSize.y));
     std::cout << "Health left: " << health << "/" << maxHealth << std::endl;
   }
 
