@@ -16,7 +16,7 @@
 #include "Button.h"
 #include "Wave.h"
 
-#define MAX_WAVES 97
+#define MAX_WAVES 26
 
 using namespace sf;
 
