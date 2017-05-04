@@ -145,6 +145,7 @@ public:
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Projectile.h"
 class TestLevel : public Level
 {
   Player p;
@@ -160,6 +161,7 @@ class TestLevel : public Level
   proj_map *enemyProjectiles = new proj_map;
   int_vec  *deadProjectiles = new int_vec;
   enemy_map *enemies = new enemy_map;
+  pow_map *powerups = new pow_map;
 
   std::vector<Wave*> waves;             // Keep track of all possible waves
   int currWaveIndex = -1;               // Current wave that we're on
@@ -190,9 +192,9 @@ public:
     p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
-    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
-    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
-    waves.push_back(new WaveThree(playerProjectiles, enemyProjectiles, deadProjectiles, enemies));
+    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveThree(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
 
     readyUpForNextWave();
   }

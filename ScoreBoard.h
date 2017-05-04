@@ -40,7 +40,7 @@ public:
     // Remove any old buttons
     scores.clear();
 
-    titleBanner= new Button(0,resH/12,gameFont,"Scores",(.06*resW));
+    titleBanner= new Button(0,resH/12,gameFont,"Local Scores",(.06*resW));
     titleBanner->centerWidth(resW);
 
     backButton = new Button(0,resH,gameFont,"Back",(.06*resW));
