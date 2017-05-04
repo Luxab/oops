@@ -28,8 +28,9 @@ public:
   bool currentlyTransparent = false;    // Keep track of when we are immune
   bool immunityFirstCheck = false;      // There are too many bools here
   proj_map *enemyProjectiles;           // Keep track of all enemy projectiles on screen
-  proj_map *playerProjectiles;
-  enemy_map *enemies;
+  proj_map *playerProjectiles;          // Keep track of all projectiles we fire
+  enemy_map *enemies;                   // Keep track of all enemies
+  pow_map *powerups;                    // Keep track of all powerups
   bool dead = false;
 
   Sound deathSound;              // Sound that plays when weapon is shot
@@ -39,15 +40,16 @@ public:
   {
 
   }
-  Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, int s, FloatRect b) : Sprite(tin)
+  Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
-    deathSound.setBuffer(deathSoundBuffer);
     deathSoundBuffer.loadFromFile("audio/DeathYell1.wav");
+    deathSound.setBuffer(deathSoundBuffer);
 
     // Projectile tracking
     playerProjectiles = pp;
     enemyProjectiles = ep;
     enemies = e;
+    powerups = p;
 
     // Player characteristics
     speed = s;
@@ -198,12 +200,43 @@ public:
     }
   }
 
+  void checkPowerUps (RenderWindow &win)
+  {
+    std::vector<int> powerupsToBeDeleted;
+
+    for (std::pair<int, PowerUp*> powerupPair : *powerups)
+    {
+      PowerUp *powerup = powerupPair.second;
+      if (powerup->contains(getGlobalBounds()))
+      {
+        // If we're intersecting, get the powerup's benefits
+        health->addHealth(powerup->getHealthBoost());
+        if (powerup->getWeapon())
+          weapon = powerup->getWeapon();
+
+        // Play the powerup pickup sound
+        powerup->playSound();
+
+        powerupsToBeDeleted.push_back(powerupPair.first);
+      }
+    }
+
+    for (int powerupKey : powerupsToBeDeleted)
+    {
+      powerups->erase(powerupKey);
+    }
+  }
+
   void draw(RenderWindow &win)
   {
     // Check if we've run into any enemy projectiles
     if (!currentlyImmune)
+    {
         checkProjectiles(win);
+        currentlyTransparent = false;
+    }
 
+    checkPowerUps(win);
     animateImmunity();
 
     tickMove();
@@ -241,7 +274,7 @@ public:
 
   void loseHealth(RenderWindow &win, int amt)
   {
-    health->takeDamage(win, amt);
+    health->takeDamage(amt);
     if (health->getCurrentHealth() <= 0)
         killSelf();
 

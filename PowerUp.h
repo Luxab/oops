@@ -5,6 +5,7 @@
 //	Lab 02 Spring 2017
 #include <SFML/Graphics.hpp>
 #include <math.h> // sin,cos
+#include <random>
 #include "definitions.h"
 
 using namespace sf;
@@ -15,64 +16,32 @@ typedef enum POWERUP_TYPE
   HEALTH_POWERUP
 } POWERUP_TYPE;
 
-class PowerUpSprite: public Sprite
-{
-public:
-  float healthBoost; //How much damage does the projectile do
-  float speed; //How fast does the projectile move
-  float moveDirection; // In what direction the projectile will move
-  float posX, posY;
-
-  PowerUpSprite(int xin, int yin, Texture &tin, float speed, float moveDir, float potency) : Sprite(tin)
-  {
-    // Set characteristics
-    this->posX = xin;
-    this->posY = yin;
-    this->speed = speed;
-    this->moveDirection = moveDir;
-    this->rotate(moveDir);
-
-    // Set initial position
-    setPosition(xin,yin);
-  }
-  ~PowerUpSprite()
-  {
-
-  }
-
-  void tickMove()
-  {
-    //Move in {direction} at {speed}
-    float moveX = sin(moveDirection);
-    float moveY = cos(moveDirection);
-
-    // Scale by the speed
-    moveX *= speed;
-    moveY *= speed;
-
-    // Add to our existing position
-    this->posX += moveX;
-    this->posY -= moveY;
-
-    setPosition(posX, posY);
-  }
-
-  bool contains(FloatRect rect)
-  {
-    return getGlobalBounds().intersects(rect);
-  }
-};
-
 class PowerUp : public Sprite
 {
 public:
-  float posX, posY;
+  Vector2f pos;
   float speed;
-  Texture powerupTexture;
+  float healthBoost;                // How much health does the powerup provide
+  Weapon *weapon;                   // What weapon this powerup gives you
+  Texture powerupTexture;           // What the powerup looks like
+  IntRect boundaries;               // Window bounds
+  pow_map *powerups;                // Keep track of powerups that are spawned
+  proj_map *playerProjectiles;      // Keep track of the player's projectiles
 
-  PowerUp()
+  Sound grabSound;                  // Sound that plays when powerup is picked up
+  SoundBuffer grabSoundBuffer;      // Buffer for grab sound
+
+  PowerUp(IntRect b, pow_map *p, proj_map *pp)
   {
+    this->playerProjectiles = pp;
+    this->boundaries = b;
+    this->powerups = p;
+    this->pos = pos;
     
+    grabSound.setBuffer(grabSoundBuffer);
+
+    // Set this in derived classes
+    weapon = nullptr;
   }
   ~PowerUp()
   {
@@ -82,37 +51,98 @@ public:
   void tickMove()
   {
     //Move in {direction} at {speed}
-    double moveDirection = 0;
-    float moveX = sin(moveDirection);
-    float moveY = cos(moveDirection);
+    float moveX = 0;
+    float moveY = 1;
 
     // Scale by the speed
     moveX *= speed;
     moveY *= speed;
 
-    // Add to our existing position
-    this->posX += moveX;
-    this->posY -= moveY;
+    move(moveX, moveY);
+  }
 
-    setPosition(posX, posY);
+  void draw (RenderWindow &win)
+  {
+    Sprite toDraw = *this;
+    win.draw(toDraw);
+
+    tickMove();
   }
 
   bool contains(FloatRect rect)
   {
     return getGlobalBounds().intersects(rect);
   }
+
+  void playSound ()
+  {
+    grabSound.play();
+  }
+
+  float getHealthBoost()
+  {
+    return healthBoost;
+  }
+
+  Weapon* getWeapon()
+  {
+    return weapon;
+  }
 };
 
-/*
 class SnackBar : public PowerUp
 {
     public:
-      SnackBar (pow_map *pin) : PowerUp (p)
+      SnackBar (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
       {
-        powerupTexture.loadFromFile("images/transparent.png");
+        std::cout << "Creating new snackbar." << std::endl;
+
+        // Set characteristics
+        healthBoost = 2;
+        speed = 1;
+
+        powerupTexture.loadFromFile("images/bb.png");
+        grabSoundBuffer.loadFromFile("audio/shot_sound.wav");
+
+        // Set texture
+        setTexture(powerupTexture);
+
+        // Set size of the powerup
+        setScale(Vector2f(1.2,1.2));
       }
-    
+
+      ~SnackBar ()
+      {
+
+      }
 };
-*/
+
+class GunPowerUp : public PowerUp
+{
+    public:
+      GunPowerUp (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
+      {
+        std::cout << "Creating new gun." << std::endl;
+
+        // Set characteristics
+        weapon = new SpreadEagle(boundaries, playerProjectiles);
+        healthBoost = 0;
+        speed = 1;
+
+        powerupTexture.loadFromFile("images/ak47.png");
+        grabSoundBuffer.loadFromFile("audio/shot_sound.wav");
+
+        // Set texture
+        setTexture(powerupTexture);
+
+        // Set size of the powerup
+        setScale(Vector2f(0.6,0.6));
+      }
+
+      ~GunPowerUp()
+      {
+
+      }
+};
 
 #endif

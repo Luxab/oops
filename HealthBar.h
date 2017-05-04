@@ -82,11 +82,25 @@ public:
 
   }
 
-  void takeDamage(RenderWindow &window, int damageAmount)
+  void takeDamage(int damageAmount)
   {
     health-= damageAmount;
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
     std::cout << "Health left: " << health << "/" << maxHealth << std::endl;
+  }
+
+  void addHealth (float amt)
+  {
+    std::cout << "Adding health: " << amt << std::endl;
+    health += amt;
+
+    // Prevent health from overrunning
+    if (health > maxHealth)
+        health = maxHealth;
+
+    setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+    std::cout << "Health is now: " << health << std::endl;
+    takeDamage(0);
   }
 
   int getCurrentHealth()

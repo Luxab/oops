@@ -189,7 +189,7 @@ public:
 
     // Create player
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
-    p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+    p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, powerups, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
 
     // Set up waves
     waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
@@ -248,7 +248,7 @@ public:
       enemies->erase(enemyKey);
     }
 
-    // Delete all dead projectiles
+    // Delete all dead player projectiles
     for (auto &projKey: *deadProjectiles)
     {
       playerProjectiles->erase(projKey);
@@ -264,6 +264,35 @@ public:
       p.draw(*window); //let the player draw
     } else if (!gameIsOver){
       gameOver();
+    }
+
+    // Draw all powerups and remove if gone out of bounds
+    std::vector<int> powerupsToBeDeleted;
+
+    for (std::pair<int, PowerUp*> pow : *powerups)
+    {
+      // Workaround to appease vtable gods
+      PowerUp* powObj = pow.second;
+      Sprite toDraw = *powObj;
+      window->draw(toDraw);
+      powObj->draw(*window);
+
+      pow.second->tickMove();
+
+      // Ensure powerup hasn't gone out of bounds
+      IntRect boundaries = Rect<int>(background.getGlobalBounds());
+      if (!boundaries.intersects(Rect<int>(pow.second->getGlobalBounds())))
+      {
+        // Has gone out of bounds, remove from hashmap
+        powerupsToBeDeleted.push_back(pow.first);
+      }
+      
+    }
+
+    // Delete all powerups that went off-screen
+    for (auto &powKey : powerupsToBeDeleted)
+    {
+      powerups->erase(powKey);
     }
 
     // Check for end of wave

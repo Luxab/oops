@@ -19,14 +19,17 @@ int_vec  *dp;                       // Keep track of dead projectiles
 enemy_map *e;                       // Keep track of all enemies on screen
 pow_map *p;                         // Keep track of all powerups
 
+std::vector<PowerUp*> wavePowerUps; // Fill this vector with all powerups you'd like to spawn during a given wave
+double powerUpCooldown = 5000;      // How often to spawn powerups. Can be changed
+
+bool finishedSpawning = false;      // Set to true when wave is finished
+float ratio = (float) 2 / 3;        // 2/3 ratio for spawning behind boundary line
+
+bool gameStarted = false;           // Only do some stuff after game has officially started
+
 // Random vars
 std::random_device rd;
 std::mt19937 rng(rd());
-
-std::vector<PowerUp*> wavePowerUps; // Fill this vector with all powerups you'd like to spawn during a given wave
-double powerUpCooldown = 10000;     // How often to spawn powerups. Can be changed
-
-bool finishedSpawning = false;      // Set to true when wave is finished
 
 class Wave
 {
@@ -44,27 +47,35 @@ class Wave
     {
       if (powerupSpawnClock.getElapsedTime().asMilliseconds() > powerUpCooldown)
       {
-        std::cout << "Spawning powerups" << std::endl;
         powerupSpawnClock.restart();
 
         // Get random powerup
-        std::uniform_int_distribution<int> uni(0,wavePowerUps.size());
+
+        std::uniform_int_distribution<int> uni(0,wavePowerUps.size()-1);
         auto random_index = uni(rng);
-        
+
         if (wavePowerUps.size() != 0)
         {
             PowerUp *randPowerup = wavePowerUps.at(random_index);
+
+            // Set random position for each powerup
+            std::uniform_int_distribution<int> pow_uni(30, boundaries.width * ratio - 50);
+            auto random_width = pow_uni(rng);
+            std::cout << "Spawning powerups at " << random_width << "," << "30" << std::endl;
+
+            randPowerup->setPosition(random_width, 30);
 
             std::pair<int, PowerUp*> powerupPair(p->size(), randPowerup);
             p->insert(powerupPair);
         }
       }
+
     }
 
     void draw(RenderWindow &win)
     {
-      powerupSpawnClock.restart();
-      spawnPowerups();
+      if (gameStarted)
+        spawnPowerups();
     }
 
     void setBoundaries (IntRect b)
@@ -93,6 +104,9 @@ class WaveOne : public Wave
       dp = dpin;
       e  = ein;
       p = pin;
+
+      wavePowerUps.push_back(new SnackBar(boundaries, p, ppin));
+      wavePowerUps.push_back(new GunPowerUp(boundaries, p, ppin));
     }
     ~WaveOne ()
     {
@@ -101,6 +115,8 @@ class WaveOne : public Wave
 
     void spawnEnemies ()
     {
+      gameStarted = true;
+
       std::vector<Enemy*> enemiesToSpawn;
 
       Skeltal *w1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
