@@ -38,6 +38,8 @@ public:
   bool dead = false;                // Keep track of enemy's life state
   bool deathProcess = false;        // Starts the death animation if true
 
+  bool mvDirect = false;            // For Zig-Zag: false if moving left, true if moving right
+
   Enemy()
   {
 
@@ -97,6 +99,25 @@ public:
         case STRAIGHT_DOWN:
             move (0,speed);
             //health->move(0,speed);
+            break;
+        case ZIG_ZAG:
+            if (getPosition().x > boundaries.left + boundaries.width)
+            {
+                mvDirect = !mvDirect;
+            }
+            else if (getPosition().x < boundaries.left)
+            {
+                mvDirect = !mvDirect;
+            }
+
+            if (mvDirect == false)
+            {
+                move(-speed, 0);
+            }
+            else
+            {
+                move(speed, 0);
+            }
             break;
         default: // Default is STRAIGHT_DOWN
             move (0,speed);
@@ -272,7 +293,7 @@ class SnipeHunt : public Enemy
 {
   public:
   SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
-      : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new Sniper(b, ep), b, spawnLoc)
+      : Enemy(ep, pp, dp, e, ZIG_ZAG, new Sniper(b, ep), b, spawnLoc)
     {
         enemyTexture.loadFromFile("images/bb.png");
         setTexture(enemyTexture);

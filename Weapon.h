@@ -138,9 +138,8 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
-#ifndef __WIN32__
+      std::cout << "Sound!" << std::endl;
       shotSound.play();
-#endif
    }
 };
 
