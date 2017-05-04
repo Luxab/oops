@@ -15,6 +15,54 @@ typedef enum POWERUP_TYPE
   HEALTH_POWERUP
 } POWERUP_TYPE;
 
+class PowerUpSprite: public Sprite
+{
+public:
+  float healthBoost; //How much damage does the projectile do
+  float speed; //How fast does the projectile move
+  float moveDirection; // In what direction the projectile will move
+  float posX, posY;
+
+  PowerUpSprite(int xin, int yin, Texture &tin, float speed, float moveDir, float potency) : Sprite(tin)
+  {
+    // Set characteristics
+    this->posX = xin;
+    this->posY = yin;
+    this->speed = speed;
+    this->moveDirection = moveDir;
+    this->rotate(moveDir);
+
+    // Set initial position
+    setPosition(xin,yin);
+  }
+  ~PowerUpSprite()
+  {
+
+  }
+
+  void tickMove()
+  {
+    //Move in {direction} at {speed}
+    float moveX = sin(moveDirection);
+    float moveY = cos(moveDirection);
+
+    // Scale by the speed
+    moveX *= speed;
+    moveY *= speed;
+
+    // Add to our existing position
+    this->posX += moveX;
+    this->posY -= moveY;
+
+    setPosition(posX, posY);
+  }
+
+  bool contains(FloatRect rect)
+  {
+    return getGlobalBounds().intersects(rect);
+  }
+};
+
 class PowerUp : public Sprite
 {
 public:
@@ -24,6 +72,7 @@ public:
 
   PowerUp()
   {
+    
   }
   ~PowerUp()
   {
