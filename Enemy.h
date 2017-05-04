@@ -249,16 +249,16 @@ class WigWam : public Enemy
       // Characteristics
       speed = 1;
       health->setMaxHealth(3);
-    weapon = new PeaShooter(b, ep);
+      weapon = new PeaShooter(b, ep);
 
-    // Set score for killing
-    score = 25;
-  }
-  // Destructor
-  ~WigWam()
-  {
-      // Do Nothing
-  }
+      // Set score for killing
+      score = 25;
+    }
+    // Destructor
+    ~WigWam()
+    {
+        // Do Nothing
+    }
 };
 
 class Skeltal : public Enemy
