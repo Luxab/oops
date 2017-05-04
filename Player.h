@@ -32,12 +32,18 @@ public:
   enemy_map *enemies;
   bool dead = false;
 
+  Sound deathSound;              // Sound that plays when weapon is shot
+  SoundBuffer deathSoundBuffer;  // Buffer for shot sound
+
   Player()
   {
 
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, int s, FloatRect b) : Sprite(tin)
   {
+    deathSound.setBuffer(deathSoundBuffer);
+    deathSoundBuffer.loadFromFile("audio/DeathYell1.wav");
+
     // Projectile tracking
     playerProjectiles = pp;
     enemyProjectiles = ep;
@@ -61,7 +67,7 @@ public:
     transparent.loadFromFile("images/transparent.png");
 
     // Default weapon
-    weapon = new BBGun(boundaries, playerProjectiles);
+    weapon = new SpreadEagle(boundaries, playerProjectiles);
 
     // Set position to middle
     setPosition(boundaries.width/2, boundaries.height/2);
@@ -75,7 +81,7 @@ public:
   void shoot (Weapon *w)
   {
     Vector2f pos = getPosition();
-    
+
     // Only fire if timer is past cooldown
     if (weaponCooldown.getElapsedTime().asMilliseconds() > w->cooldown)
     {
@@ -225,8 +231,8 @@ public:
         else if (immunityClock.getElapsedTime().asMilliseconds() % 50 <  25)
           currentlyTransparent = false;
       }
-    } 
-    else 
+    }
+    else
     {
       currentlyImmune = false;
       immunityFirstCheck = true;
@@ -251,6 +257,7 @@ public:
   void killSelf()
   {
     dead = true;
+    deathSound.play();
     std::cout << "You ded!" << std::endl;
   }
 
