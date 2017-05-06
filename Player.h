@@ -95,6 +95,7 @@ public:
     transparent.loadFromFile("images/transparent.png");
 
     // Default weapon
+    std::cout << "Default weapon with bounds: " << boundaries.top << "," << boundaries.left << "," << boundaries.width << "," << boundaries.height << std::endl;
     weapon = new SpreadEagle(boundaries, playerProjectiles);
 
     // Set position to middle

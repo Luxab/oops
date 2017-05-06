@@ -198,35 +198,38 @@ class TestLevel : public Level
   Text combo;                           // Shows combos
   Text score;                           // Displays your score at the right
 
+  IntRect boundaries;                   // Boundaries of the level
+
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
   {
     // Set up level characteristics
     gameFont = fin;
-    FloatRect bbnd = background.getGlobalBounds();
+    boundaries = Rect<int>(background.getGlobalBounds());
     background.setFillColor(Color(28,64,93)); // dark blue
 
     // Create right, black boundary line
-    boundingLine = new RectangleShape(Vector2f(0,bbnd.height));
-    boundingLine->setPosition(bbnd.width*ratio,0);
+    boundingLine = new RectangleShape(Vector2f(0,boundaries.height));
+    boundingLine->setPosition(boundaries.width*ratio,0);
     boundingLine->setOutlineColor(Color(0,0,0));
     boundingLine->setOutlineThickness(2);
+
 
     // Show score and starting text
     showText();
 
     // Create player
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
-    p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, powerups, PLAYER_SPEED, FloatRect(bbnd.left,bbnd.top,bbnd.width*ratio,bbnd.height));
+    p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, powerups, PLAYER_SPEED, FloatRect(boundaries.left,boundaries.top,boundaries.width*ratio,boundaries.height));
 
     // Set up waves
-    waves.push_back(new WaveOne(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
-    waves.push_back(new WaveTwo(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
-    waves.push_back(new WaveThree(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveOne(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveTwo(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveThree(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
 
     float difficulty = 25;
     for(int w = 0; w < MAX_WAVES; w++) {
-      waves.push_back(new WaveProcedural(playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups, difficulty));
+      waves.push_back(new WaveProcedural(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups, difficulty));
       difficulty *= 2;
     }
 
@@ -314,7 +317,6 @@ public:
       pow.second->tickMove();
 
       // Ensure powerup hasn't gone out of bounds
-      IntRect boundaries = Rect<int>(background.getGlobalBounds());
       if (!boundaries.intersects(Rect<int>(pow.second->getGlobalBounds())))
       {
         // Has gone out of bounds, remove from hashmap
