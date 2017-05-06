@@ -199,6 +199,9 @@ class TestLevel : public Level
   Text score;                           // Displays your score at the right
 
   IntRect boundaries;                   // Boundaries of the level
+  Clock welcomeTextTimerClock;          // Timer for making welcome text disappear
+  bool welcomeTextShowing = false;      // Is the welcome text showing?
+  double welcomeTextShownLength = 3000; // How long the welcome text fades out for
 
 public:
   TestLevel(RenderWindow &win, Event &ev, changeLevel cl,Font fin) : Level(win,ev,cl)
@@ -259,7 +262,24 @@ public:
 
     waves.at(currWaveIndex)->draw(*window);
 
-    // TODO: Check that none of the player/enemy projectiles have gone off screen
+    // Fade out welcome to wave X text
+    if (welcomeTextShowing && welcomeTextTimerClock.getElapsedTime().asMilliseconds() > welcomeTextShownLength)
+    {
+      // Fade alpha slightly every frame
+      statusText.setColor(Color(255,255,255,statusText.getColor().a - 2));
+
+      // Once text has been faded out, remove it
+      if (statusText.getColor().a <= 5)
+      {
+        // Kill alpha
+        statusText.setColor(Color(255,255,255,0));
+
+        // Stop timer
+        welcomeTextShowing = false;
+      }
+    }
+
+    // If enemy is dead or off screen, remove them
     int_vec toBeDeleted;
     for (std::pair<int, Enemy*> enemyPair : *enemies)
     {
@@ -406,8 +426,11 @@ public:
   {
     // Show wave text
     statusText.setString("Welcome to Wave " + std::to_string(currWaveIndex + 1));
-    statusText.setPosition(Vector2f(background.getGlobalBounds().width/12,
-                                      50));
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/12, 50));
+    statusText.setColor(Color(255,255,255)); // Set to white
+
+    std::cout << "Starting wave!" << std::endl;
+    welcomeTextShowing = true;
 
     // Find index of current wave
     // Start wave
