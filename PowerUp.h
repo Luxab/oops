@@ -128,7 +128,7 @@ class SnackBar : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/bb.png");
-        grabSoundBuffer.loadFromFile("audio/shot_sound.wav");
+        grabSoundBuffer.loadFromFile("audio/item_pickup.wav");
 
         // Set texture
         setTexture(powerupTexture);
@@ -151,6 +151,7 @@ class GunPowerUp : public PowerUp
         std::cout << "Creating new gun." << std::endl;
 
         // Set characteristics
+        std:::cout << "Creating weapon with bounds: " << boundaries.top << "," << boundaries.left << "," << boundaries.width << "," << boundaries.height << std::endl;
         weapon = new SpreadEagle(boundaries, playerProjectiles);
         healthBoost = 0;
         speed = 1;
