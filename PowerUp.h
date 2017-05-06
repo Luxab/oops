@@ -151,7 +151,7 @@ class GunPowerUp : public PowerUp
         std::cout << "Creating new gun." << std::endl;
 
         // Set characteristics
-        std:::cout << "Creating weapon with bounds: " << boundaries.top << "," << boundaries.left << "," << boundaries.width << "," << boundaries.height << std::endl;
+        std::cout << "Creating weapon with bounds: " << boundaries.top << "," << boundaries.left << "," << boundaries.width << "," << boundaries.height << std::endl;
         weapon = new SpreadEagle(boundaries, playerProjectiles);
         healthBoost = 0;
         speed = 1;

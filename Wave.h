@@ -123,13 +123,15 @@ class WaveOne : public Wave
 {
 
   public:
-    WaveOne (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
+    WaveOne (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
     {
       pp = ppin;
       ep = epin;
       dp = dpin;
       e  = ein;
       p = pin;
+
+      boundaries = b;
 
       wavePowerUps.push_back(new SnackBar(boundaries, p, ppin));
       wavePowerUps.push_back(new GunPowerUp(boundaries, p, ppin));
@@ -171,13 +173,15 @@ class WaveTwo : public Wave
 {
 
   public:
-    WaveTwo (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
+    WaveTwo (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
     {
       pp = ppin;
       ep = epin;
       dp = dpin;
       e  = ein;
       p = pin;
+
+      boundaries = b;
     }
     ~WaveTwo ()
     {
@@ -217,13 +221,15 @@ class WaveTwo : public Wave
 class WaveThree : public Wave
 {
   public:
-    WaveThree (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
+    WaveThree (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
     {
       pp = ppin;
       ep = epin;
       dp = dpin;
       e = ein;
       p = pin;
+
+      boundaries = b;
     }
     ~WaveThree()
     {
@@ -257,7 +263,7 @@ class WaveProcedural : public Wave
 {
   float difficulty;
   public:
-    WaveProcedural (proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin, float difficulty)
+    WaveProcedural (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin, float difficulty)
     {
       pp = ppin;
       ep = epin;
@@ -265,6 +271,8 @@ class WaveProcedural : public Wave
       e = ein;
       p = pin;
       this->difficulty = difficulty;
+
+      boundaries = b;
     }
     ~WaveProcedural()
     {
