@@ -124,6 +124,39 @@ class BBGun : public Weapon
       proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
+
+      shotSound.play();
+   }
+};
+
+class AK47 : public Weapon
+{
+  public:
+    AK47(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+      // Set characteristics
+      potency = 1;
+      speed = 20;
+      cooldown = 100;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+    }
+    ~AK47()
+    {
+
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      // Single shot up
+
+      // Insert new projectile into projectiles map
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      proj->setScale(Vector2f(.1,.1));
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+      projectiles->insert(newShot);
+
+      shotSound.play();
    }
 };
 
@@ -174,14 +207,15 @@ class LargeBullet : public Weapon
   public:
     LargeBullet(IntRect b, proj_map *p) : Weapon (b, p)
     {
-        potency = 3;
-        speed = 20;
-        cooldown = 750;
-        shotTexture.loadFromFile("images/bullet.png");
+      potency = 3;
+      speed = 20;
+      cooldown = 750;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~LargeBullet()
     {
-        // Do nothing
+      // Do nothing
     }
 
     virtual void shoot(Vector2f initPos)
@@ -191,6 +225,7 @@ class LargeBullet : public Weapon
       std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
       projectiles->insert(newShot1);
 
+      shotSound.play();
     }
 };
 
@@ -206,6 +241,7 @@ class PeaShooter : public Weapon
       speed = 20;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~PeaShooter()
     {
@@ -221,6 +257,8 @@ class PeaShooter : public Weapon
       proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
+
+      shotSound.play();
    }
 };
 
@@ -230,10 +268,11 @@ class Sniper : public Weapon
   public:
     Sniper(IntRect b, proj_map *p) : Weapon (b, p)
     {
-        potency = 10;
-        speed = 40;
-        cooldown = 1000;
-        shotTexture.loadFromFile("images/bullet.png");
+      potency = 10;
+      speed = 40;
+      cooldown = 1000;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~Sniper()
     {
@@ -242,11 +281,13 @@ class Sniper : public Weapon
 
     virtual void shoot(Vector2f initPos)
     {
-        // One shot down, as in PeaShooter
-        Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
-        proj->setScale(Vector2f(.2, .2));
-        std::pair<int,Projectile*> newShot (projectiles->size(), proj);
-        projectiles->insert(newShot);
+      // One shot down, as in PeaShooter
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj->setScale(Vector2f(.2, .2));
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+      projectiles->insert(newShot);
+
+      shotSound.play();
     }
 };
 
@@ -257,10 +298,11 @@ class WideGun : public Weapon
   public:
     WideGun(IntRect b, proj_map *p) : Weapon (b, p)
     {
-        potency = 1;
-        speed = 2;
-        cooldown = 3000;
-        shotTexture.loadFromFile("images/bullet.png");
+      potency = 1;
+      speed = 2;
+      cooldown = 3000;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~WideGun()
     {
@@ -270,11 +312,13 @@ class WideGun : public Weapon
     virtual void shoot(Vector2f initPos)
     {
 
-        // Very large bullet
-        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
-        proj1->setScale(Vector2f(.6, .6));
-        std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
-        projectiles->insert(newShot1);
+      // Very large bullet
+      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj1->setScale(Vector2f(.6, .6));
+      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+      projectiles->insert(newShot1);
+
+      shotSound.play();
     }
 
 };
@@ -285,49 +329,52 @@ class Shotter : public Weapon
   public:
     Shotter(IntRect b, proj_map *p) : Weapon (b, p)
     {
-        potency = 1;
-        speed = 2;
-        cooldown = 3000;
-        shotTexture.loadFromFile("images/bullet.png");
+      potency = 1;
+      speed = 2;
+      cooldown = 3000;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
     }
     ~Shotter()
     {
-        // Do nothing
+      // Do nothing
     }
 
     virtual void shoot(Vector2f initPos)
     {
-        // Original Code: Three projectiles which shoot in the proper direction
-        // Please do not use a for loop or more than three projectiles at once, it vastly slows down the game
-        // Also -(MPI/2) + (2*i/M_PI) is not the correct direction
+      // Original Code: Three projectiles which shoot in the proper direction
+      // Please do not use a for loop or more than three projectiles at once, it vastly slows down the game
+      // Also -(MPI/2) + (2*i/M_PI) is not the correct direction
 
-        Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
-        proj1->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
-        projectiles->insert(newShot1);
+      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj1->setScale(Vector2f(.1, .1));
+      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
+      projectiles->insert(newShot1);
 
-        Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(3.0/4.0), potency);
-        proj2->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
-        projectiles->insert(newShot2);
+      Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(3.0/4.0), potency);
+      proj2->setScale(Vector2f(.1, .1));
+      std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
+      projectiles->insert(newShot2);
 
-        Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-3.0/4.0), potency);
-        proj3->setScale(Vector2f(.1, .1));
-        std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
-        projectiles->insert(newShot3);
+      Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-3.0/4.0), potency);
+      proj3->setScale(Vector2f(.1, .1));
+      std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
+      projectiles->insert(newShot3);
 
-        // Five Projectiles at angles
-        /*
-        int bulletAmt = 6;
-        double scale = 0.1;
-        for (int i = 0; i < bulletAmt; i++)
-        {
-            Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, -(M_PI/2) + (2*i/M_PI), potency);
-            proj->setScale(Vector2f(scale, scale));
-            std::pair<int,Projectile*> newShot (projectiles->size(), proj);
-            projectiles->insert(newShot);
-        }
-       */
+      // Five Projectiles at angles
+      /*
+      int bulletAmt = 6;
+      double scale = 0.1;
+      for (int i = 0; i < bulletAmt; i++)
+      {
+          Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, -(M_PI/2) + (2*i/M_PI), potency);
+          proj->setScale(Vector2f(scale, scale));
+          std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+          projectiles->insert(newShot);
+      }
+     */
+
+      shotSound.play();
     }
 };
 

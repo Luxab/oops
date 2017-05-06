@@ -59,8 +59,8 @@ public:
   pow_map *powerups;                    // Keep track of all powerups
   bool dead = false;
 
-  Sound deathSound;              // Sound that plays when weapon is shot
-  SoundBuffer deathSoundBuffer;  // Buffer for shot sound
+  Sound *deathSound = new Sound;              // Sound that plays when weapon is shot
+  SoundBuffer *deathSoundBuffer = new SoundBuffer;  // Buffer for shot sound
 
   Player()
   {
@@ -68,8 +68,8 @@ public:
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
-    deathSoundBuffer.loadFromFile("audio/DeathYell1.wav");
-    deathSound.setBuffer(deathSoundBuffer);
+    deathSoundBuffer->loadFromFile("audio/death_yell.wav");
+    deathSound->setBuffer(*deathSoundBuffer);
 
     // Projectile tracking
     playerProjectiles = pp;
@@ -95,7 +95,6 @@ public:
     transparent.loadFromFile("images/transparent.png");
 
     // Default weapon
-    std::cout << "Default weapon with bounds: " << boundaries.top << "," << boundaries.left << "," << boundaries.width << "," << boundaries.height << std::endl;
     weapon = new SpreadEagle(boundaries, playerProjectiles);
 
     // Set position to middle
@@ -316,8 +315,9 @@ public:
 
   void killSelf()
   {
+    deathSound->play();
+
     dead = true;
-    deathSound.play();
     std::cout << "You ded!" << std::endl;
   }
 
