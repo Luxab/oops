@@ -276,10 +276,16 @@ public:
 
         std::string scoreString = "Score:\n" + std::to_string(currScore);
         score.setString(scoreString);
+      } 
+      // Ensure powerup hasn't gone out of bounds
+      else if (!boundaries.intersects(Rect<int>(enemyPair.second->getGlobalBounds())))
+      {
+        // Has gone out of bounds, remove from hashmap
+        toBeDeleted.push_back(enemyPair.first);
       }
     }
 
-    // Delete all projectiles that went off-screen
+    // Delete all dead or off-screen enemies
     for (auto &enemyKey : toBeDeleted)
     {
       enemies->erase(enemyKey);
