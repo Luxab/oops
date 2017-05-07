@@ -1,0 +1,3 @@
+/home/user/Nextcloud/School/CSE/OOP/oops/CMakeFiles/edit_cache.dir
+/home/user/Nextcloud/School/CSE/OOP/oops/CMakeFiles/rebuild_cache.dir
+/home/user/Nextcloud/School/CSE/OOP/oops/CMakeFiles/sfeMovieDemo.dir
