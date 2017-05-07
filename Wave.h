@@ -119,7 +119,6 @@ class Wave
     void spawnEnemies ()
     {
       gameStarted = true;
-      std::cout << "sus" << std::endl;
 
       // Create pairs for each enemy and insert into maps
       for (waveEnemiesIndex; waveEnemiesIndex < waveEnemies.size(); ++waveEnemiesIndex)
