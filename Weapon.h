@@ -31,11 +31,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Projectile.h"
-#include <vector>
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
+#include <random>
 #include <unordered_map>
+
+#include "Projectile.h"
 
 using namespace sf;
 
@@ -50,15 +52,16 @@ public:
   IntRect boundaries;           // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
-  Sound shotSound;              // Sound that plays when weapon is shot
-  SoundBuffer shotSoundBuffer;  // Buffer for shot sound
+  Sound *shotSound = new Sound; // Sound that plays when weapon is shot
+  SoundBuffer *shotSoundBuffer
+      = new SoundBuffer;        // Buffer for shot sound
 
   Weapon(IntRect b, proj_map *p)
   {
     boundaries = b;
     projectiles = p;
 
-    shotSound.setBuffer(shotSoundBuffer);
+    shotSound->setBuffer(*shotSoundBuffer);
   }
   ~Weapon()
   {
@@ -125,7 +128,7 @@ class BBGun : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound.play();
+      shotSound->play();
    }
 };
 
@@ -139,7 +142,7 @@ class AK47 : public Weapon
       speed = 20;
       cooldown = 100;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~AK47()
     {
@@ -156,7 +159,7 @@ class AK47 : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound.play();
+      shotSound->play();
    }
 };
 
@@ -170,7 +173,7 @@ class SpreadEagle : public Weapon
       speed = 20;
       cooldown = 250;
       shotTexture.loadFromFile("images/bb.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~SpreadEagle()
     {
@@ -197,7 +200,7 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
-      shotSound.play();
+      shotSound->play();
    }
 };
 
@@ -211,7 +214,7 @@ class LargeBullet : public Weapon
       speed = 20;
       cooldown = 750;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~LargeBullet()
     {
@@ -225,9 +228,63 @@ class LargeBullet : public Weapon
       std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
       projectiles->insert(newShot1);
 
-      shotSound.play();
+      shotSound->play();
     }
 };
+
+class Cannon : public Weapon
+{
+  public:
+    Cannon(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+      // Set characteristics
+      potency = .1;
+      speed = 10;
+      cooldown = 150;
+      shotTexture.loadFromFile("images/ball.png");
+      shotSoundBuffer->loadFromFile("audio/cannon.wav");
+    }
+    ~Cannon()
+    {
+
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      // Single shot up
+
+      // Random vars
+      std::random_device rd;
+      std::mt19937 rng(rd());
+
+      // Insert new projectile into projectiles map
+      for (int i = 0; i < 50; i++)
+      {
+        // Random angle
+        std::uniform_real_distribution<double> uni(-M_PI/4,M_PI/4);
+        auto random_angle = uni(rng);
+
+        std::uniform_int_distribution<int> uni_dist(-25,25);
+        std::uniform_int_distribution<int> uni_color_r(100,255);
+        std::uniform_int_distribution<int> uni_color_g(100,255);
+        std::uniform_int_distribution<int> uni_color_b(100,255);
+        auto random_d = uni_dist(rng);
+        auto random_r = uni_color_r(rng);
+        auto random_g = uni_color_g(rng);
+        auto random_b = uni_color_b(rng);
+
+        Projectile *proj = new Projectile(initPos.x, initPos.y-random_d, shotTexture, 
+            speed, random_angle, potency);
+        proj->setScale(Vector2f(.1,.1));
+        proj->setColor(Color(random_r, random_g, random_b));
+        std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+        projectiles->insert(newShot);
+      }
+
+      shotSound->play();
+   }
+};
+
 
 // -------------------- Enemy Weaponry -------------------- //
 
@@ -241,7 +298,7 @@ class PeaShooter : public Weapon
       speed = 20;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      //shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~PeaShooter()
     {
@@ -258,7 +315,7 @@ class PeaShooter : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound.play();
+      shotSound->play();
    }
 };
 
@@ -272,7 +329,7 @@ class Sniper : public Weapon
       speed = 40;
       cooldown = 1000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~Sniper()
     {
@@ -287,7 +344,7 @@ class Sniper : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound.play();
+      shotSound->play();
     }
 };
 
@@ -302,7 +359,7 @@ class WideGun : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~WideGun()
     {
@@ -318,7 +375,7 @@ class WideGun : public Weapon
       std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
       projectiles->insert(newShot1);
 
-      shotSound.play();
+      shotSound->play();
     }
 
 };
@@ -333,7 +390,7 @@ class Shotter : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer.loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~Shotter()
     {
@@ -374,7 +431,7 @@ class Shotter : public Weapon
       }
      */
 
-      shotSound.play();
+      shotSound->play();
     }
 };
 

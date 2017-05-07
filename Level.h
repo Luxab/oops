@@ -370,8 +370,15 @@ public:
       waitingForNextLevel = false;
     }
 
+    // Easter egg
+    if (!gameIsOver && Keyboard::isKeyPressed(Keyboard::P))
+    {
+      p.setWeapon(new Cannon(boundaries,playerProjectiles));
+    }
+
+
     // Wait a bit after dying
-    if (gameIsOver && (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Return)))
+    if (gameIsOver && Keyboard::isKeyPressed(Keyboard::Return))
     {
       cl("victory");
     }
@@ -422,7 +429,8 @@ public:
       // You won!
       std::cout << "No next wave found, you musta won!!!!" << std::endl;
       gameOver();
-      statusText.setString("You won!");
+      statusText.setString("      You won!\n\nEnter to Continue");
+    statusText.setColor(Color(10,255,10)); // Set to green
     } else {
       // Go to next wave
       currWaveIndex++;
@@ -450,7 +458,7 @@ public:
   void gameOver()
   {
     statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 50));
-    statusText.setString("Game over!");
+    statusText.setString("Game over!\n\nPress Enter");
     statusText.setColor(Color(255,10,10)); // Set to red
     gameIsOver = true;
   }
