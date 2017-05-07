@@ -36,8 +36,8 @@ using namespace sf;
 
 class MovingHealthBar : public RectangleShape
 {
-  int maxHealth;
-  int health;
+  float maxHealth;
+  float health;
   int x,y,bSize;
   int bWidth, bHeight; //width and height of the background.
 
@@ -55,7 +55,7 @@ public:
 
   }
 
-  void takeDamage(RenderWindow &window, int damageAmount)
+  void takeDamage(RenderWindow &window, float damageAmount)
   {
     health-= damageAmount;
 
@@ -70,7 +70,7 @@ public:
     return health;
   }
 
-  void setMaxHealth(int h)
+  void setMaxHealth(float h)
   {
     maxHealth = h;
     health = h;
@@ -79,8 +79,8 @@ public:
 
 class HealthBar : public RectangleShape
 {
-  int maxHealth;
-  int health;
+  float maxHealth;
+  float health;
   int x,y;
   Vector2f bSize;
   int bWidth, bHeight; //width and height of the background.
@@ -110,7 +110,7 @@ public:
 
   }
 
-  void takeDamage(int damageAmount)
+  void takeDamage(float damageAmount)
   {
     health-= damageAmount;
     setSize(Vector2f(bSize.x*((float)health/(float)maxHealth),bSize.y));

@@ -208,7 +208,7 @@ public:
         // TODO: Maybe a special gun could pass through enemies?
         deadProjectiles->push_back(shot.first);
 
-        loseHealth(win, 1);
+        loseHealth(win, shotObj->getPotency());
       }
     }
   }
@@ -244,7 +244,7 @@ public:
     return getGlobalBounds().intersects(rect);
   }
 
-  void loseHealth(RenderWindow &win, int amt)
+  void loseHealth(RenderWindow &win, float amt)
   {
     // Take some damage
     health->takeDamage(win, amt);

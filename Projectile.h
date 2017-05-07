@@ -82,6 +82,11 @@ public:
   {
     return getGlobalBounds().intersects(rect);
   }
+
+  float getPotency ()
+  {
+    return potency;
+  }
 };
 
 #endif
