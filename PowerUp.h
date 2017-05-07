@@ -124,7 +124,7 @@ class SnackBar : public PowerUp
         std::cout << "Creating new snackbar." << std::endl;
 
         // Set characteristics
-        healthBoost = 2;
+        healthBoost = 1;
         speed = 1;
 
         powerupTexture.loadFromFile("images/bb.png");
@@ -138,6 +138,33 @@ class SnackBar : public PowerUp
       }
 
       ~SnackBar ()
+      {
+
+      }
+};
+
+class Doritos : public PowerUp
+{
+    public:
+      Doritos (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
+      {
+        std::cout << "Creating new doritos." << std::endl;
+
+        // Set characteristics
+        healthBoost = 2;
+        speed = 1;
+
+        powerupTexture.loadFromFile("images/doritos.png");
+        grabSoundBuffer.loadFromFile("audio/item_pickup.wav");
+
+        // Set texture
+        setTexture(powerupTexture);
+
+        // Set size of the powerup
+        setScale(Vector2f(0.3,0.3));
+      }
+
+      ~Doritos ()
       {
 
       }

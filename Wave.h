@@ -46,12 +46,13 @@ enemy_map *e;                       // Keep track of all enemies on screen
 pow_map *p;                         // Keep track of all powerups
 
 std::vector<PowerUp*> wavePowerUps; // Fill this vector with all powerups you'd like to spawn during a given wave
+std::vector<Enemy*> waveEnemies;    // Fill this vector with all enemies you'd like to spawn during a given wave
+int waveEnemiesIndex = 0;           // Iterator for wave enemy vector
 double powerUpCooldown = 10000;     // How often to spawn powerups. Can be changed per wave
 
 bool finishedSpawning = false;      // Set to true when wave is finished
-float ratio = (float) 2 / 3;        // 2/3 ratio for spawning behind boundary line
-
 bool gameStarted = false;           // Only do some stuff after game has officially started
+float ratio = (float) 2 / 3;        // 2/3 ratio for spawning behind boundary line
 
 // Random vars
 std::random_device rd;
@@ -75,33 +76,39 @@ class Wave
       {
         powerupSpawnClock.restart();
 
-        // Get random powerup
-
-        std::uniform_int_distribution<int> uni(0,wavePowerUps.size()-1);
-        auto random_index = uni(rng);
-
         if (wavePowerUps.size() != 0)
         {
-            PowerUp *randPowerup = wavePowerUps.at(random_index);
+            // Get random powerup
+          std::uniform_int_distribution<int> uni(0,wavePowerUps.size()-1);
+          auto random_index = uni(rng);
 
-            // Set random position for each powerup
-            std::uniform_int_distribution<int> pow_uni(30, boundaries.width * ratio - 50);
-            auto random_width = pow_uni(rng);
-            std::cout << "Spawning powerups at " << random_width << "," << "30" << std::endl;
+          PowerUp *randPowerup = wavePowerUps.at(random_index);
 
-            randPowerup->setPosition(random_width, 30);
+          // Set random position for each powerup
+          std::uniform_int_distribution<int> pow_uni(30, boundaries.width * ratio - 50);
+          auto random_width = pow_uni(rng);
 
-            std::pair<int, PowerUp*> powerupPair(p->size(), randPowerup);
-            p->insert(powerupPair);
+          randPowerup->setPosition(random_width, 30);
+
+          std::pair<int, PowerUp*> powerupPair(p->size(), randPowerup);
+          p->insert(powerupPair);
         }
       }
-
     }
 
     void draw(RenderWindow &win)
     {
       if (gameStarted)
+      {
         spawnPowerups();
+
+        // If there are no enemies and there are still enemies to spawn,
+        // spawn the next part of the wave
+        if (!finishedSpawning && e->size() <= 0)
+          spawnEnemies();
+        else if (!finishedSpawning && e->size() <= 0 && waveEnemiesIndex >= waveEnemies.size() - 1)
+          finishedSpawning = true;
+      }
     }
 
     void setBoundaries (IntRect b)
@@ -109,19 +116,49 @@ class Wave
         boundaries = b;
     }
 
-    virtual void spawnEnemies () = 0;
+    void spawnEnemies ()
+    {
+      gameStarted = true;
+      std::cout << "sus" << std::endl;
+
+      // Create pairs for each enemy and insert into maps
+      for (waveEnemiesIndex; waveEnemiesIndex < waveEnemies.size(); ++waveEnemiesIndex)
+      {
+        Enemy *enemy = waveEnemies.at(waveEnemiesIndex);
+
+        // If normal enemy, load on to screen
+        if (!enemy->isBreak())
+        {
+          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
+          e->insert(enemyPair);
+        } else {
+          // Is break enemy, just wait for all current enemies to die
+          waveEnemiesIndex++;
+          break;
+        }
+
+        // Only finish wave once we reach the end of our enemies vector
+        if (waveEnemiesIndex+1 >= waveEnemies.size())
+          finishedSpawning = true;
+      }
+    }
+
+    virtual void loadEnemiesAndPowerups () = 0;
 
     bool waveIsFinished ()
     {
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
+
+      // Clear powerups
+      wavePowerUps.clear();
+
       return finishedSpawning && (e->size() <= 0);
     }
 };
 
 class WaveOne : public Wave
 {
-
   public:
     WaveOne (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
     {
@@ -132,35 +169,31 @@ class WaveOne : public Wave
       p = pin;
 
       boundaries = b;
-
-      wavePowerUps.push_back(new SnackBar(boundaries, p, ppin));
-      wavePowerUps.push_back(new GunPowerUp(boundaries, p, ppin));
     }
     ~WaveOne ()
     {
 
     }
 
-    void spawnEnemies ()
+    void loadEnemiesAndPowerups ()
     {
-      gameStarted = true;
+      // Set up enemies
+      Skeltal *e1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      waveEnemies.push_back(e1);
 
-      std::vector<Enemy*> enemiesToSpawn;
+      Break *b1 = new Break(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      waveEnemies.push_back(b1);
 
-      Skeltal *w1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
-      enemiesToSpawn.push_back(w1);
+      WigWam *e2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
+      waveEnemies.push_back(e2);
 
-      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
-      enemiesToSpawn.push_back(w3);
+      Break *b2 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
+      waveEnemies.push_back(b2);
 
-      // Create pairs for each enemy and insert into maps
-      for (auto &enemy : enemiesToSpawn)
-      {
-        std::pair<int,Enemy*> enemyPair (e->size(), enemy);
-        e->insert(enemyPair);
-      }
+      Skeltal *e3 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      waveEnemies.push_back(e3);
 
-      finishedSpawning = true;
+      // No powerups this round :)
     }
 
     void draw()
@@ -171,7 +204,6 @@ class WaveOne : public Wave
 
 class WaveTwo : public Wave
 {
-
   public:
     WaveTwo (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
     {
@@ -188,27 +220,20 @@ class WaveTwo : public Wave
 
     }
 
-    void spawnEnemies ()
+    void loadEnemiesAndPowerups ()
     {
-      std::vector<Enemy*> enemiesToSpawn;
-
       WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(0,100));
-      enemiesToSpawn.push_back(w1);
+      waveEnemies.push_back(w1);
 
       WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(150,300));
-      enemiesToSpawn.push_back(w2);
+      waveEnemies.push_back(w2);
 
       WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,100));
-      enemiesToSpawn.push_back(w3);
+      waveEnemies.push_back(w3);
 
-      // Create pairs for each enemy and insert into maps
-      for (auto &enemy : enemiesToSpawn)
-      {
-        std::pair<int,Enemy*> enemyPair (e->size(), enemy);
-        e->insert(enemyPair);
-      }
-
-      finishedSpawning = true;
+      // Set up powerups
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
     }
 
     void draw()
@@ -236,26 +261,26 @@ class WaveThree : public Wave
       // Do Nothing
     }
 
-    void spawnEnemies()
+    void loadEnemiesAndPowerups ()
     {
-      std::vector<Enemy*> enemiesToSpawn;
-
+      // Set up enemies
       SnipeHunt *s1 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,100));
-      enemiesToSpawn.push_back(s1);
+      waveEnemies.push_back(s1);
 
       BigGuns *b1 = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,300));
-      enemiesToSpawn.push_back(b1);
+      waveEnemies.push_back(b1);
 
       RunGun *r1 = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,100));
-      enemiesToSpawn.push_back(r1);
+      waveEnemies.push_back(r1);
 
-      for(auto &enemy : enemiesToSpawn)
-      {
-          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
-          e->insert(enemyPair);
-      }
+      // Set up powerups
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+    }
 
-       finishedSpawning = true;
+    void spawnEnemies()
+    {
+
     }
 };
 
@@ -281,7 +306,7 @@ class WaveProcedural : public Wave
 
     void spawnEnemies()
     {
-      std::vector<Enemy*> enemiesToSpawn;
+      std::vector<Enemy*> waveEnemies;
       std::uniform_real_distribution<float> randx(0, 400);
       std::uniform_real_distribution<float> randy(100, 500);
 
@@ -289,7 +314,7 @@ class WaveProcedural : public Wave
       while(d <= difficulty) {
         SnipeHunt *sh = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(sh->score <= difficulty-d) {
-          enemiesToSpawn.push_back(sh);
+          waveEnemies.push_back(sh);
 	  d += sh->score;
         }
 	else {
@@ -298,7 +323,7 @@ class WaveProcedural : public Wave
 	}
         BigGuns *bg = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(bg->score <= difficulty-d) {
-          enemiesToSpawn.push_back(bg);
+          waveEnemies.push_back(bg);
 	  d += bg->score;
         }
 	else {
@@ -308,7 +333,7 @@ class WaveProcedural : public Wave
 
         RunGun *rg = new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(rg->score <= difficulty-d) {
-          enemiesToSpawn.push_back(rg);
+          waveEnemies.push_back(rg);
 	  d += rg->score;
         }
 	else {
@@ -318,7 +343,7 @@ class WaveProcedural : public Wave
 
         Skeltal *s = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(s->score <= difficulty-d) {
-          enemiesToSpawn.push_back(s);
+          waveEnemies.push_back(s);
 	  d += s->score;
         }
         else {
@@ -328,7 +353,7 @@ class WaveProcedural : public Wave
 
         WigWam *ww = new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
         if(ww->score <= difficulty-d) {
-          enemiesToSpawn.push_back(ww);
+          waveEnemies.push_back(ww);
 	  d += ww->score;
         }
         else {
@@ -337,7 +362,7 @@ class WaveProcedural : public Wave
 	}
       }
 
-      for(auto &enemy : enemiesToSpawn)
+      for(auto &enemy : waveEnemies)
       {
           std::pair<int,Enemy*> enemyPair (e->size(), enemy);
           e->insert(enemyPair);

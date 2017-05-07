@@ -65,6 +65,7 @@ public:
   enemy_map *enemies;               // Keep track of all spawned enemies on screen
   bool dead = false;                // Keep track of enemy's life state
   bool deathProcess = false;        // Starts the death animation if true
+  bool isBreakEnemy = false;        // Used to determine if we have a break enemy
   float ratio = (float) 2 / 3;      // Ratio for boundary lines
 
   bool mvDirect = false;            // For ZIG_ZAG: false if moving left, true if moving right
@@ -199,16 +200,16 @@ public:
   {
     for (std::pair<int, Projectile*> shot : *playerProjectiles)
     {
-        // Workaround to appease vtable gods
-        Projectile *shotObj = shot.second;
-        if (shotObj && shotObj->contains(getGlobalBounds()))
-        {
-          // Destroy bullet
-          // TODO: Maybe a special gun could pass through enemies?
-          deadProjectiles->push_back(shot.first);
+      // Workaround to appease vtable gods
+      Projectile *shotObj = shot.second;
+      if (shotObj && shotObj->contains(getGlobalBounds()))
+      {
+        // Destroy bullet
+        // TODO: Maybe a special gun could pass through enemies?
+        deadProjectiles->push_back(shot.first);
 
-          loseHealth(win, 1);
-        }
+        loseHealth(win, 1);
+      }
     }
   }
 
@@ -231,6 +232,11 @@ public:
     Vector2f pos = getPosition();
     //health->setPosition(pos.x, pos.y); // TODO: Perhaps make move()
     //health->draw(win);
+  }
+
+  bool isBreak ()
+  {
+    return isBreakEnemy;
   }
 
   bool contains(FloatRect rect)
@@ -256,6 +262,23 @@ public:
   {
     dead = true;
   }
+};
+
+// Dummy enemy. Used to put breaks in Waves
+class Break : public Enemy
+{
+  public:
+    // Constructor
+    Break (IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
+    //    : Enemy(ep, pp, dp, e, LOOP_DE_LOOP, new PeaShooter(b, ep), b, spawnLoc)
+    {
+      isBreakEnemy = true;
+    }
+    // Destructor
+    ~Break()
+    {
+        // Do Nothing
+    }
 };
 
 // Basic enemy

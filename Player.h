@@ -164,7 +164,9 @@ public:
 
     // Set correct texture based on immunity value
     if (currentlyTransparent)
-      setTexture(transparent);
+      this->setColor(Color(255,255,255,100));
+    else
+      this->setColor(Color(255,255,255,255));
 
     // Apply changes
     setTextureRect(tRec);
@@ -285,9 +287,9 @@ public:
         currentlyImmune = true;
 
         // Animate between transparent and non-transparent based on clock
-        if (immunityClock.getElapsedTime().asMilliseconds() % 50 >= 25)
+        if (immunityClock.getElapsedTime().asMilliseconds() % 100 >= 50)
           currentlyTransparent = true;
-        else if (immunityClock.getElapsedTime().asMilliseconds() % 50 <  25)
+        else if (immunityClock.getElapsedTime().asMilliseconds() % 100 < 50)
           currentlyTransparent = false;
       }
     }
@@ -305,6 +307,11 @@ public:
         killSelf();
 
     // Start the immunity countdown
+    immunityClock.restart();
+  }
+
+  void restartImmunityClock ()
+  {
     immunityClock.restart();
   }
 
