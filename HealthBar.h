@@ -48,7 +48,7 @@ public:
     maxHealth = mh;
     health = maxHealth;
     setPosition(location.x,location.y);
-    setFillColor(Color(234,0,0)); // red
+    setFillColor(Color(234,0,0,0)); // red, transparent by default
   }
   ~MovingHealthBar()
   {
@@ -74,6 +74,11 @@ public:
   {
     maxHealth = h;
     health = h;
+  }
+
+  void draw(RenderWindow &win)
+  {
+    win.draw(*this);
   }
 };
 

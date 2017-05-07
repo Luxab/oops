@@ -55,6 +55,7 @@ public:
   IntRect boundaries;               // Rectangle that defines level boundaries
   Clock weaponCooldown;             // Only fire after cooldown
   Clock movementClock;              // Used for LOOP_DE_LOOP MOVE_TYPE
+  Clock healthBarClock;             // Show health bar for a limited amount of time
   MOVE_TYPE moveType;               // Which pattern enemy moves in
   Vector2f initialPos;              // Where the enemy spawns
   Texture enemyTexture;             // How it look n stuff
@@ -67,6 +68,7 @@ public:
   bool deathProcess = false;        // Starts the death animation if true
   bool isBreakEnemy = false;        // Used to determine if we have a break enemy
   float ratio = (float) 2 / 3;      // Ratio for boundary lines
+  double healthBarShowLen = 1000;   // How long to show health bar (in ms)
 
   bool mvDirect = false;            // For ZIG_ZAG: false if moving left, true if moving right
   int cirRad = 50;                  // Radius of circle for LOOP_DE_LOOP
@@ -95,7 +97,7 @@ public:
     FloatRect eB = getGlobalBounds();
     Vector2f barSize(eB.width,10);
     Vector2f barLoc(eB.left,eB.top-barSize.y);
-    health = new MovingHealthBar(barLoc,barSize,1);
+    health = new MovingHealthBar(Vector2f(getPosition().x, getPosition().y));
 
     // Set position to spawn location
     setPosition(spawnLoc);
@@ -230,8 +232,14 @@ public:
 
     // Draw health
     Vector2f pos = getPosition();
-    //health->setPosition(pos.x, pos.y); // TODO: Perhaps make move()
-    //health->draw(win);
+    health->setPosition(pos.x, pos.y - 40.0f);
+    health->draw(win);
+
+    // Hide health if time expired
+    if (healthBarClock.getElapsedTime().asMilliseconds() > healthBarShowLen)
+      health->setFillColor(Color(234,0,0,0));
+    else
+      health->setFillColor(Color(234,0,0,255));
   }
 
   bool isBreak ()
@@ -248,6 +256,8 @@ public:
   {
     // Take some damage
     health->takeDamage(win, amt);
+
+    healthBarClock.restart();
 
     if (health->getCurrentHealth() <= 0)
         deathAnimation();
@@ -381,6 +391,17 @@ public:
     Sprite toDraw = *this;
     win.draw(toDraw);
     tickMove();
+
+    // Draw health
+    Vector2f pos = getPosition();
+    health->setPosition(pos.x, pos.y - 40.0f);
+    health->draw(win);
+
+    // Hide health if time expired
+    if (healthBarClock.getElapsedTime().asMilliseconds() > healthBarShowLen)
+      health->setFillColor(Color(234,0,0,0));
+    else
+      health->setFillColor(Color(234,0,0,255));
   }
 };
 
