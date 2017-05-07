@@ -224,6 +224,7 @@ public:
     // Create player
     playerTexture.loadFromFile("images/Skateboard_Forward.png");
     p = Player(playerTexture, playerProjectiles, enemyProjectiles, enemies, powerups, PLAYER_SPEED, FloatRect(boundaries.left,boundaries.top,boundaries.width*ratio,boundaries.height));
+    p.restartImmunityClock();
 
     // Set up waves
     waves.push_back(new WaveOne(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
@@ -231,10 +232,10 @@ public:
     waves.push_back(new WaveThree(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
 
     float difficulty = 25;
-    for(int w = 0; w < MAX_WAVES; w++) {
+    /*for(int w = 0; w < MAX_WAVES; w++) {
       waves.push_back(new WaveProcedural(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups, difficulty));
       difficulty *= 2;
-    }
+    }*/
 
     readyUpForNextWave();
   }
@@ -263,7 +264,7 @@ public:
     waves.at(currWaveIndex)->draw(*window);
 
     // Fade out welcome to wave X text
-    if (welcomeTextShowing && welcomeTextTimerClock.getElapsedTime().asMilliseconds() > welcomeTextShownLength)
+    if (!gameIsOver && welcomeTextShowing && welcomeTextTimerClock.getElapsedTime().asMilliseconds() > welcomeTextShownLength)
     {
       // Fade alpha slightly every frame
       statusText.setColor(Color(255,255,255,statusText.getColor().a - 2));
@@ -368,6 +369,12 @@ public:
       startWave();
       waitingForNextLevel = false;
     }
+
+    // Wait a bit after dying
+    if (gameIsOver && (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::Return)))
+    {
+      cl("victory");
+    }
   }
 
   void showText()
@@ -417,8 +424,8 @@ public:
       gameOver();
       statusText.setString("You won!");
     } else {
-        // Go to next wave
-        currWaveIndex++;
+      // Go to next wave
+      currWaveIndex++;
     }
   }
 
@@ -435,18 +442,17 @@ public:
     // Find index of current wave
     // Start wave
     waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
+    waves.at(currWaveIndex)->loadEnemiesAndPowerups();
     waves.at(currWaveIndex)->spawnEnemies();
   }
 
   // You lose
   void gameOver()
   {
-    statusText.setPosition(Vector2f(background.getGlobalBounds().width/6,
-                                      50));
+    statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 50));
     statusText.setString("Game over!");
+    statusText.setColor(Color(255,10,10)); // Set to red
     gameIsOver = true;
-
-    cl("victory");
   }
 };
 
