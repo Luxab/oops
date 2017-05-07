@@ -125,7 +125,6 @@ public:
         health = maxHealth;
 
     setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
-    takeDamage(0);
   }
 
   int getCurrentHealth()
