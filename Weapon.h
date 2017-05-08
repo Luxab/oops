@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -62,6 +62,7 @@ public:
     projectiles = p;
 
     shotSound->setBuffer(*shotSoundBuffer);
+    shotSound->setVolume(35);
   }
   ~Weapon()
   {
@@ -279,7 +280,7 @@ class Cannon : public Weapon
         auto random_g = uni_color_g(rng);
         auto random_b = uni_color_b(rng);
 
-        Projectile *proj = new Projectile(initPos.x, initPos.y-random_d, shotTexture, 
+        Projectile *proj = new Projectile(initPos.x, initPos.y-random_d, shotTexture,
             speed, random_angle, potency);
         proj->setScale(Vector2f(.1,.1));
         proj->setColor(Color(random_r, random_g, random_b));
