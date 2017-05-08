@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -44,12 +44,21 @@ class MainMenu : public Level
   Button *scoreButton;
   Button *quitButton;
 
+  Music *music = new Music; //Main Menu music
+
 public:
   MainMenu(RenderWindow &win, Event &ev, changeLevel cl, startNewGame sng,Font fin) : Level(win, ev, cl)
   {
     gameFont = fin;
     initLevel();
     this->sng = sng;
+
+    if (!music->openFromFile("audio/Tempest2000/02 Track 2.wav"))
+    {
+      std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
+    }
+    music->setLoop(true);
+    music->play();
   }
   ~MainMenu()
   {
@@ -122,10 +131,12 @@ public:
       }
       if (scoreButton->contains(mouseX,mouseY))
       {
+        music->stop();
         cl("scores");
       }
       if (playButton->contains(mouseX,mouseY))
       {
+        music->stop();
         sng();
         cl("test");
       }
