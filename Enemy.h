@@ -313,7 +313,7 @@ class WigWam : public Enemy
       weapon = new PeaShooter(b, ep);
 
       // Set score for killing
-      score = 25;
+      score = 50;
     }
     // Destructor
     ~WigWam()
@@ -340,7 +340,7 @@ public:
     walk2.loadFromFile("images/skel_walk2.png");
     deadTexture.loadFromFile("images/skel_death.png");
     setTexture(walk1);
-    score = 50;
+    score = 10;
   }
 
   void walkAnimation()
