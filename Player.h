@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -33,6 +33,8 @@
 #include "Weapon.h"
 #include "HealthBar.h"
 #include <vector>
+#include <iostream>
+#include <string>
 
 using namespace sf;
 
@@ -59,6 +61,9 @@ public:
   pow_map *powerups;                    // Keep track of all powerups
   bool dead = false;
 
+  Sound *painSound = new Sound;
+  SoundBuffer *painBuffer = new SoundBuffer;
+
   Sound *deathSound = new Sound;              // Sound that plays when weapon is shot
   SoundBuffer *deathSoundBuffer = new SoundBuffer;  // Buffer for shot sound
 
@@ -68,6 +73,8 @@ public:
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
+    painSound->setBuffer(*painBuffer);
+
     deathSoundBuffer->loadFromFile("audio/death_yell.wav");
     deathSound->setBuffer(*deathSoundBuffer);
 
@@ -300,8 +307,21 @@ public:
     }
   }
 
+  void playPainSound()
+  {
+    std::string painString;
+    painString+="audio/pain/man_pain_";
+    int randNum = rand() % 29 + 1; //Range of 1 to 29
+    std::cout << randNum << std::endl;
+    painString+= std::to_string(randNum);
+    painString+=".wav";
+    painBuffer->loadFromFile(painString);
+    painSound->play();
+  }
+
   void loseHealth(RenderWindow &win, int amt)
   {
+    playPainSound();
     health->takeDamage(amt);
     if (health->getCurrentHealth() <= 0)
         killSelf();
