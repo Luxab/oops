@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -54,12 +54,17 @@ bool finishedSpawning = false;      // Set to true when wave is finished
 bool gameStarted = false;           // Only do some stuff after game has officially started
 float ratio = (float) 2 / 3;        // 2/3 ratio for spawning behind boundary line
 
+Music *music = new Music; //music
+
 // Random vars
 std::random_device rd;
 std::mt19937 rng(rd());
 
 class Wave
 {
+  bool musicInit = 0;
+protected:
+  std::string musicFileName;
   public:
     Wave ()
     {
@@ -96,10 +101,34 @@ class Wave
       }
     }
 
+    void playMusic()
+    {
+      if (!music->getStatus())
+      {
+        std::cout << "Playing Wave Music" << std::endl;
+        music->play();
+      }
+    }
+
+    void initWaveMusic()
+    {
+      if (!music->openFromFile(musicFileName))
+      {
+        std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
+      }
+      music->setLoop(true);
+    }
+
     void draw(RenderWindow &win)
     {
-      if (gameStarted)
+      if (!musicInit)
       {
+        musicInit = !musicInit;
+        initWaveMusic();
+      }
+      if (gameStarted && !waveIsFinished())
+      {
+        playMusic();
         spawnPowerups();
 
         // If there are no enemies and there are still enemies to spawn,
@@ -149,10 +178,15 @@ class Wave
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
 
+      return finishedSpawning && (e->size() <= 0);
+    }
+
+    void cleanup()
+    {
+      std::cout << "Cleaning up wave" << std::endl;
+      music->stop();
       // Clear powerups
       wavePowerUps.clear();
-
-      return finishedSpawning && (e->size() <= 0);
     }
 };
 
@@ -168,6 +202,8 @@ class WaveOne : public Wave
       p = pin;
 
       boundaries = b;
+
+      musicFileName = "audio/Tempest2000/03 Track 3.wav";
     }
     ~WaveOne ()
     {
@@ -213,6 +249,7 @@ class WaveTwo : public Wave
       p = pin;
 
       boundaries = b;
+      musicFileName = "audio/Tempest2000/04 Track 4.wav";
     }
     ~WaveTwo ()
     {
@@ -254,6 +291,7 @@ class WaveThree : public Wave
       p = pin;
 
       boundaries = b;
+      musicFileName = "audio/Tempest2000/05 Track 5.wav";
     }
     ~WaveThree()
     {

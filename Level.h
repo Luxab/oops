@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -96,7 +96,7 @@ public:
   {
 
   }
-  
+
   virtual void didAppear()
   {
 
@@ -297,7 +297,7 @@ public:
 
         std::string scoreString = "Score:\n" + std::to_string(currScore);
         score.setString(scoreString);
-      } 
+      }
       // Ensure powerup hasn't gone out of bounds
       else if (!boundaries.intersects(Rect<int>(enemyPair.second->getGlobalBounds())))
       {
@@ -327,6 +327,7 @@ public:
       window->draw(p); //draw the player
       p.draw(*window); //let the player draw
     } else if (!gameIsOver){
+      waves[currWaveIndex]->cleanup();
       gameOver();
     }
 
@@ -349,7 +350,7 @@ public:
         // Has gone out of bounds, remove from hashmap
         powerupsToBeDeleted.push_back(pow.first);
       }
-      
+
     }
 
     // Delete all powerups that went off-screen
@@ -361,6 +362,7 @@ public:
     // Check for end of wave
     if (!gameIsOver && !waitingForNextLevel && waves[currWaveIndex]->waveIsFinished())
     {
+      waves[currWaveIndex]->cleanup();
       readyUpForNextWave();
     }
 
@@ -422,7 +424,7 @@ public:
   {
     waitingForNextLevel = true;
     statusText.setString("Press space to start!");
-
+    waves[currWaveIndex]->cleanup();
     if (currWaveIndex + 1 >= waves.size())
     {
       // Next wave not found
@@ -490,7 +492,7 @@ class VictoryScreen : public Level
       enterInitialsText.setString("Enter your initials");
       enterInitialsText.setCharacterSize(60);
       enterInitialsText.setColor(Color::White);
-  
+
       FloatRect bbnd = background.getGlobalBounds();
       enterInitialsText.setPosition(Vector2f(bbnd.width/4, 20));
 
@@ -590,7 +592,7 @@ class VictoryScreen : public Level
       std::ifstream textScores(scoreFileName);
       std::vector<std::string> nameVec;   // Store current names
       int_vec scoreVec;                   // Store current scores
-  
+
       if (textScores)
       {
         // Read through score lines
@@ -598,27 +600,27 @@ class VictoryScreen : public Level
         {
           std::string str, scoreStr, name;
           std::getline(textScores,str);
-  
+
           // Get score from current score lines
           //
-  
+
           std::istringstream nameiss(str);
           std::istringstream scoreiss(str);
-  
+
           // Store name
           for (int i = 0; nameiss >> name; i++)
           {
             if (i == 1)
               break; // We got our name
           }
-  
+
           // Store score
           for (int i = 0; scoreiss >> scoreStr; i++)
           {
             if (i == 2)
               break; // We got our score
           }
-  
+
           // Convert score to int and insert it and
           // corresponding name into vector
           if (name != "" && scoreStr != "")
@@ -634,7 +636,7 @@ class VictoryScreen : public Level
       std::vector<std::string>::iterator nameIt = nameVec.begin() + (scoreIt - scoreVec.begin());
       scoreVec.insert(scoreIt, currScore);
       nameVec.insert(nameIt, nameString);
-  
+
       // If high score list is comprised of 10 or more people, cut off last person
       // it doesn't grow
       if (scoreVec.size() >= 10)
@@ -654,7 +656,7 @@ class VictoryScreen : public Level
         if (scoreVec.at(i) != 0)
             outTextScores << i+1 << ": " << nameVec.at(i) << " " << scoreVec.at(i) << std::endl;
       }
-  
+
       // Release file descriptor
       outTextScores.close();
     }
