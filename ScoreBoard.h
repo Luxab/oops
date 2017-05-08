@@ -44,12 +44,20 @@ class ScoreBoard : public Level
   Button *backButton;
   BGShapes *backgroundShapes;
 
+  Music *music = new Music; //Main Menu music
+
 public:
   ScoreBoard(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
   {
     backgroundShapes = new BGShapes(background, win);
     gameFont = fin;
     drawButtons();
+
+    if (!music->openFromFile("audio/misc2/Robert Ellis - Crystal Kick.wav"))
+    {
+      std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
+    }
+    music->setLoop(true);
   }
   ~ScoreBoard()
   {
@@ -103,8 +111,17 @@ public:
     drawButtons();
   }
 
+  void playMusic()
+  {
+    if (!music->getStatus())
+    {
+      music->play();
+    }
+  }
+
   void draw()
   {
+    playMusic();
     checkWindowSize();
     backgroundShapes->draw();
     // Draw scores to screen
@@ -123,7 +140,10 @@ public:
     if (Mouse::isButtonPressed(Mouse::Left))
     {
       if(backButton->contains(mouseX,mouseY))
+      {
+        music->stop();
         cl("main");
+      }
     }
     else
     {
