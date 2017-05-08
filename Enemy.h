@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -305,13 +305,13 @@ class WigWam : public Enemy
     WigWam(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, LOOP_DE_LOOP, new PeaShooter(b, ep), b, spawnLoc)
     {
-      enemyTexture.loadFromFile("images/bb.png");
+      enemyTexture.loadFromFile("images/skull.png");
 
       // Set texture
       setTexture(enemyTexture);
 
       // Size of the enemy
-      setScale(2,2);
+      setScale(.3,.3);
 
       // Characteristics
       speed = 1;
