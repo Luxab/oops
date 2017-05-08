@@ -480,6 +480,9 @@ class VictoryScreen : public Level
   bool enoughIsEnough;
   std::string nameString = "";   // Name of the player, used for high scores
 
+  bool inputAllowed = 0;
+  bool initialDraw = 1;
+
   public:
     int pLevelIndex;
 
@@ -520,54 +523,69 @@ class VictoryScreen : public Level
 
     void draw()
     {
+      if (initialDraw)
+      {
+        holdUp = levelClock.getElapsedTime();
+        initialDraw = 0;
+      }
       checkWindowSize();
       backButton->draw(*window);
       window->draw(enterInitialsText);
 
-      if(Keyboard::isKeyPressed(Keyboard::Return))
-      {
-        writeNewScore(currScore);
-        cl("scores");
-      }
-      //wait before allowing another input.
-      if(levelClock.getElapsedTime().asSeconds()-holdUp.asSeconds()>.2)
+      //Wait before allowing ANY input
+      if(levelClock.getElapsedTime().asSeconds()-holdUp.asSeconds()>1)
       {
         holdUp = levelClock.getElapsedTime();
-        enoughIsEnough = true;
+        inputAllowed = true;
       }
 
-      if(enoughIsEnough)
+      if (inputAllowed)
       {
-        if(Keyboard::isKeyPressed(Keyboard::BackSpace) && nameString.size()!=0)
+        if(Keyboard::isKeyPressed(Keyboard::Return) && nameString.size()>0)
         {
-          nameString.pop_back();
-          enoughIsEnough = false;
+          writeNewScore(currScore);
+          cl("scores");
         }
-        else if (nameString.size()<3)
+        //wait before allowing another input.
+        if(levelClock.getElapsedTime().asSeconds()-holdUp.asSeconds()>.2)
         {
-          if (nameString.size() == 0)
+          holdUp = levelClock.getElapsedTime();
+          enoughIsEnough = true;
+        }
+
+        if(enoughIsEnough)
+        {
+          if(Keyboard::isKeyPressed(Keyboard::BackSpace) && nameString.size()!=0)
           {
-            nameButton->setText("_ _ _");
+            nameString.pop_back();
+            enoughIsEnough = false;
+          }
+          else if (nameString.size()<3)
+          {
+            if (nameString.size() == 0)
+            {
+              nameButton->setText("_ _ _");
+              nameButton->centerWidth(resW);
+            }
+
+            char c = 65;
+            //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
+            for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
+            {
+              if (Keyboard::isKeyPressed(static_cast<Keyboard::Key>(keyLoop)))
+              {
+                nameString.push_back(c);
+                enoughIsEnough = false;
+                break;
+              }
+              c++;
+            }
+          }
+          if(!enoughIsEnough)
+          {
+            nameButton->setText(nameString);
             nameButton->centerWidth(resW);
           }
-
-          char c = 65;
-          //Iterates through the 'key' enumerator from A to Z, finds the appropriate key input
-          for (int keyLoop = Keyboard::A; keyLoop != Keyboard::Num0; keyLoop++)
-          {
-            if (Keyboard::isKeyPressed(static_cast<Keyboard::Key>(keyLoop)))
-            {
-              nameString.push_back(c);
-              enoughIsEnough = false;
-              break;
-            }
-            c++;
-          }
-        }
-        if(!enoughIsEnough)
-        {
-          nameButton->setText(nameString);
-          nameButton->centerWidth(resW);
         }
       }
 
