@@ -58,7 +58,6 @@ public:
       std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
     }
     music->setLoop(true);
-    music->play();
   }
   ~MainMenu()
   {
@@ -107,8 +106,17 @@ public:
     initLevel();
   }
 
+  void playMusic()
+  {
+    if (!music->getStatus())
+    {
+      music->play();
+    }
+  }
+
   void draw()
   {
+    playMusic();
     checkWindowSize();
 
     window->draw(background); //draw background first!
