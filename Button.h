@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -54,7 +54,7 @@ public:
     bSize = bsin;
     bSpacing = 10+bSize/10;
 
-    bColDef = Color(80,80,80);
+    bColDef = Color(80,80,80,150);
     bColor = bColDef;
     bFont = fin;
     bText = Text(tin,bFont,bSize);
@@ -116,31 +116,61 @@ public:
   void checkHover(int mx, int my)
   {
     //Makes the button glow green when the mouse is over it
-    int glowVal = 220;
+    int glowVal = 190;
 
     int asyGlow;
-    if (contains(mx,my) && bColor.g<glowVal)
+    if (contains(mx,my))
     {
-      asyGlow = 20*bColor.g/bColDef.g;
-      if (bColor.g+asyGlow>glowVal)
+      if (bColor.g<glowVal)
       {
-        bColor.g = glowVal;
+        asyGlow = 20*bColor.g/bColDef.g;
+        if (bColor.g+asyGlow>glowVal)
+        {
+          bColor.g = glowVal;
+        }
+        else
+        {
+          bColor.g+=asyGlow;
+        }
       }
-      else
+      if (bColor.a<255)
       {
-        bColor.g+=asyGlow;
+        asyGlow = 20*bColor.a/bColDef.a;
+        if (bColor.a+asyGlow>255)
+        {
+          bColor.a = 255;
+        }
+        else
+        {
+          bColor.a+=asyGlow;
+        }
       }
     }
-    else if (!contains(mx,my) && bColor.g>bColDef.g)
+    else
     {
-      asyGlow = 20*bColor.g/bColDef.g;
-      if (bColor.g-asyGlow<bColDef.g)
+      if (bColor.g>bColDef.g)
       {
-        bColor.g = bColDef.g;
+        asyGlow = 20*bColor.g/bColDef.g;
+        if (bColor.g-asyGlow<bColDef.g)
+        {
+          bColor.g = bColDef.g;
+        }
+        else
+        {
+          bColor.g-=asyGlow;
+        }
       }
-      else
+      if (bColor.a>bColDef.a)
       {
-        bColor.g-=asyGlow;
+        asyGlow = 20*bColor.a/bColDef.a;
+        if (bColor.a-asyGlow<bColDef.a)
+        {
+          bColor.a = bColDef.a;
+        }
+        else
+        {
+          bColor.a-=asyGlow;
+        }
       }
     }
     setFillColor(bColor);
