@@ -554,7 +554,7 @@ public:
     combo.setCharacterSize(50);
 
     statusText.setColor(Color::White);
-    score.setClolor(Color::White);
+    score.setColor(Color::White);
     combo.setColor(Color::White);
 
     FloatRect bbnd = background.getGlobalBounds();
