@@ -62,7 +62,7 @@ public:
     if (health < 0)
       health = 0;
 
-    setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+    setSize(Vector2f(getSize().x*(health/maxHealth),getSize().y));
   }
 
   int getCurrentHealth()
@@ -84,15 +84,14 @@ public:
 
 class HealthBar : public RectangleShape
 {
-  float maxHealth;
-  float health;
+  float maxHealth = 5;
+  float health = 5;
   int x,y;
   Vector2f bSize;
   int bWidth, bHeight; //width and height of the background.
   std::vector<RectangleShape*> outlines;
 
 public:
-
   HealthBar(Vector2f location = Vector2f(0,0), Vector2f size = Vector2f(100,30), int mh=5) : RectangleShape(size)
   {
     maxHealth = mh;
@@ -118,20 +117,20 @@ public:
   void takeDamage(float damageAmount)
   {
     health-= damageAmount;
-    setSize(Vector2f(bSize.x*((float)health/(float)maxHealth),bSize.y));
+    setSize(Vector2f(bSize.x*(health/maxHealth),bSize.y));
   }
 
   void addHealth (float amt)
   {
-    health += amt;
+    health += (int) amt;
 
-    std::cout << "Adding health: " << amt << ", new health: " << health;
+    std::cout << "Adding health: " << amt << ", new health: " << health << "/" << maxHealth << std::endl;
 
     // Prevent health from overrunning
     if (health > maxHealth)
         health = maxHealth;
 
-    setSize(Vector2f(getSize().x*((float)health/(float)maxHealth),getSize().y));
+    setSize(Vector2f(getSize().x*(health/maxHealth),getSize().y));
   }
 
   int getCurrentHealth()
@@ -146,6 +145,7 @@ public:
     {
       win.draw(*outlines[i]);
     }
+    setSize(Vector2f(bSize.x*(health/maxHealth),bSize.y));
   }
 };
 #endif

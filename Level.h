@@ -51,6 +51,8 @@ typedef void (*startNewGame)();
 
 // Global
 int currScore = 0;                    // Keep track of current player score
+std::vector<Wave*> waves;             // Keep track of all possible waves
+int currWaveIndex = -1;               // Current wave that we're on
 
 #define PLAYER_SPEED 10
 
@@ -164,7 +166,13 @@ public:
     if (Mouse::isButtonPressed(Mouse::Left))
     {
       if(backButton->contains(mouseX,mouseY))
+      {
+        // Stop level music
+        waves.at(currWaveIndex)->stopWaveMusic();
+
+        currWaveIndex = -1;
         cl("main");
+      }
     }
     else
       backButton->checkHover(mouseX,mouseY);
@@ -190,9 +198,6 @@ class TestLevel : public Level
   int_vec  *deadProjectiles = new int_vec;
   enemy_map *enemies = new enemy_map;
   pow_map *powerups = new pow_map;
-
-  std::vector<Wave*> waves;             // Keep track of all possible waves
-  int currWaveIndex = -1;               // Current wave that we're on
 
   Text statusText;                      // Shows "Hit space to start!" text
   Text combo;                           // Shows combos
@@ -298,7 +303,7 @@ public:
         std::string scoreString = "Score:\n" + std::to_string(currScore);
         score.setString(scoreString);
       }
-      // Ensure powerup hasn't gone out of bounds
+      // Check if enemy has gone out of bounds
       else if (!boundaries.intersects(Rect<int>(enemyPair.second->getGlobalBounds())))
       {
         // Has gone out of bounds, remove from hashmap
@@ -382,6 +387,7 @@ public:
     // Wait a bit after dying
     if (gameIsOver && Keyboard::isKeyPressed(Keyboard::Return))
     {
+      currWaveIndex = -1;
       cl("victory");
     }
   }
@@ -598,7 +604,9 @@ class VictoryScreen : public Level
       if (Mouse::isButtonPressed(Mouse::Left))
       {
         if(backButton->contains(mouseX,mouseY))
+        {
           cl("main");
+        }
       }
       else
         backButton->checkHover(mouseX,mouseY);

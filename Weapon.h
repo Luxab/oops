@@ -98,6 +98,11 @@ public:
   // virtual void setWeaponRect() = 0;
 
   virtual void shoot(Vector2f initPos) = 0;
+
+  void closeWeaponSoundBuffer()
+  {
+    shotSound->stop();
+  }
 };
 
 // -------------------- Player Weaponry -------------------- //
@@ -109,7 +114,7 @@ class BBGun : public Weapon
     {
       // Set characteristics
       potency = 1;
-      speed = 20;
+      speed = 10;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
     }
@@ -295,7 +300,7 @@ class PeaShooter : public Weapon
     {
       // Set characteristics
       potency = 1;
-      speed = 20;
+      speed = 10;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
       //shotSoundBuffer->loadFromFile("audio/shot_sound.wav");

@@ -51,7 +51,7 @@ public:
   Texture left, right, up, down, transparent;
   Clock weaponCooldown;
   Clock immunityClock;                  // Keep track of how long invincibility lasts
-  double immunitySeconds = 3000;        // Milliseconds player gets immunity after damage
+  double immunitySeconds = 1000;        // Milliseconds player gets immunity after damage
   bool currentlyImmune = false;         // Keep track of when we are immune
   bool currentlyTransparent = false;    // Keep track of when we are immune
   bool immunityFirstCheck = false;      // There are too many bools here
@@ -213,6 +213,8 @@ public:
     return false;
   }
 
+  // Check if we're intersecting enemies or their
+  // projectiles
   void checkProjectiles (RenderWindow &win)
   {
     for (std::pair<int, Projectile*> shotPair : *enemyProjectiles)
@@ -221,7 +223,7 @@ public:
       Projectile *shot = shotPair.second;
       if (shot->contains(getGlobalBounds()))
       {
-        loseHealth(win,1);
+        loseHealth(win,shot->getPotency());
       }
     }
 
@@ -244,8 +246,14 @@ public:
       PowerUp *powerup = powerupPair.second;
       if (powerup->contains(getGlobalBounds()))
       {
+        std::cout << "Got powerup, adding health: " << powerup->getHealthBoost() << std::endl;
         // If we're intersecting, get the powerup's benefits
-        health->addHealth(powerup->getHealthBoost());
+        if (powerup->getHealthBoost() != 0)
+        {
+          health->addHealth(powerup->getHealthBoost());
+          health->draw(win);
+        }
+        
         if (powerup->getWeapon())
           weapon = powerup->getWeapon();
 
@@ -312,7 +320,6 @@ public:
     std::string painString;
     painString+="audio/pain/man_pain_";
     int randNum = rand() % 29 + 1; //Range of 1 to 29
-    std::cout << randNum << std::endl;
     painString+= std::to_string(randNum);
     painString+=".wav";
     painBuffer->loadFromFile(painString);

@@ -349,11 +349,11 @@ public:
     {
       if (walk)
       {
-        setTexture(walk1);
+        setTexture(walk2);
       }
       else
       {
-        setTexture(walk2);
+        setTexture(walk1);
       }
       walk = !walk;
       aClock.restart();

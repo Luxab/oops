@@ -47,7 +47,7 @@ class PowerUp : public Sprite
 public:
   Vector2f pos;
   float speed;
-  float healthBoost;                // How much health does the powerup provide
+  float healthBoost = 0;            // How much health does the powerup provide
   Weapon *weapon;                   // What weapon this powerup gives you
   Texture powerupTexture;           // What the powerup looks like
   IntRect boundaries;               // Window bounds

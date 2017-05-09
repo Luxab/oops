@@ -119,6 +119,11 @@ protected:
       music->setLoop(true);
     }
 
+    void stopWaveMusic()
+    {
+      music->stop();
+    }
+
     void draw(RenderWindow &win)
     {
       if (!musicInit)
