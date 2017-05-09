@@ -38,6 +38,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "SoundFileReaderMp3.hpp"
 #include "Projectile.h"
 #include "Button.h"
 #include "Wave.h"
@@ -137,8 +138,7 @@ public:
   bool playedSound = false;                     // Tells us whether intro sound has played
   std::string logoText;                         // Text displayed in logo
 
-  Sound *introSound = new Sound;                // Intro sound
-  SoundBuffer *introBuffer = new SoundBuffer;   // Intro sound buffer
+  Music *introSound = new Music;                // Intro sound
 
   std::vector<Color> colors;                   // Hold all colors of logo
   int colorsOffset = 0;                         // Offset for place we are in colors vector
@@ -174,8 +174,8 @@ public:
     colors.push_back(Color::Red);
 
     // Set up sound
-    introSound->setBuffer(*introBuffer);
-    introBuffer->loadFromFile("audio/really_good.wav");
+    SoundFileFactory::registerReader<audio::SoundFileReaderMp3>();
+    introSound->openFromFile("audio/really_good.mp3");
   }
   ~IntroScreen()
   {
