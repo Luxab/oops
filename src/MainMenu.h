@@ -147,8 +147,8 @@ public:
       if (optionsButton->contains(mouseX,mouseY))
       {
         // TODO: Add options
-        optionsButton->setPosition(optionsButton->getPosition().x - optionsButton->getGlobalBounds().width/2, optionsButton->getPosition().y);
         optionsButton->setText("Coming Soon");
+        optionsButton->centerWidth(resW);
       }
       if (scoreButton->contains(mouseX,mouseY))
       {
