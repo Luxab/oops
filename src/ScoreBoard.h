@@ -102,7 +102,7 @@ public:
         continue;
 
       Button *b = new Button(0,(i+3)*resH/12,gameFont,s,(.03*resW));
-      b->setColor(Color(0,0,0,0));
+      b->setFillColor(Color(0,0,0,0));
       b->centerWidth(resW);
       scores.push_back(*b);
     }
