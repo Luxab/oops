@@ -263,7 +263,6 @@ class WaveOne : public Wave
       waveEnemies.push_back(e12);
 
       // No powerups this round :)
-      wavePowerUps.push_back(new SpreadEaglePowerUp(boundaries, p, pp));
     }
 
     void draw()
