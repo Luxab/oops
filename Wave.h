@@ -340,6 +340,8 @@ class WaveFour : public Wave
 
       boundaries = b;
       musicFileName = "audio/Tempest2000/01 Thermal Resolution.wav";
+
+      powerUpCooldown = 500;
     }
     ~WaveFour()
     {

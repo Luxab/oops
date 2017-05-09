@@ -41,24 +41,28 @@ using namespace sf;
 class Player : public Sprite
 {
 public:
-  HealthBar *health;
-  //int health;                         // How much damage can it take
-  float speed;                          // How fast does it move
-  Weapon *weapon;                       // Player's current weapon
   IntRect boundaries;                   // Rectangle that defines level boundaries
   float rightSide;
   float bottomSide;
+
+  float speed;                          // How fast does it move
+  int combo = 1;                        // Player's score multiplier
+  Weapon *weapon;                       // Player's current weapon
+  HealthBar *health;
   Texture left, right, up, down, transparent;
+
   Clock weaponCooldown;
   Clock immunityClock;                  // Keep track of how long invincibility lasts
   double immunitySeconds = 1000;        // Milliseconds player gets immunity after damage
   bool currentlyImmune = false;         // Keep track of when we are immune
   bool currentlyTransparent = false;    // Keep track of when we are immune
   bool immunityFirstCheck = false;      // There are too many bools here
+
   proj_map *enemyProjectiles;           // Keep track of all enemy projectiles on screen
   proj_map *playerProjectiles;          // Keep track of all projectiles we fire
   enemy_map *enemies;                   // Keep track of all enemies
   pow_map *powerups;                    // Keep track of all powerups
+
   bool dead = false;
 
   Sound *painSound = new Sound;
@@ -315,6 +319,16 @@ public:
     }
   }
 
+  int getCombo()
+  {
+    return combo;
+  }
+
+  void raiseCombo()
+  {
+    combo++;
+  }
+
   void playPainSound()
   {
     std::string painString;
@@ -330,8 +344,16 @@ public:
   {
     playPainSound();
     health->takeDamage(amt);
+
+    // Die if our health is too low
     if (health->getCurrentHealth() <= 0)
-        killSelf();
+    {
+      killSelf();
+      return;
+    }
+
+    // Lose your combo
+    combo = 1;
 
     // Start the immunity countdown
     immunityClock.restart();

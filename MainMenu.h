@@ -137,22 +137,27 @@ public:
     float mouseY = mousepos.y;
     if (Mouse::isButtonPressed(Mouse::Left))
     {
-      //std::cout << x << "; " << y << std::endl;
-      if (quitButton->contains(mouseX,mouseY))
+      if (playButton->contains(mouseX,mouseY))
       {
         music->stop();
-        window->close();
+        sng();
+        cl("test");
+      }
+      if (optionsButton->contains(mouseX,mouseY))
+      {
+        // TODO: Add options
+        optionsButton->setPosition(optionsButton->getPosition().x - optionsButton->getGlobalBounds().width/2, optionsButton->getPosition().y);
+        optionsButton->setText("Coming Soon");
       }
       if (scoreButton->contains(mouseX,mouseY))
       {
         music->stop();
         cl("scores");
       }
-      if (playButton->contains(mouseX,mouseY))
+      if (quitButton->contains(mouseX,mouseY))
       {
         music->stop();
-        sng();
-        cl("test");
+        window->close();
       }
     }
     else

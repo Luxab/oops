@@ -317,10 +317,12 @@ public:
         toBeDeleted.push_back(enemyPair.first);
 
         // Increase player score
-        currScore += enemy->score;
+        currScore += enemy->score * p.getCombo();
 
         std::string scoreString = "Score:\n" + std::to_string(currScore);
         score.setString(scoreString);
+
+        p.raiseCombo();
       }
       // Check if enemy has gone out of bounds
       else if (enemy->getPosition().y > background.getGlobalBounds().height)
@@ -329,6 +331,12 @@ public:
         toBeDeleted.push_back(enemyPair.first);
       }
     }
+
+    // Update combo text continuously
+    std::string comboString = "Combo:\n" + std::to_string(p.getCombo()) + "x";
+    for (int i = 0; i < p.getCombo() / 5; i++)
+        comboString += "!";
+    combo.setString(comboString);
 
     // Delete all dead or off-screen enemies
     for (auto &enemyKey : toBeDeleted)
