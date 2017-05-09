@@ -414,7 +414,6 @@ class WaveProcedural : public Wave
     void loadEnemiesAndPowerups()
     {
       std::uniform_real_distribution<float> randx(0, 400);
-      std::uniform_real_distribution<float> randy(100, 500);
       std::uniform_int_distribution<int> rand_enemy(0, 5);
 
       int d = 0;
@@ -428,31 +427,31 @@ class WaveProcedural : public Wave
           }
           case 1:
           {
-            waveEnemies.push_back(new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            waveEnemies.push_back(new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             d++;
             break;
           }
           case 2:
           {
-            waveEnemies.push_back(new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            waveEnemies.push_back(new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             d++;
             break;
           }
           case 3:
           {
-            waveEnemies.push_back(new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            waveEnemies.push_back(new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             d++;
             break;
           }
           case 4:
           {
-            waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             d++;
             break;
           }
           case 5:
           {
-            waveEnemies.push_back(new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            waveEnemies.push_back(new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             d++;
             break;
           }
