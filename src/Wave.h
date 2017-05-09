@@ -90,7 +90,7 @@ protected:
           PowerUp *randPowerup = wavePowerUps.at(random_index);
 
           // Set random position for each powerup
-          std::uniform_int_distribution<int> pow_uni(30, boundaries.width * ratio - 50);
+          std::uniform_int_distribution<int> pow_uni(30, boundaries.width * ratio - 100);
           auto random_width = pow_uni(rng);
 
           randPowerup->setPosition(random_width, 30);
