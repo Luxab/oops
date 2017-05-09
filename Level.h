@@ -307,21 +307,22 @@ public:
     for (std::pair<int, Enemy*> enemyPair : *enemies)
     {
       enemyPair.second->draw(*window);
+      Enemy* enemy = enemyPair.second;
 
       // If enemy is dead, remove them from screen
-      if (enemyPair.second->isDead())
+      if (enemy->isDead())
       {
         // If collided, remove from hashmap
         toBeDeleted.push_back(enemyPair.first);
 
         // Increase player score
-        currScore += enemyPair.second->score;
+        currScore += enemy->score;
 
         std::string scoreString = "Score:\n" + std::to_string(currScore);
         score.setString(scoreString);
       }
       // Check if enemy has gone out of bounds
-      else if (!boundaries.intersects(Rect<int>(enemyPair.second->getGlobalBounds())))
+      else if (enemy->getPosition().y > background.getGlobalBounds().height)
       {
         // Has gone out of bounds, remove from hashmap
         toBeDeleted.push_back(enemyPair.first);

@@ -218,19 +218,19 @@ class WaveOne : public Wave
     void loadEnemiesAndPowerups ()
     {
       // Set up enemies
-      Skeltal *e1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      Skeltal *e1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e1);
 
       Break *b1 = new Break(boundaries, ep, pp, dp, e, Vector2f(100,100));
       waveEnemies.push_back(b1);
 
-      WigWam *e2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,100));
+      WigWam *e2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e2);
 
       Break *b2 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
       waveEnemies.push_back(b2);
 
-      Skeltal *e3 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,100));
+      Skeltal *e3 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e3);
 
       // No powerups this round :)
@@ -263,13 +263,13 @@ class WaveTwo : public Wave
 
     void loadEnemiesAndPowerups ()
     {
-      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(0,100));
+      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(0,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w1);
 
-      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(150,300));
+      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(150,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w2);
 
-      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,100));
+      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w3);
 
       // Set up powerups

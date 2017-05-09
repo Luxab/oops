@@ -38,4 +38,7 @@ typedef std::unordered_map<int, Projectile*> proj_map;
 typedef std::unordered_map<int, Enemy*> enemy_map;
 typedef std::unordered_map<int, PowerUp*> pow_map;
 
+#define ENEMY_STOP_LINE  50
+#define ENEMY_SPAWN_LINE -100
+
 #endif

@@ -196,6 +196,10 @@ public:
             //health->move(0,speed);
             break;
     }
+
+    // Move enemy down from top of screen
+    if (getPosition().y < ENEMY_STOP_LINE)
+      move(0,speed);
   }
 
   void checkProjectiles (RenderWindow &win)
@@ -228,7 +232,9 @@ public:
     tickMove();
 
     // Try to shoot every goddamn frame
-    shoot(weapon);
+    // Once we're past the stop line ofc
+    if (getPosition().y >= ENEMY_STOP_LINE)
+      shoot(weapon);
 
     // Draw health
     Vector2f pos = getPosition();
