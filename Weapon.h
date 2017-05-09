@@ -211,34 +211,6 @@ class SpreadEagle : public Weapon
    }
 };
 
-// Very large bullet
-class LargeBullet : public Weapon
-{
-  public:
-    LargeBullet(IntRect b, proj_map *p) : Weapon (b, p)
-    {
-      potency = 3;
-      speed = 20;
-      cooldown = 750;
-      shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
-    }
-    ~LargeBullet()
-    {
-      // Do nothing
-    }
-
-    virtual void shoot(Vector2f initPos)
-    {
-      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
-      proj1->setScale(Vector2f(.3,.3));
-      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
-      projectiles->insert(newShot1);
-
-      shotSound->play();
-    }
-};
-
 class Cannon : public Weapon
 {
   public:
@@ -295,6 +267,35 @@ class Cannon : public Weapon
 
 // -------------------- Enemy Weaponry -------------------- //
 
+// Very large bullet
+class LargeBullet : public Weapon
+{
+  public:
+    LargeBullet(IntRect b, proj_map *p) : Weapon (b, p)
+    {
+      potency = 3;
+      speed = 20;
+      cooldown = 750;
+      shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
+    }
+    ~LargeBullet()
+    {
+      // Do nothing
+    }
+
+    virtual void shoot(Vector2f initPos)
+    {
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, 0, potency);
+      proj->setRotation(180);
+      proj->setScale(Vector2f(.3,.3));
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+      projectiles->insert(newShot);
+
+      shotSound->play();
+    }
+};
+
 class PeaShooter : public Weapon
 {
   public:
@@ -318,6 +319,7 @@ class PeaShooter : public Weapon
 
       // Insert new projectile into projectiles map
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj->setRotation(180);
       proj->setScale(Vector2f(.1,.1));
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
@@ -347,6 +349,7 @@ class Sniper : public Weapon
     {
       // One shot down, as in PeaShooter
       Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj->setRotation(180);
       proj->setScale(Vector2f(.2, .2));
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
@@ -377,10 +380,11 @@ class WideGun : public Weapon
     {
 
       // Very large bullet
-      Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
-      proj1->setScale(Vector2f(.6, .6));
-      std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
-      projectiles->insert(newShot1);
+      Projectile *proj = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj->setRotation(180);
+      proj->setScale(Vector2f(.6, .6));
+      std::pair<int,Projectile*> newShot (projectiles->size(), proj);
+      projectiles->insert(newShot);
 
       shotSound->play();
     }
@@ -411,16 +415,19 @@ class Shotter : public Weapon
       // Also -(MPI/2) + (2*i/M_PI) is not the correct direction
 
       Projectile *proj1 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI, potency);
+      proj1->setRotation(180);
       proj1->setScale(Vector2f(.1, .1));
       std::pair<int,Projectile*> newShot1 (projectiles->size(), proj1);
       projectiles->insert(newShot1);
 
       Projectile *proj2 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(3.0/4.0), potency);
+      proj2->setRotation(180);
       proj2->setScale(Vector2f(.1, .1));
       std::pair<int,Projectile*> newShot2 (projectiles->size(), proj2);
       projectiles->insert(newShot2);
 
       Projectile *proj3 = new Projectile(initPos.x, initPos.y, shotTexture, speed, M_PI*(-3.0/4.0), potency);
+      proj3->setRotation(180);
       proj3->setScale(Vector2f(.1, .1));
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);

@@ -31,6 +31,13 @@
 
 using namespace sf;
 
+typedef enum SHAPE_COLOR
+{
+  SHAPES_BLUE,
+  SHAPES_GREEN,
+  SHAPES_RED
+} SHAPE_COLOR;
+
 class BGShapes
 {
   RenderWindow *window;
@@ -40,12 +47,18 @@ class BGShapes
   std::vector<CircleShape*> backgroundCircles;      // Vector to hold all background circles
   double backgroundCirclesCooldown = 400;           // Cooldown for spawning new circles
   double backgroundCirclesScaleAmt = 5;             // Rate at which circles scale
+  Vector2f spawnLocation;                           // Location of where circles spawn
+  SHAPE_COLOR shapeColor;
 
 public:
-  BGShapes(RectangleShape &b, RenderWindow &win)
+  BGShapes(RectangleShape &b, RenderWindow &win, Vector2f spawnLoc, SHAPE_COLOR sc)
   {
     window = &win;
     background = &b;
+    shapeColor = sc;
+    spawnLocation = spawnLoc;
+
+    background->setFillColor(Color(0,0,0));
   }
   ~BGShapes()
   {
@@ -72,15 +85,41 @@ public:
       std::uniform_real_distribution<double> uni(-M_PI/4,M_PI/4);
       auto random_angle = uni(rng);
 
-      std::uniform_int_distribution<int> uni_color_r(100,255);
-      std::uniform_int_distribution<int> uni_color_g(0,55);
-      std::uniform_int_distribution<int> uni_color_b(0,55);
+
+      int r_val,r_val_max;
+      int g_val,g_val_max;
+      int b_val,b_val_max;
+
+      switch (shapeColor) {
+        case SHAPES_RED:
+            r_val = 100;r_val_max = 255;
+            g_val = 0;g_val_max = 55;
+            b_val = 0;b_val_max = 55;
+          break;
+        case SHAPES_GREEN:
+            r_val = 0;r_val_max = 55;
+            g_val = 100;g_val_max = 255;
+            b_val = 0;b_val_max = 55;
+          break;
+        case SHAPES_BLUE:
+            r_val = 0;r_val_max = 55;
+            g_val = 0;g_val_max = 55;
+            b_val = 100;b_val_max = 255;
+          break;
+        default:
+          break;
+      }
+
+      std::uniform_int_distribution<int> uni_color_r(r_val,r_val_max);
+      std::uniform_int_distribution<int> uni_color_g(g_val,g_val_max);
+      std::uniform_int_distribution<int> uni_color_b(b_val,b_val_max);
+
       auto random_r = uni_color_r(rng);
       auto random_g = uni_color_g(rng);
       auto random_b = uni_color_b(rng);
 
       CircleShape *c = new CircleShape(0,30);
-      c->setPosition(bgDim.width/2,0);
+      c->setPosition(spawnLocation);
       c->setFillColor(Color(random_r, random_g, random_b));
       backgroundCircles.push_back(c);
 
@@ -95,7 +134,7 @@ public:
       window->draw(*c);
       c->setRadius(c->getRadius() + backgroundCirclesScaleAmt);
       //c->setPosition(bgDim.width/2 - c->getRadius(),bgDim.height/2 - c->getRadius());
-      c->setPosition(bgDim.width/2 - c->getRadius(),0 - c->getRadius());
+      c->setPosition(spawnLocation.x - c->getRadius(),spawnLocation.y - c->getRadius());
     }
 
     for (int i = 0; i < backgroundCircles.size();)
@@ -103,7 +142,7 @@ public:
       CircleShape *c = backgroundCircles.at(i);
 
       // Delete circles that are too large
-      if (c->getRadius() > bgDim.width)
+      if (c->getRadius() > bgDim.width * 1.5)
         backgroundCircles.erase(backgroundCircles.begin() + i);
       else
         i++;

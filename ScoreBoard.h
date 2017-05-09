@@ -49,7 +49,7 @@ class ScoreBoard : public Level
 public:
   ScoreBoard(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
   {
-    backgroundShapes = new BGShapes(background, win);
+    backgroundShapes = new BGShapes(background, win, Vector2f(background.getLocalBounds().width/2,background.getLocalBounds().height),SHAPES_BLUE);
     gameFont = fin;
     drawButtons();
 

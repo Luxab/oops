@@ -52,7 +52,7 @@ class MainMenu : public Level
 public:
   MainMenu(RenderWindow &win, Event &ev, changeLevel cl, startNewGame sng,Font fin) : Level(win, ev, cl)
   {
-    backgroundShapes = new BGShapes(background, win);
+    backgroundShapes = new BGShapes(background, win, Vector2f(background.getGlobalBounds().width/2,0),SHAPES_RED);
     gameFont = fin;
     initLevel();
     this->sng = sng;

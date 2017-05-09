@@ -281,7 +281,6 @@ public:
     drawAndAnimateRoad();
 
     window->draw(*boundingLine);
-    window->draw(statusText);
     window->draw(score);
     window->draw(combo);
 
@@ -418,6 +417,8 @@ public:
       currWaveIndex = -1;
       cl("victory");
     }
+
+    window->draw(statusText);
   }
 
   void showText()
