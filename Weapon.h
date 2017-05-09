@@ -142,7 +142,7 @@ class AK47 : public Weapon
       speed = 20;
       cooldown = 100;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~AK47()
     {
@@ -214,7 +214,7 @@ class LargeBullet : public Weapon
       speed = 20;
       cooldown = 750;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~LargeBullet()
     {
@@ -242,7 +242,7 @@ class Cannon : public Weapon
       speed = 10;
       cooldown = 150;
       shotTexture.loadFromFile("images/ball.png");
-      shotSoundBuffer->loadFromFile("audio/cannon.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/cannon.wav");
     }
     ~Cannon()
     {
@@ -251,7 +251,7 @@ class Cannon : public Weapon
 
     virtual void shoot(Vector2f initPos)
     {
-      // Single shot up
+      // Many shot up
 
       // Random vars
       std::random_device rd;
@@ -329,7 +329,7 @@ class Sniper : public Weapon
       speed = 40;
       cooldown = 1000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~Sniper()
     {
@@ -359,7 +359,7 @@ class WideGun : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~WideGun()
     {
@@ -390,7 +390,7 @@ class Shotter : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~Shotter()
     {

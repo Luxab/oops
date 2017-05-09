@@ -183,7 +183,7 @@ class GunPowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/ak47.png");
-        grabSoundBuffer.loadFromFile("audio/shot_sound.wav");
+        grabSoundBuffer.loadFromFile("audio/weapon_sounds/shotgun_reload.wav");
 
         // Set texture
         setTexture(powerupTexture);
