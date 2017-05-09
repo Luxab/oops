@@ -420,9 +420,9 @@ class SnipeHunt : public Enemy
     SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, ZIG_ZAG, new Sniper(b, ep), b, spawnLoc)
       {
-        enemyTexture.loadFromFile("images/bb.png");
+        enemyTexture.loadFromFile("images/snipehunt.png");
         setTexture(enemyTexture);
-        setScale(2, 2);
+        setScale(0.6, 0.6);
 
         speed = 1;
         health->setMaxHealth(3);
