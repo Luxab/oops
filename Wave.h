@@ -350,20 +350,10 @@ class WaveFour : public Wave
     {
       std::uniform_real_distribution<float> randx(0, 400);
 
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
-                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
-                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
-                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
-                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
-                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-      waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, 
-                  Vector2f(0,0)));
-
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      for(int i = 0; i < 5; i++) {
+        waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+        wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      }
     }
 
     void spawnEnemies()
@@ -412,14 +402,26 @@ class WaveProcedural : public Wave
     {
       std::uniform_real_distribution<float> randx(0, 400);
       std::uniform_int_distribution<int> rand_enemy(0, 5);
-
+      std::uniform_int_distribution<int> rand_powerup(0, 2);
       int d = 0;
       int lastbreak = 0;
+
+      switch(rand_powerup(rng)) {
+        case 0:
+          wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+	  break;
+        case 1:
+          wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+          break;
+        case 2:
+          wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
+      }
+
       while(d <= difficulty) {
         switch(rand_enemy(rng)) {
           case 0:
           {
-            wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+            waveEnemies.push_back(new CircleShot(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
             break;
           }
           case 1:
