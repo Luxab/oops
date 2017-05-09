@@ -182,6 +182,7 @@ protected:
     {
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
+      powerUpCooldown = 10000; // Reset Powerup Cooldown
 
       return finishedSpawning && (e->size() <= 0);
     }
