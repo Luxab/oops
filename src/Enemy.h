@@ -445,9 +445,9 @@ class BigGuns : public Enemy
     BigGuns(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new WideGun(b, ep), b, spawnLoc)
     {
-      enemyTexture.loadFromFile("images/bb.png");
+      enemyTexture.loadFromFile("images/bigguns.png");
       setTexture(enemyTexture);
-      setScale(2, 2);
+      setScale(0.8, 0.8);
 
       speed = 1;
       health->setMaxHealth(3);
