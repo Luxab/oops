@@ -447,7 +447,7 @@ class BigGuns : public Enemy
     {
       enemyTexture.loadFromFile("images/bigguns.png");
       setTexture(enemyTexture);
-      setScale(0.8, 0.8);
+      setScale(0.4, 0.4);
 
       speed = 1;
       health->setMaxHealth(3);
