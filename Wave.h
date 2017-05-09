@@ -183,7 +183,7 @@ protected:
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
 
-      return finishedSpawning && (e->size() <= 0);
+      return finishedSpawning && (e->size() <= 0) && (p->size() <= 0);
     }
 
     void cleanup()
@@ -352,8 +352,44 @@ class WaveFour : public Wave
 
       for(int i = 0; i < 5; i++) {
         waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      }
+    }
+
+    void spawnEnemies()
+    {
+
+    }
+};
+
+class WaveFive : public Wave
+{
+  public:
+    WaveFive (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
+    {
+      pp = ppin;
+      ep = epin;
+      dp = dpin;
+      e = ein;
+      p = pin;
+
+      boundaries = b;
+      musicFileName = "audio/Tempest2000/01 Thermal Resolution.wav";
+    }
+    ~WaveFive()
+    {
+      // Do Nothing
+    }
+
+    void loadEnemiesAndPowerups ()
+    {
+      std::uniform_real_distribution<float> randx(0, 400);
+      waveEnemies.push_back(new CircleShot(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      double oldPowerUpCooldown = powerUpCooldown;
+      powerUpCooldown = 10;
+      for(int i = 0; i < 10; i++) {
         wavePowerUps.push_back(new Doritos(boundaries, p, pp));
       }
+      powerUpCooldown = oldPowerUpCooldown;
     }
 
     void spawnEnemies()
