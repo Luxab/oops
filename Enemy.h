@@ -420,15 +420,15 @@ class SnipeHunt : public Enemy
     SnipeHunt(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, ZIG_ZAG, new Sniper(b, ep), b, spawnLoc)
       {
-          enemyTexture.loadFromFile("images/bb.png");
-          setTexture(enemyTexture);
-          setScale(2, 2);
+        enemyTexture.loadFromFile("images/bb.png");
+        setTexture(enemyTexture);
+        setScale(2, 2);
 
-          speed = 1;
-          health->setMaxHealth(3);
-          weapon = new Sniper(b, ep);
+        speed = 1;
+        health->setMaxHealth(3);
+        weapon = new Sniper(b, ep);
 
-         score = 100;
+        score = 100;
      }
      // Destructor
      ~SnipeHunt()
@@ -445,15 +445,15 @@ class BigGuns : public Enemy
     BigGuns(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new WideGun(b, ep), b, spawnLoc)
     {
-        enemyTexture.loadFromFile("images/bb.png");
-        setTexture(enemyTexture);
-        setScale(2, 2);
+      enemyTexture.loadFromFile("images/bb.png");
+      setTexture(enemyTexture);
+      setScale(2, 2);
 
-        speed = 1;
-        health->setMaxHealth(3);
-        weapon = new WideGun(b, ep);
+      speed = 1;
+      health->setMaxHealth(3);
+      weapon = new WideGun(b, ep);
 
-        score = 100;
+      score = 100;
     }
     // Destructor
     ~BigGuns()
@@ -495,15 +495,15 @@ class CircleShot : public Enemy
     CircleShot(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, LOOP_DE_LOOP, new Shotter(b, ep), b, spawnLoc)
     {
-        enemyTexture.loadFromFile("images/bb.png");
-        setTexture(enemyTexture);
-        setScale(2, 2);
+      enemyTexture.loadFromFile("images/bb.png");
+      setTexture(enemyTexture);
+      setScale(2, 2);
 
-        speed = 1;
-        health->setMaxHealth(2); // Slightly lower health than normal
-        weapon = new Shotter(b, ep);
+      speed = 1;
+      health->setMaxHealth(2); // Slightly lower health than normal
+      weapon = new Shotter(b, ep);
 
-        score = 100;
+      score = 100;
     }
     // Destructor
     ~CircleShot()

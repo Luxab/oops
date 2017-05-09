@@ -124,8 +124,6 @@ public:
   {
     health += (int) amt;
 
-    std::cout << "Adding health: " << amt << ", new health: " << health << "/" << maxHealth << std::endl;
-
     // Prevent health from overrunning
     if (health > maxHealth)
         health = maxHealth;

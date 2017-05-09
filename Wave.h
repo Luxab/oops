@@ -306,13 +306,13 @@ class WaveThree : public Wave
     void loadEnemiesAndPowerups ()
     {
       // Set up enemies
-      SnipeHunt *s1 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,100));
+      SnipeHunt *s1 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(0,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(s1);
 
-      BigGuns *b1 = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,300));
+      BigGuns *b1 = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(250,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(b1);
 
-      RunGun *r1 = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,100));
+      RunGun *r1 = new RunGun(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(r1);
 
       // Set up powerups
@@ -348,13 +348,20 @@ class WaveFour : public Wave
     void loadEnemiesAndPowerups ()
     {
       std::uniform_real_distribution<float> randx(0, 400);
-      std::uniform_real_distribution<float> randy(100, 500);
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
-      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
-      waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, Vector2f(0,0)));
+
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
+                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
+                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
+                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
+                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, 
+                  Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+      waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, 
+                  Vector2f(0,0)));
+
       wavePowerUps.push_back(new Doritos(boundaries, p, pp));
       wavePowerUps.push_back(new Doritos(boundaries, p, pp));
       wavePowerUps.push_back(new Doritos(boundaries, p, pp));
