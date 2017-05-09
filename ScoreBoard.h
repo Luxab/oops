@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -29,6 +29,7 @@
 #ifndef SCOREBOARD_H
 #define SCOREBOARD_H
 
+#include "BGShapes.h"
 #include "Level.h"
 #include <vector>
 #include <fstream>
@@ -41,10 +42,12 @@ class ScoreBoard : public Level
   std::vector<Button> scores;
   Button *titleBanner;
   Button *backButton;
+  BGShapes *backgroundShapes;
 
 public:
   ScoreBoard(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
   {
+    backgroundShapes = new BGShapes(background, win);
     gameFont = fin;
     drawButtons();
   }
@@ -103,6 +106,7 @@ public:
   void draw()
   {
     checkWindowSize();
+    backgroundShapes->draw();
     // Draw scores to screen
     for (unsigned int i = 0; i<scores.size(); i++)
     {

@@ -30,6 +30,7 @@
 #define MAINMENU_H
 
 #include "Level.h"
+#include "BGShapes.h"
 using namespace sf;
 
 class MainMenu : public Level
@@ -46,14 +47,12 @@ class MainMenu : public Level
 
   Music *music = new Music; //Main Menu music
 
-  Clock backgroundCirclesClock;                     // Timer to spawn new background circles
-  std::vector<CircleShape*> backgroundCircles;      // Vector to hold all background circles
-  double backgroundCirclesCooldown = 400;           // Cooldown for spawning new circles
-  double backgroundCirclesScaleAmt = 5;             // Rate at which circles scale
+  BGShapes *backgroundShapes;
 
 public:
   MainMenu(RenderWindow &win, Event &ev, changeLevel cl, startNewGame sng,Font fin) : Level(win, ev, cl)
   {
+    backgroundShapes = new BGShapes(background, win);
     gameFont = fin;
     initLevel();
     this->sng = sng;
@@ -89,7 +88,7 @@ public:
   {
     window->clear();
     //Initializes the buttons on the main menu.
-    titleBanner= new Button(0,0,gameFont,"Tony Phawk: The Last Ride",(.075*resW));
+    titleBanner= new Button(0,0,gameFont,"Tony",(.075*resW));
     titleBanner->centerWidth(resW);
 
     playButton = new Button(0,resH/5,gameFont,"Play", (.06*resW));
@@ -119,69 +118,13 @@ public:
     }
   }
 
-  void drawBackgroundCircles()
-  {
-    FloatRect bgDim = background.getGlobalBounds();
-
-    // Add a new circle every few hundred milliseconds
-    if (backgroundCirclesClock.getElapsedTime().asMilliseconds() > backgroundCirclesCooldown)
-    {
-      // Generate new circle
-      //
-
-      // Random vars
-      std::random_device rd;
-      std::mt19937 rng(rd());
-
-      // Random angle
-      std::uniform_real_distribution<double> uni(-M_PI/4,M_PI/4);
-      auto random_angle = uni(rng);
-
-      std::uniform_int_distribution<int> uni_color_r(100,255);
-      std::uniform_int_distribution<int> uni_color_g(0,55);
-      std::uniform_int_distribution<int> uni_color_b(0,55);
-      auto random_r = uni_color_r(rng);
-      auto random_g = uni_color_g(rng);
-      auto random_b = uni_color_b(rng);
-
-      CircleShape *c = new CircleShape(0,30);
-      c->setPosition(bgDim.width/2,0);
-      c->setFillColor(Color(random_r, random_g, random_b));
-      backgroundCircles.push_back(c);
-
-      // Reset timer
-      backgroundCirclesClock.restart();
-    }
-    
-    // Grow every circle in the vector
-    for (CircleShape *c : backgroundCircles)
-    {
-      // Draw each circle
-      window->draw(*c);
-      c->setRadius(c->getRadius() + backgroundCirclesScaleAmt);
-      //c->setPosition(bgDim.width/2 - c->getRadius(),bgDim.height/2 - c->getRadius());
-      c->setPosition(bgDim.width/2 - c->getRadius(),0 - c->getRadius());
-    }
-
-    for (int i = 0; i < backgroundCircles.size();)
-    {
-      CircleShape *c = backgroundCircles.at(i);
-
-      // Delete circles that are too large
-      if (c->getRadius() > bgDim.width)
-        backgroundCircles.erase(backgroundCircles.begin() + i);
-      else
-        i++;
-    }
-  }
-
   void draw()
   {
     playMusic();
     checkWindowSize();
 
     window->draw(background); //draw background first!
-    drawBackgroundCircles();
+    backgroundShapes->draw();
     titleBanner->draw(*window);
     playButton->draw(*window);
     optionsButton->draw(*window);
