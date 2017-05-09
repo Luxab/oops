@@ -333,7 +333,6 @@ public:
       window->draw(p); //draw the player
       p.draw(*window); //let the player draw
     } else if (!gameIsOver){
-      waves[currWaveIndex]->cleanup();
       gameOver();
     }
 
@@ -388,6 +387,7 @@ public:
     // Wait a bit after dying
     if (gameIsOver && Keyboard::isKeyPressed(Keyboard::Return))
     {
+      waves[currWaveIndex]->cleanup();
       currWaveIndex = -1;
       cl("victory");
     }
@@ -470,6 +470,7 @@ public:
   // You lose
   void gameOver()
   {
+    waves[currWaveIndex]->cleanup();
     statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 50));
     statusText.setString("Game over!\n\nPress Enter");
     statusText.setColor(Color(255,10,10)); // Set to red
