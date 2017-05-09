@@ -119,6 +119,8 @@ public:
 
 };
 
+#include "RichText.hpp"
+
 class IntroScreen : public Level
 {
   Font gameFont;
@@ -128,13 +130,20 @@ class IntroScreen : public Level
   Button *pauseNotif;
 
   Clock introClock;                             // This whole thing's scripted, yo!
+  Clock rainbowClock;                           // Clock for logo rainbow
 
 public:
-  Text logo;                                    // Logo text
+  sfe::RichText logo;
   bool playedSound = false;                     // Tells us whether intro sound has played
+  std::string logoText;                         // Text displayed in logo
 
   Sound *introSound = new Sound;                // Intro sound
   SoundBuffer *introBuffer = new SoundBuffer;   // Intro sound buffer
+
+  std::vector<Color> colors;                   // Hold all colors of logo
+  int colorsOffset = 0;                         // Offset for place we are in colors vector
+
+  RectangleShape textCover;                     // Black rectangle that covers the text
 
   IntroScreen(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
   {
@@ -142,12 +151,27 @@ public:
 
     // Logo characteristics
     logo.setFont(gameFont);
-    logo.setString("Really Good Games");
     logo.setCharacterSize(50);
-    logo.setColor(Color(255,255,255,0)); // Invisible at first
+    logo.clear(); // Invisible at first
     FloatRect bbnd = background.getGlobalBounds();
     logo.setPosition(Vector2f(50, bbnd.height - 100));
     std::cout << "background: " << bbnd.width << "," << bbnd.height << std::endl;
+    logoText = "Really Good Games";
+
+    // Set up text cover rect
+    textCover.setFillColor(Color::Black); // Black initially
+    textCover.setPosition(Vector2f(logo.getPosition().x,logo.getPosition().y));
+    textCover.setSize(Vector2f(500,100));
+
+    std::cout << "Size: " << textCover.getSize().x << "," << textCover.getSize().y << std::endl;
+
+    // Set up logo colors
+    colors.push_back(Color::Cyan);
+    colors.push_back(Color::White);
+    colors.push_back(Color::Green);
+    colors.push_back(Color::Magenta);
+    colors.push_back(Color::Blue);
+    colors.push_back(Color::Red);
 
     // Set up sound
     introSound->setBuffer(*introBuffer);
@@ -164,14 +188,37 @@ public:
 
   }
 
+  void colorText()
+  {
+    // Remove existing text
+    logo.clear();
+
+    // Get color in order and append logo text
+    for (int i = 0; i < logoText.length(); i++)
+    {
+      int index = (i + colorsOffset) % colors.size();
+      Color chosenColor = colors.at(index);
+      logo << chosenColor << logoText.at(i);
+    }
+  }
+
   void draw()
   {
     checkWindowSize();
     window->draw(logo);
+    window->draw(textCover);
+    
+    // Color text on a timer
+    if (rainbowClock.getElapsedTime().asMilliseconds() > 50)
+    {
+      colorText();
+      colorsOffset++;
+      rainbowClock.restart();
+    }
 
-    int alpha = logo.getColor().a;
-    if (alpha < 255)
-      logo.setColor(Color(255,255,255,alpha+5));
+    int alpha = textCover.getFillColor().a;
+    if (alpha > 0)
+      textCover.setFillColor(Color(0,0,0,alpha-5));
     else
       if (!playedSound)
       {
@@ -182,8 +229,8 @@ public:
       }
 
     if (introClock.getElapsedTime().asMilliseconds() > 3000)
-      if (alpha > 0)
-        logo.setColor(Color(255,255,255,alpha-5));
+      if (alpha < 255)
+        textCover.setFillColor(Color(0,0,0,alpha+5));
       else
         // Done, go to Main menu
         cl("main");
