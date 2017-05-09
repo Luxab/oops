@@ -470,9 +470,9 @@ class RunGun : public Enemy
     RunGun(IntRect b, proj_map *ep, proj_map *pp, int_vec *dp, enemy_map *e, Vector2f spawnLoc)
         : Enemy(ep, pp, dp, e, STRAIGHT_DOWN, new Shotter(b, ep), b, spawnLoc)
     {
-        enemyTexture.loadFromFile("images/bb.png");
+        enemyTexture.loadFromFile("images/rungun.png");
         setTexture(enemyTexture);
-        setScale(2, 2);
+        setScale(0.5, 0.5);
 
         speed = 1;
         health->setMaxHealth(3);
