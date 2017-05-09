@@ -42,7 +42,7 @@
 #include "Button.h"
 #include "Wave.h"
 
-#define MAX_WAVES 26
+#define MAX_WAVES 6
 
 using namespace sf;
 
@@ -250,12 +250,13 @@ public:
     waves.push_back(new WaveOne(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
     waves.push_back(new WaveTwo(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
     waves.push_back(new WaveThree(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
+    waves.push_back(new WaveFour(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups));
 
-    float difficulty = 25;
-    /*for(int w = 0; w < MAX_WAVES; w++) {
+    float difficulty = 5;
+    for(int w = 0; w < MAX_WAVES; w++) {
       waves.push_back(new WaveProcedural(boundaries, playerProjectiles, enemyProjectiles, deadProjectiles, enemies, powerups, difficulty));
-      difficulty *= 2;
-    }*/
+      difficulty += 5;
+    }
 
     readyUpForNextWave();
   }
@@ -449,6 +450,10 @@ public:
     waitingForNextLevel = true;
     statusText.setString("Press space to start!");
     waves[currWaveIndex]->cleanup();
+    if (currWaveIndex == 3) {
+      statusText.setString("      Brought to you by:\n\nDORITOS Nacho Cheese");
+      statusText.setColor(Color(255,10,10)); // Set to green
+    }
     if (currWaveIndex + 1 >= waves.size())
     {
       // Next wave not found
