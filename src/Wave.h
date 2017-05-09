@@ -487,63 +487,61 @@ class WaveProcedural : public Wave
     void loadEnemiesAndPowerups()
     {
       std::uniform_real_distribution<float> randx(0, 400);
+      std::uniform_real_distribution<float> randy(ENEMY_SPAWN_LINE, ENEMY_SPAWN_LINE-400);
       std::uniform_int_distribution<int> rand_enemy(0, 5);
-      std::uniform_int_distribution<int> rand_powerup(0, 2);
-      int d = 0;
-      int lastbreak = 0;
+      std::uniform_int_distribution<int> rand_enemy_num(3, 10);
+      std::uniform_int_distribution<int> rand_powerup(0, 3);
+      std::uniform_int_distribution<int> rand_powerup_num(0, 2);
 
-      switch(rand_powerup(rng)) {
-        case 0:
-          wavePowerUps.push_back(new Doritos(boundaries, p, pp));
-	  break;
-        case 1:
-          wavePowerUps.push_back(new AK47PowerUp(boundaries, p, pp));
-          break;
-        case 2:
-          wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
+      for(int i = 0; i < rand_powerup_num(rng); i++) {
+        switch(rand_powerup(rng)) {
+           case 0:
+             wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+             break;
+           case 1:
+             wavePowerUps.push_back(new AK47PowerUp(boundaries, p, pp));
+             break;
+           case 2:
+             wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
+             break;
+           case 3:
+             wavePowerUps.push_back(new SpreadEaglePowerUp(boundaries, p, pp));
+             break;
+        }
       }
 
-      while(d <= difficulty) {
+      for(int i = 0; i < rand_enemy_num(rng); i++) {
         switch(rand_enemy(rng)) {
           case 0:
           {
-            waveEnemies.push_back(new CircleShot(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
+            waveEnemies.push_back(new CircleShot(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
           case 1:
           {
-            waveEnemies.push_back(new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-            d++;
+            waveEnemies.push_back(new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
           case 2:
           {
-            waveEnemies.push_back(new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-            d++;
+            waveEnemies.push_back(new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
           case 3:
           {
-            waveEnemies.push_back(new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-            d++;
+            waveEnemies.push_back(new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
           case 4:
           {
-            waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-            d++;
+            waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
           case 5:
           {
-            waveEnemies.push_back(new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
-            d++;
+            waveEnemies.push_back(new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
             break;
           }
-        }
-        if(waveEnemies.size() - lastbreak > 5) {
-          waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, Vector2f(0,0)));
-          lastbreak = waveEnemies.size();
         }
       }
     }
