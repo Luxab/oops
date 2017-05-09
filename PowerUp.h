@@ -127,14 +127,14 @@ class SnackBar : public PowerUp
         healthBoost = 1;
         speed = 1;
 
-        powerupTexture.loadFromFile("images/bb.png");
+        powerupTexture.loadFromFile("images/snackbar.png");
         grabSoundBuffer.loadFromFile("audio/item_pickup.wav");
 
         // Set texture
         setTexture(powerupTexture);
 
         // Set size of the powerup
-        setScale(Vector2f(1.2,1.2));
+        setScale(Vector2f(0.5,0.5));
       }
 
       ~SnackBar ()

@@ -197,6 +197,7 @@ public:
       //std::cout << x << "; " << y << std::endl;
       if (quitButton->contains(mouseX,mouseY))
       {
+        music->stop();
         window->close();
       }
       if (scoreButton->contains(mouseX,mouseY))

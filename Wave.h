@@ -273,8 +273,8 @@ class WaveTwo : public Wave
       waveEnemies.push_back(w3);
 
       // Set up powerups
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
       wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+      wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
     }
 
     void draw()
@@ -316,8 +316,8 @@ class WaveThree : public Wave
       waveEnemies.push_back(r1);
 
       // Set up powerups
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
       wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+      wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
     }
 
     void spawnEnemies()
