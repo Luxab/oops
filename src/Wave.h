@@ -222,8 +222,15 @@ class WaveOne : public Wave
       Skeltal *e1 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e1);
 
+      // Set up enemies
+      Skeltal *e5 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(300,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e5);
+
       Break *b1 = new Break(boundaries, ep, pp, dp, e, Vector2f(100,100));
       waveEnemies.push_back(b1);
+
+      WigWam *e4 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e4);
 
       WigWam *e2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e2);
@@ -231,8 +238,32 @@ class WaveOne : public Wave
       Break *b2 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
       waveEnemies.push_back(b2);
 
-      Skeltal *e3 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
+      Skeltal *e3 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(200,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e3);
+
+      WigWam *e6 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e6);
+
+      WigWam *e7 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e7);
+
+      Break *b3 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
+      waveEnemies.push_back(b2);
+
+      Skeltal *e8 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e8);
+
+      Skeltal *e9 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(250,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e9);
+
+      Skeltal *e10 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e10);
+
+      Skeltal *e11 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE-500));
+      waveEnemies.push_back(e11);
+
+      Skeltal *e12 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE-500));
+      waveEnemies.push_back(e12);
 
       // No powerups this round :)
     }

@@ -576,7 +576,8 @@ public:
   void readyUpForNextWave ()
   {
     waitingForNextLevel = true;
-    statusText.setString("Press space to start!");
+    statusText.setString("Hit space to continue!");
+    statusText.setColor(Color::White);
     waves[currWaveIndex]->cleanup();
     if (currWaveIndex == 4) {
       statusText.setString("      Brought to you by:\n\nDORITOS Nacho Cheese");
