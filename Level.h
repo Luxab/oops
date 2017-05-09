@@ -119,6 +119,77 @@ public:
 
 };
 
+class IntroScreen : public Level
+{
+  Font gameFont;
+
+  // Buttons
+  Button *backButton;
+  Button *pauseNotif;
+
+  Clock introClock;                             // This whole thing's scripted, yo!
+
+public:
+  Text logo;                                    // Logo text
+  bool playedSound = false;                     // Tells us whether intro sound has played
+
+  Sound *introSound = new Sound;                // Intro sound
+  SoundBuffer *introBuffer = new SoundBuffer;   // Intro sound buffer
+
+  IntroScreen(RenderWindow &win, Event &ev, changeLevel cl, Font fin) : Level(win,ev,cl)
+  {
+    gameFont = fin;
+
+    // Logo characteristics
+    logo.setFont(gameFont);
+    logo.setString("Really Good Games");
+    logo.setCharacterSize(50);
+    logo.setColor(Color(255,255,255,0)); // Invisible at first
+    FloatRect bbnd = background.getGlobalBounds();
+    logo.setPosition(Vector2f(50, bbnd.height - 100));
+    std::cout << "background: " << bbnd.width << "," << bbnd.height << std::endl;
+
+    // Set up sound
+    introSound->setBuffer(*introBuffer);
+    introBuffer->loadFromFile("audio/really_good.wav");
+  }
+  ~IntroScreen()
+  {
+
+  }
+
+//--------------------------------IMPLEMENTATION-----------------------------------//
+  void resize()
+  {
+
+  }
+
+  void draw()
+  {
+    checkWindowSize();
+    window->draw(logo);
+
+    int alpha = logo.getColor().a;
+    if (alpha < 255)
+      logo.setColor(Color(255,255,255,alpha+5));
+    else
+      if (!playedSound)
+      {
+        // Play intro sound
+        introSound->play();
+
+        playedSound = true;
+      }
+
+    if (introClock.getElapsedTime().asMilliseconds() > 3000)
+      if (alpha > 0)
+        logo.setColor(Color(255,255,255,alpha-5));
+      else
+        // Done, go to Main menu
+        cl("main");
+  }
+};
+
 class PauseMenu : public Level
 {
   Font gameFont;

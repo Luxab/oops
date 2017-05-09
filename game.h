@@ -102,12 +102,13 @@ public:
     window.setResizeFunction(onResizeWindow);
     window.setFramerateLimit(60);
 
+    levels["intro"]   = new IntroScreen(window,event,changeLevel,gameFont);
     levels["main"]   = new MainMenu(window,event,changeLevel,startNewGame,gameFont);
     levels["scores"] = new ScoreBoard(window,event,changeLevel,gameFont);
     levels["pause"]  = new PauseMenu(window,event,changeLevel,gameFont);
     levels["victory"] = new VictoryScreen(window,event,changeLevel,gameFont);
 
-    currLevel = levels["main"];
+    currLevel = levels["intro"];
   }
 
   void play();
