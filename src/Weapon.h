@@ -203,7 +203,7 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
-      shotSound->openFromFile("audio/shot_sound.mp3");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
    }
 };
@@ -331,8 +331,8 @@ class Sniper : public Weapon
   public:
     Sniper(IntRect b, proj_map *p) : Weapon (b, p)
     {
-      potency = 10;
-      speed = 40;
+      potency = 2;
+      speed = 30;
       cooldown = 1000;
       shotTexture.loadFromFile("images/bullet.png");
     }

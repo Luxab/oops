@@ -105,7 +105,7 @@ public:
   }
   ~Enemy()
   {
-      // Do Nothing
+    // Do Nothing
   }
 
   void shoot (Weapon *w)

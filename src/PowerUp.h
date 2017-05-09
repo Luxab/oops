@@ -121,7 +121,7 @@ class SnackBar : public PowerUp
         std::cout << "Creating new snackbar." << std::endl;
 
         // Set characteristics
-        healthBoost = 1;
+        healthBoost = 2;
         speed = 1;
 
         powerupTexture.loadFromFile("images/snackbar.png");
@@ -148,7 +148,7 @@ class Doritos : public PowerUp
         std::cout << "Creating new doritos." << std::endl;
 
         // Set characteristics
-        healthBoost = 2;
+        healthBoost = 3;
         speed = 1;
 
         powerupTexture.loadFromFile("images/doritos.png");
@@ -167,12 +167,12 @@ class Doritos : public PowerUp
       }
 };
 
-class GunPowerUp : public PowerUp
+class AK47PowerUp : public PowerUp
 {
     public:
-      GunPowerUp (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
+      AK47PowerUp (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
       {
-        std::cout << "Creating new gun." << std::endl;
+        std::cout << "Creating new ak47." << std::endl;
 
         // Set characteristics
         weapon = new AK47(boundaries, playerProjectiles);
@@ -189,7 +189,35 @@ class GunPowerUp : public PowerUp
         setScale(Vector2f(0.6,0.6));
       }
 
-      ~GunPowerUp()
+      ~AK47PowerUp()
+      {
+
+      }
+};
+
+class SpreadEaglePowerUp : public PowerUp
+{
+    public:
+      SpreadEaglePowerUp (IntRect b, pow_map *pin, proj_map *ppin) : PowerUp (b,pin,ppin)
+      {
+        std::cout << "Creating new spread eagle power up." << std::endl;
+
+        // Set characteristics
+        weapon = new SpreadEagle(boundaries, playerProjectiles);
+        healthBoost = 0;
+        speed = 1;
+
+        powerupTexture.loadFromFile("images/spread_eagle.png");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.mp3");
+
+        // Set texture
+        setTexture(powerupTexture);
+
+        // Set size of the powerup
+        setScale(Vector2f(0.1,0.1));
+      }
+
+      ~SpreadEaglePowerUp()
       {
 
       }

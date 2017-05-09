@@ -253,9 +253,6 @@ class WaveOne : public Wave
       Skeltal *e8 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e8);
 
-      Skeltal *e9 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(250,ENEMY_SPAWN_LINE));
-      waveEnemies.push_back(e9);
-
       Skeltal *e10 = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(e10);
 
@@ -266,6 +263,7 @@ class WaveOne : public Wave
       waveEnemies.push_back(e12);
 
       // No powerups this round :)
+      wavePowerUps.push_back(new SpreadEaglePowerUp(boundaries, p, pp));
     }
 
     void draw()
@@ -295,17 +293,37 @@ class WaveTwo : public Wave
 
     void loadEnemiesAndPowerups ()
     {
-      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(0,ENEMY_SPAWN_LINE));
+      WigWam *w1 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w1);
 
-      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(150,ENEMY_SPAWN_LINE));
+      WigWam *w2 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(300,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w2);
 
-      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(200,ENEMY_SPAWN_LINE));
+      WigWam *w3 = new WigWam(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
       waveEnemies.push_back(w3);
 
+      Break *b1 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
+      waveEnemies.push_back(b1);
+
+      SnipeHunt *e1 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(200,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e1);
+
+      SnipeHunt *e2 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(400,ENEMY_SPAWN_LINE));
+      waveEnemies.push_back(e2);
+
+      SnipeHunt *e3 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(100,ENEMY_SPAWN_LINE-100));
+      waveEnemies.push_back(e3);
+
+      SnipeHunt *e4 = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(300,ENEMY_SPAWN_LINE-100));
+      waveEnemies.push_back(e4);
+
+      Break *b2 = new Break(boundaries, ep, pp, dp, e, Vector2f(200,100));
+      waveEnemies.push_back(b2);
+
+      // Skelly's that track you
+
       // Set up powerups
-      wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+      wavePowerUps.push_back(new SpreadEaglePowerUp(boundaries, p, pp));
       wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
     }
 
@@ -348,7 +366,7 @@ class WaveThree : public Wave
       waveEnemies.push_back(r1);
 
       // Set up powerups
-      wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+      wavePowerUps.push_back(new SpreadEaglePowerUp(boundaries, p, pp));
       wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
     }
 
@@ -480,7 +498,7 @@ class WaveProcedural : public Wave
           wavePowerUps.push_back(new Doritos(boundaries, p, pp));
 	  break;
         case 1:
-          wavePowerUps.push_back(new GunPowerUp(boundaries, p, pp));
+          wavePowerUps.push_back(new AK47PowerUp(boundaries, p, pp));
           break;
         case 2:
           wavePowerUps.push_back(new SnackBar(boundaries, p, pp));
