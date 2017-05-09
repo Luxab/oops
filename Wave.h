@@ -326,6 +326,48 @@ class WaveThree : public Wave
     }
 };
 
+class WaveFour : public Wave
+{
+  public:
+    WaveFour (IntRect b, proj_map *ppin, proj_map *epin, int_vec *dpin, enemy_map *ein, pow_map *pin)
+    {
+      pp = ppin;
+      ep = epin;
+      dp = dpin;
+      e = ein;
+      p = pin;
+
+      boundaries = b;
+      musicFileName = "audio/Tempest2000/01 Thermal Resolution.wav";
+    }
+    ~WaveFour()
+    {
+      // Do Nothing
+    }
+
+    void loadEnemiesAndPowerups ()
+    {
+      std::uniform_real_distribution<float> randx(0, 400);
+      std::uniform_real_distribution<float> randy(100, 500);
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+      waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+      waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, Vector2f(0,0)));
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+    }
+
+    void spawnEnemies()
+    {
+
+    }
+};
+
 class WaveProcedural : public Wave
 {
   float difficulty;
@@ -340,77 +382,92 @@ class WaveProcedural : public Wave
       this->difficulty = difficulty;
 
       boundaries = b;
+      
+      std::uniform_int_distribution<int> shuffle_music(1, 12);
+      switch(shuffle_music(rng)) {
+        case 2: musicFileName = "audio/Tempest2000/02 Track 2.wav"; break;
+        case 3: musicFileName = "audio/Tempest2000/03 Track 3.wav"; break;
+        case 4: musicFileName = "audio/Tempest2000/04 Track 4.wav"; break;
+        case 5: musicFileName = "audio/Tempest2000/05 Track 5.wav"; break;
+        case 6: musicFileName = "audio/Tempest2000/06 Track 6.wav"; break;
+        case 7: musicFileName = "audio/Tempest2000/07 Track 7.wav"; break;
+        case 8: musicFileName = "audio/Tempest2000/08 Track 8.wav"; break;
+        case 9: musicFileName = "audio/Tempest2000/09 Track 9.wav"; break;
+        case 10: musicFileName = "audio/Tempest2000/10 Track 10.wav"; break;
+        case 11: musicFileName = "audio/Tempest2000/11 Track 11.wav"; break;
+        case 12: musicFileName = "audio/Tempest2000/12 Track 12.wav"; break;
+        default: musicFileName = "audio/Tempest2000/01 Thermal Resolution.wav"; break;
+      }
     }
     ~WaveProcedural()
     {
       // Do Nothing
     }
 
-    void spawnEnemies()
+    void loadEnemiesAndPowerups()
     {
-      std::vector<Enemy*> waveEnemies;
       std::uniform_real_distribution<float> randx(0, 400);
       std::uniform_real_distribution<float> randy(100, 500);
+      std::uniform_int_distribution<int> rand_enemy(0, 5);
 
       int d = 0;
+      int lastbreak = 0;
       while(d <= difficulty) {
-        SnipeHunt *sh = new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
-        if(sh->score <= difficulty-d) {
-          waveEnemies.push_back(sh);
-	  d += sh->score;
+        switch(rand_enemy(rng)) {
+          case 0:
+          {
+            wavePowerUps.push_back(new Doritos(boundaries, p, pp));
+            break;
+          }
+          case 1:
+          {
+            waveEnemies.push_back(new SnipeHunt(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            d++;
+            break;
+          }
+          case 2:
+          {
+            waveEnemies.push_back(new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            d++;
+            break;
+          }
+          case 3:
+          {
+            waveEnemies.push_back(new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            d++;
+            break;
+          }
+          case 4:
+          {
+            waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            d++;
+            break;
+          }
+          case 5:
+          {
+            waveEnemies.push_back(new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng))));
+            d++;
+            break;
+          }
         }
-	else {
-	  delete sh;
-	  break;
-	}
-        BigGuns *bg = new BigGuns(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
-        if(bg->score <= difficulty-d) {
-          waveEnemies.push_back(bg);
-	  d += bg->score;
+        if(waveEnemies.size() - lastbreak > 5) {
+          waveEnemies.push_back(new Break(boundaries, ep, pp, dp, e, Vector2f(0,0)));
+          lastbreak = waveEnemies.size();
         }
-	else {
-          delete bg;
-	  break;
-	}
-
-        RunGun *rg = new RunGun(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
-        if(rg->score <= difficulty-d) {
-          waveEnemies.push_back(rg);
-	  d += rg->score;
-        }
-	else {
-          delete rg;
-	  break;
-	}
-
-        Skeltal *s = new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
-        if(s->score <= difficulty-d) {
-          waveEnemies.push_back(s);
-	  d += s->score;
-        }
-        else {
-          delete s;
-	  break;
-	}
-
-        WigWam *ww = new WigWam(boundaries, ep, pp, dp, e, Vector2f(randx(rng), randy(rng)));
-        if(ww->score <= difficulty-d) {
-          waveEnemies.push_back(ww);
-	  d += ww->score;
-        }
-        else {
-          delete ww;
-	  break;
-	}
       }
-
+      /*
       for(auto &enemy : waveEnemies)
       {
           std::pair<int,Enemy*> enemyPair (e->size(), enemy);
           e->insert(enemyPair);
       }
+      */
+       //finishedSpawning = true;
+    }
 
-       finishedSpawning = true;
+    void spawnEnemies()
+    {
+
     }
 };
 #endif
