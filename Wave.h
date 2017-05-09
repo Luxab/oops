@@ -182,6 +182,7 @@ protected:
     {
       // Wave is finished when all enemies are dead and there
       // are no more to spawn
+      powerUpCooldown = 10000; // Reset Powerup Cooldown
 
       return finishedSpawning && (e->size() <= 0) && (p->size() <= 0);
     }
@@ -349,7 +350,6 @@ class WaveFour : public Wave
     {
       std::uniform_real_distribution<float> randx(0, 400);
 
-
       for(int i = 0; i < 5; i++) {
         waveEnemies.push_back(new Skeltal(boundaries, ep, pp, dp, e, Vector2f(randx(rng), ENEMY_SPAWN_LINE)));
       }
@@ -496,14 +496,6 @@ class WaveProcedural : public Wave
           lastbreak = waveEnemies.size();
         }
       }
-      /*
-      for(auto &enemy : waveEnemies)
-      {
-          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
-          e->insert(enemyPair);
-      }
-      */
-       //finishedSpawning = true;
     }
 
     void spawnEnemies()
