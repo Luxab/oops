@@ -54,8 +54,7 @@ public:
   pow_map *powerups;                // Keep track of powerups that are spawned
   proj_map *playerProjectiles;      // Keep track of the player's projectiles
 
-  Sound grabSound;                  // Sound that plays when powerup is picked up
-  SoundBuffer grabSoundBuffer;      // Buffer for grab sound
+  Music grabSound;                  // Sound that plays when powerup is picked up
 
   PowerUp(IntRect b, pow_map *p, proj_map *pp)
   {
@@ -64,8 +63,6 @@ public:
     this->powerups = p;
     this->pos = pos;
     
-    grabSound.setBuffer(grabSoundBuffer);
-
     // Set this in derived classes
     weapon = nullptr;
   }
@@ -128,7 +125,7 @@ class SnackBar : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/snackbar.png");
-        grabSoundBuffer.loadFromFile("audio/item_pickup.wav");
+        grabSound.openFromFile("audio/item_pickup.mp3");
 
         // Set texture
         setTexture(powerupTexture);
@@ -155,7 +152,7 @@ class Doritos : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/doritos.png");
-        grabSoundBuffer.loadFromFile("audio/item_pickup.wav");
+        grabSound.openFromFile("audio/item_pickup.mp3");
 
         // Set texture
         setTexture(powerupTexture);
@@ -183,7 +180,7 @@ class GunPowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/ak47.png");
-        grabSoundBuffer.loadFromFile("audio/weapon_sounds/shotgun_reload.wav");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.mp3");
 
         // Set texture
         setTexture(powerupTexture);

@@ -65,11 +65,8 @@ public:
 
   bool dead = false;
 
-  Sound *painSound = new Sound;
-  SoundBuffer *painBuffer = new SoundBuffer;
-
-  Sound *deathSound = new Sound;              // Sound that plays when weapon is shot
-  SoundBuffer *deathSoundBuffer = new SoundBuffer;  // Buffer for shot sound
+  Music *painSound = new Music;         // Sound that plays when player is hit
+  Music *deathSound = new Music;        // Sound that plays when weapon is shot
 
   Player()
   {
@@ -77,10 +74,7 @@ public:
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
-    painSound->setBuffer(*painBuffer);
-
-    deathSoundBuffer->loadFromFile("audio/death_yell.wav");
-    deathSound->setBuffer(*deathSoundBuffer);
+    deathSound->openFromFile("audio/death_yell.mp3");
 
     // Projectile tracking
     playerProjectiles = pp;
@@ -335,8 +329,8 @@ public:
     painString+="audio/pain/man_pain_";
     int randNum = rand() % 29 + 1; //Range of 1 to 29
     painString+= std::to_string(randNum);
-    painString+=".wav";
-    painBuffer->loadFromFile(painString);
+    painString+=".mp3";
+    painSound->openFromFile(painString);
     painSound->play();
   }
 

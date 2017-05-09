@@ -83,7 +83,7 @@ public:
     resW = rw;
     resH = rh;
     winSize = Vector2u(rw,rh);
-    gameFont.loadFromFile("Raleway-Regular.ttf");
+    gameFont.loadFromFile("font/Raleway-Regular.ttf");
   }
   ~Game()
   {

@@ -52,16 +52,13 @@ public:
   IntRect boundaries;           // If projectiles leave this rect, delete them
   proj_map *projectiles;        // Keeps track of all projectiles on screen
 
-  Sound *shotSound = new Sound; // Sound that plays when weapon is shot
-  SoundBuffer *shotSoundBuffer
-      = new SoundBuffer;        // Buffer for shot sound
+  Music *shotSound = new Music; // Sound that plays when weapon is shot
 
   Weapon(IntRect b, proj_map *p)
   {
     boundaries = b;
     projectiles = p;
 
-    shotSound->setBuffer(*shotSoundBuffer);
     shotSound->setVolume(35);
   }
   ~Weapon()
@@ -100,7 +97,7 @@ public:
 
   virtual void shoot(Vector2f initPos) = 0;
 
-  void closeWeaponSoundBuffer()
+  void closeWeaponSound()
   {
     shotSound->stop();
   }
@@ -118,7 +115,6 @@ class BBGun : public Weapon
       speed = 10;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~BBGun()
     {
@@ -135,6 +131,7 @@ class BBGun : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
    }
 };
@@ -149,7 +146,6 @@ class AK47 : public Weapon
       speed = 20;
       cooldown = 100;
       shotTexture.loadFromFile("images/ball.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~AK47()
     {
@@ -166,6 +162,7 @@ class AK47 : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
    }
 };
@@ -180,7 +177,6 @@ class SpreadEagle : public Weapon
       speed = 20;
       cooldown = 250;
       shotTexture.loadFromFile("images/ball.png");
-      shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~SpreadEagle()
     {
@@ -207,6 +203,7 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
+      shotSound->openFromFile("audio/shot_sound.mp3");
       shotSound->play();
    }
 };
@@ -221,7 +218,6 @@ class Cannon : public Weapon
       speed = 10;
       cooldown = 150;
       shotTexture.loadFromFile("images/ball.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/cannon.wav");
     }
     ~Cannon()
     {
@@ -260,6 +256,7 @@ class Cannon : public Weapon
         projectiles->insert(newShot);
       }
 
+      shotSound->openFromFile("audio/weapon_sounds/cannon.mp3");
       shotSound->play();
    }
 };
@@ -277,7 +274,6 @@ class LargeBullet : public Weapon
       speed = 20;
       cooldown = 750;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~LargeBullet()
     {
@@ -292,6 +288,7 @@ class LargeBullet : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
     }
 };
@@ -306,7 +303,6 @@ class PeaShooter : public Weapon
       speed = 10;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
-      //shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~PeaShooter()
     {
@@ -324,6 +320,7 @@ class PeaShooter : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/enemy_shot.mp3");
       shotSound->play();
    }
 };
@@ -338,7 +335,6 @@ class Sniper : public Weapon
       speed = 40;
       cooldown = 1000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~Sniper()
     {
@@ -354,6 +350,7 @@ class Sniper : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
     }
 };
@@ -369,7 +366,6 @@ class WideGun : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~WideGun()
     {
@@ -386,6 +382,7 @@ class WideGun : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
     }
 
@@ -401,7 +398,6 @@ class Shotter : public Weapon
       speed = 2;
       cooldown = 3000;
       shotTexture.loadFromFile("images/bullet.png");
-      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~Shotter()
     {
@@ -445,6 +441,7 @@ class Shotter : public Weapon
       }
      */
 
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.mp3");
       shotSound->play();
     }
 };
