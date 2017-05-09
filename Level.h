@@ -192,6 +192,12 @@ class TestLevel : public Level
   Font gameFont;                        // Font this level is using
   RectangleShape *boundingLine;         // Line at 2/3rds screen width
 
+  // Game background
+  Sprite roadFirst;                     // Game background, two for vertical scrolling
+  Sprite roadSecond;
+  Texture roadFirstTexture;
+  Texture roadSecondTexture;
+
   // Keep track of player/enemy projectiles
   proj_map *playerProjectiles = new proj_map;
   proj_map *enemyProjectiles = new proj_map;
@@ -216,12 +222,21 @@ public:
     boundaries = Rect<int>(background.getGlobalBounds());
     background.setFillColor(Color(28,64,93)); // dark blue
 
+    // Draw road texture
+    roadFirstTexture.loadFromFile("images/road.png");
+    roadSecondTexture.loadFromFile("images/road.png");
+    roadFirst.setTexture(roadFirstTexture);
+    roadSecond.setTexture(roadSecondTexture);
+
+    // Set second road just above the first
+    roadFirst.setPosition(0,0);
+    roadSecond.setPosition(0,-background.getGlobalBounds().height);
+
     // Create right, black boundary line
     boundingLine = new RectangleShape(Vector2f(0,boundaries.height));
     boundingLine->setPosition(boundaries.width*ratio,0);
     boundingLine->setOutlineColor(Color(0,0,0));
     boundingLine->setOutlineThickness(2);
-
 
     // Show score and starting text
     showText();
@@ -260,6 +275,8 @@ public:
   {
     checkWindowSize();
     window->draw(background); //draw background first!
+
+    drawAndAnimateRoad();
 
     window->draw(*boundingLine);
     window->draw(statusText);
@@ -460,6 +477,22 @@ public:
     waves.at(currWaveIndex)->setBoundaries(Rect<int>(background.getGlobalBounds()));
     waves.at(currWaveIndex)->loadEnemiesAndPowerups();
     waves.at(currWaveIndex)->spawnEnemies();
+  }
+
+  void drawAndAnimateRoad()
+  {
+    window->draw(roadFirst);
+    window->draw(roadSecond);
+
+    // Reset roads if they go out of bounds
+    if (roadFirst.getGlobalBounds().top > background.getGlobalBounds().height)
+      roadFirst.setPosition(0,-background.getGlobalBounds().height);
+    if (roadSecond.getGlobalBounds().top > background.getGlobalBounds().height)
+      roadSecond.setPosition(0,-background.getGlobalBounds().height);
+
+    // Move Roads down
+    roadFirst.move(0,2);
+    roadSecond.move(0,2);
   }
 
   // You lose

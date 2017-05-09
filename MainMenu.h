@@ -91,13 +91,13 @@ public:
     titleBanner= new Button(0,0,gameFont,"Tony",(.075*resW));
     titleBanner->centerWidth(resW);
 
-    playButton = new Button(0,resH/5,gameFont,"Play", (.06*resW));
+    playButton = new Button(0,resH/4.5,gameFont,"Play", (.06*resW));
     playButton->centerWidth(resW);
 
-    optionsButton = new Button(0,2*resH/5,gameFont,"Options",(.06*resW));
+    optionsButton = new Button(0,2*resH/4.5,gameFont,"Options",(.06*resW));
     optionsButton->centerWidth(resW);
 
-    scoreButton = new Button(0,3*resH/5,gameFont,"Score Board", (.06*resW));
+    scoreButton = new Button(0,3*resH/4.5,gameFont,"Score Board", (.06*resW));
     scoreButton->centerWidth(resW);
 
     quitButton = new Button(0,500,gameFont,"Quit",.05*resW);

@@ -117,6 +117,7 @@ class BBGun : public Weapon
       speed = 10;
       cooldown = 300;
       shotTexture.loadFromFile("images/bullet.png");
+      shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~BBGun()
     {
@@ -146,7 +147,7 @@ class AK47 : public Weapon
       potency = 1;
       speed = 20;
       cooldown = 100;
-      shotTexture.loadFromFile("images/bullet.png");
+      shotTexture.loadFromFile("images/ball.png");
       shotSoundBuffer->loadFromFile("audio/weapon_sounds/shot_sound.wav");
     }
     ~AK47()
@@ -177,7 +178,7 @@ class SpreadEagle : public Weapon
       potency = 1;
       speed = 20;
       cooldown = 250;
-      shotTexture.loadFromFile("images/bb.png");
+      shotTexture.loadFromFile("images/ball.png");
       shotSoundBuffer->loadFromFile("audio/shot_sound.wav");
     }
     ~SpreadEagle()
