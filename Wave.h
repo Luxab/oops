@@ -363,10 +363,6 @@ class WaveFour : public Wave
                   Vector2f(0,0)));
 
       wavePowerUps.push_back(new Doritos(boundaries, p, pp));
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
-      wavePowerUps.push_back(new Doritos(boundaries, p, pp));
     }
 
     void spawnEnemies()
@@ -461,14 +457,6 @@ class WaveProcedural : public Wave
           lastbreak = waveEnemies.size();
         }
       }
-      /*
-      for(auto &enemy : waveEnemies)
-      {
-          std::pair<int,Enemy*> enemyPair (e->size(), enemy);
-          e->insert(enemyPair);
-      }
-      */
-       //finishedSpawning = true;
     }
 
     void spawnEnemies()

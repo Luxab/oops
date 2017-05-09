@@ -451,7 +451,7 @@ public:
     statusText.setString("Press space to start!");
     waves[currWaveIndex]->cleanup();
     if (currWaveIndex == 3) {
-      statusText.setString("      Brought to you by:\n\nDORITOS Nacho Cheese");
+      statusText.setString("      Brought to you by:\n\nDORITOS Nacho Cheese   ");
       statusText.setColor(Color(255,10,10)); // Set to green
     }
     if (currWaveIndex + 1 >= waves.size())
