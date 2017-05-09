@@ -408,13 +408,13 @@ public:
     if (!gameIsOver && welcomeTextShowing && welcomeTextTimerClock.getElapsedTime().asMilliseconds() > welcomeTextShownLength)
     {
       // Fade alpha slightly every frame
-      statusText.setFillColor(Color(255,255,255,statusText.getFillColor().a - 2));
+      statusText.setColor(Color(255,255,255,statusText.getColor().a - 2));
 
       // Once text has been faded out, remove it
-      if (statusText.getFillColor().a <= 5)
+      if (statusText.getColor().a <= 5)
       {
         // Kill alpha
-        statusText.setFillColor(Color(255,255,255,0));
+        statusText.setColor(Color(255,255,255,0));
 
         // Stop timer
         welcomeTextShowing = false;
@@ -553,9 +553,9 @@ public:
     score.setCharacterSize(50);
     combo.setCharacterSize(50);
 
-    statusText.setFillColor(Color::White);
-    score.setFillColor(Color::White);
-    combo.setFillColor(Color::White);
+    statusText.setColor(Color::White);
+    score.setClolor(Color::White);
+    combo.setColor(Color::White);
 
     FloatRect bbnd = background.getGlobalBounds();
     statusText.setPosition(Vector2f(bbnd.width/12, bbnd.height/2));
@@ -577,11 +577,11 @@ public:
   {
     waitingForNextLevel = true;
     statusText.setString("Hit space to continue!");
-    statusText.setFillColor(Color::White);
+    statusText.setColor(Color::White);
     waves[currWaveIndex]->cleanup();
     if (currWaveIndex == 4) {
       statusText.setString("      Brought to you by:\n\nDORITOS Nacho Cheese");
-      statusText.setFillColor(Color(255,10,10)); // Set to green
+      statusText.setColor(Color(255,10,10)); // Set to green
     }
     if (currWaveIndex + 1 >= waves.size())
     {
@@ -590,7 +590,7 @@ public:
       std::cout << "No next wave found, you musta won!!!!" << std::endl;
       gameOver();
       statusText.setString("      You won!\n\nEnter to Continue");
-    statusText.setFillColor(Color(10,255,10)); // Set to green
+    statusText.setColor(Color(10,255,10)); // Set to green
     } else {
       // Go to next wave
       currWaveIndex++;
@@ -602,7 +602,7 @@ public:
     // Show wave text
     statusText.setString("Welcome to Wave " + std::to_string(currWaveIndex + 1));
     statusText.setPosition(Vector2f(background.getGlobalBounds().width/12, 50));
-    statusText.setFillColor(Color(255,255,255)); // Set to white
+    statusText.setColor(Color(255,255,255)); // Set to white
 
     std::cout << "Starting wave!" << std::endl;
     welcomeTextShowing = true;
@@ -636,7 +636,7 @@ public:
     waves[currWaveIndex]->cleanup();
     statusText.setPosition(Vector2f(background.getGlobalBounds().width/6, 50));
     statusText.setString("Game over!\n\nPress Enter");
-    statusText.setFillColor(Color(255,10,10)); // Set to red
+    statusText.setColor(Color(255,10,10)); // Set to red
     gameIsOver = true;
   }
 };
@@ -669,7 +669,7 @@ class VictoryScreen : public Level
       enterInitialsText.setFont(gameFont);
       enterInitialsText.setString("Enter your initials");
       enterInitialsText.setCharacterSize(60);
-      enterInitialsText.setFillColor(Color::White);
+      enterInitialsText.setColor(Color::White);
 
       FloatRect bbnd = background.getGlobalBounds();
       enterInitialsText.setPosition(Vector2f(bbnd.width/4, 20));
