@@ -173,7 +173,7 @@ public:
     colors.push_back(Color::Red);
 
     // Set up sound
-    introSound->openFromFile("audio/really_good.wav");
+    introSound->openFromFile("audio/other/really_good.wav");
   }
   ~IntroScreen()
   {

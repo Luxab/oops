@@ -74,7 +74,7 @@ public:
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
-    deathSound->openFromFile("audio/death_yell.wav");
+    deathSound->openFromFile("audio/other/death_yell.wav");
 
     // Projectile tracking
     playerProjectiles = pp;

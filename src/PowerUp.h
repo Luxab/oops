@@ -1,4 +1,4 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
  *      * Duncan Klug
@@ -125,7 +125,7 @@ class SnackBar : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/snackbar.png");
-        grabSound.openFromFile("audio/item_pickup.wav");
+        grabSound.openFromFile("audio/other/item_pickup.wav");
 
         // Set texture
         setTexture(powerupTexture);
@@ -152,7 +152,7 @@ class Doritos : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/doritos.png");
-        grabSound.openFromFile("audio/item_pickup.wav");
+        grabSound.openFromFile("audio/other/item_pickup.wav");
 
         // Set texture
         setTexture(powerupTexture);
