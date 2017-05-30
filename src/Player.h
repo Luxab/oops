@@ -74,7 +74,7 @@ public:
   }
   Player(Texture &tin, proj_map *pp, proj_map *ep, enemy_map *e, pow_map *p, int s, FloatRect b) : Sprite(tin)
   {
-    deathSound->openFromFile("audio/death_yell.mp3");
+    deathSound->openFromFile("audio/death_yell.wav");
 
     // Projectile tracking
     playerProjectiles = pp;
@@ -251,7 +251,7 @@ public:
           health->addHealth(powerup->getHealthBoost());
           health->draw(win);
         }
-        
+
         if (powerup->getWeapon())
           weapon = powerup->getWeapon();
 
@@ -329,7 +329,7 @@ public:
     painString+="audio/pain/man_pain_";
     int randNum = rand() % 29 + 1; //Range of 1 to 29
     painString+= std::to_string(randNum);
-    painString+=".mp3";
+    painString+=".wav";
     painSound->openFromFile(painString);
     painSound->play();
   }

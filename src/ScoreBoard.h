@@ -55,7 +55,7 @@ public:
     gameFont = fin;
     drawButtons();
 
-    if (!music->openFromFile("audio/misc2/Robert_Ellis_-_Crystal_Kick.mp3"))
+    if (!music->openFromFile("audio/misc2/Robert_Ellis_-_Crystal_Kick.wav"))
     {
       std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
     }

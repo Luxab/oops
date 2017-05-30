@@ -38,7 +38,6 @@
 #include <fstream>
 #include <sstream>
 
-#include "SoundFileReaderMp3.hpp"
 #include "Projectile.h"
 #include "Button.h"
 #include "Wave.h"
@@ -174,8 +173,7 @@ public:
     colors.push_back(Color::Red);
 
     // Set up sound
-    SoundFileFactory::registerReader<audio::SoundFileReaderMp3>();
-    introSound->openFromFile("audio/really_good.mp3");
+    introSound->openFromFile("audio/really_good.wav");
   }
   ~IntroScreen()
   {
