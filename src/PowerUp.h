@@ -125,7 +125,7 @@ class SnackBar : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/snackbar.png");
-        grabSound.openFromFile("audio/other/item_pickup.wav");
+        grabSound.openFromFile("audio/other/item_pickup.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -152,7 +152,7 @@ class Doritos : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/doritos.png");
-        grabSound.openFromFile("audio/other/item_pickup.wav");
+        grabSound.openFromFile("audio/other/item_pickup.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -180,7 +180,7 @@ class AK47PowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/ak47.png");
-        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.wav");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -208,7 +208,7 @@ class SpreadEaglePowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/spread_eagle.png");
-        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.wav");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.ogg");
 
         // Set texture
         setTexture(powerupTexture);

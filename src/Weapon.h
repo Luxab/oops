@@ -131,7 +131,7 @@ class BBGun : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
    }
 };
@@ -162,7 +162,7 @@ class AK47 : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
    }
 };
@@ -203,7 +203,7 @@ class SpreadEagle : public Weapon
       std::pair<int,Projectile*> newShot3 (projectiles->size(), proj3);
       projectiles->insert(newShot3);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
    }
 };
@@ -256,7 +256,7 @@ class Cannon : public Weapon
         projectiles->insert(newShot);
       }
 
-      shotSound->openFromFile("audio/weapon_sounds/cannon.wav");
+      shotSound->openFromFile("audio/weapon_sounds/cannon.ogg");
       shotSound->play();
    }
 };
@@ -288,7 +288,7 @@ class LargeBullet : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
     }
 };
@@ -320,7 +320,7 @@ class PeaShooter : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/enemy_shot.wav");
+      shotSound->openFromFile("audio/weapon_sounds/enemy_shot.ogg");
       shotSound->play();
    }
 };
@@ -350,7 +350,7 @@ class Sniper : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
     }
 };
@@ -382,7 +382,7 @@ class WideGun : public Weapon
       std::pair<int,Projectile*> newShot (projectiles->size(), proj);
       projectiles->insert(newShot);
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
     }
 
@@ -441,7 +441,7 @@ class Shotter : public Weapon
       }
      */
 
-      shotSound->openFromFile("audio/weapon_sounds/shot_sound.wav");
+      shotSound->openFromFile("audio/weapon_sounds/shot_sound.ogg");
       shotSound->play();
     }
 };

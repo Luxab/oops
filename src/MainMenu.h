@@ -58,7 +58,7 @@ public:
     initLevel();
     this->sng = sng;
 
-    if (!music->openFromFile("audio/Tempest2000/02 Track 2.wav"))
+    if (!music->openFromFile("audio/Tempest2000/02 Track 2.ogg"))
     {
       std::cout << "MUSIC LOAD FROM FILE ERROR" << std::endl;
     }
