@@ -209,7 +209,7 @@ class WaveOne : public Wave
 
       boundaries = b;
 
-      musicFileName = "audio/Tempest2000/03_Track_3.mp3";
+      musicFileName = "audio/Tempest2000/03 Track 3.ogg";
     }
     ~WaveOne ()
     {
@@ -283,7 +283,7 @@ class WaveTwo : public Wave
       p = pin;
 
       boundaries = b;
-      musicFileName = "audio/Tempest2000/04_Track_4.mp3";
+      musicFileName = "audio/Tempest2000/04 Track 4.ogg";
     }
     ~WaveTwo ()
     {
@@ -345,7 +345,7 @@ class WaveThree : public Wave
       p = pin;
 
       boundaries = b;
-      musicFileName = "audio/Tempest2000/05_Track_5.mp3";
+      musicFileName = "audio/Tempest2000/05 Track 5.ogg";
     }
     ~WaveThree()
     {
@@ -387,7 +387,7 @@ class WaveFour : public Wave
       p = pin;
 
       boundaries = b;
-      musicFileName = "audio/Tempest2000/01_Thermal_Resolution.mp3";
+      musicFileName = "audio/Tempest2000/01 Thermal Resolution.ogg";
 
       powerUpCooldown = 500;
     }
@@ -423,7 +423,7 @@ class WaveFive : public Wave
       p = pin;
 
       boundaries = b;
-      musicFileName = "audio/Tempest2000/01_Thermal_Resolution.mp3";
+      musicFileName = "audio/Tempest2000/01 Thermal Resolution.ogg";
     }
     ~WaveFive()
     {
@@ -462,21 +462,21 @@ class WaveProcedural : public Wave
       this->difficulty = difficulty;
 
       boundaries = b;
-      
+
       std::uniform_int_distribution<int> shuffle_music(1, 12);
       switch(shuffle_music(rng)) {
-        case_2: musicFileName = "audio/Tempest2000/02_Track_2.mp3"; break;
-        case_3: musicFileName = "audio/Tempest2000/03_Track_3.mp3"; break;
-        case_4: musicFileName = "audio/Tempest2000/04_Track_4.mp3"; break;
-        case_5: musicFileName = "audio/Tempest2000/05_Track_5.mp3"; break;
-        case_6: musicFileName = "audio/Tempest2000/06_Track_6.mp3"; break;
-        case_7: musicFileName = "audio/Tempest2000/07_Track_7.mp3"; break;
-        case_8: musicFileName = "audio/Tempest2000/08_Track_8.mp3"; break;
-        case_9: musicFileName = "audio/Tempest2000/09_Track_9.mp3"; break;
-        case_10: musicFileName = "audio/Tempest2000/10_Track_10.mp3"; break;
-        case_11: musicFileName = "audio/Tempest2000/11_Track_11.mp3"; break;
-        case_12: musicFileName = "audio/Tempest2000/12_Track_12.mp3"; break;
-        default: musicFileName = "audio/Tempest2000/01_Thermal_Resolution.mp3"; break;
+        case_2: musicFileName = "audio/Tempest2000/02 Track 2.ogg"; break;
+        case_3: musicFileName = "audio/Tempest2000/03 Track 3.ogg"; break;
+        case_4: musicFileName = "audio/Tempest2000/04 Track 4.ogg"; break;
+        case_5: musicFileName = "audio/Tempest2000/05 Track 5.ogg"; break;
+        case_6: musicFileName = "audio/Tempest2000/06 Track 6.ogg"; break;
+        case_7: musicFileName = "audio/Tempest2000/07 Track 7.ogg"; break;
+        case_8: musicFileName = "audio/Tempest2000/08 Track 8.ogg"; break;
+        case_9: musicFileName = "audio/Tempest2000/09 Track 9.ogg"; break;
+        case_10: musicFileName = "audio/Tempest2000/10 Track 10.ogg"; break;
+        case_11: musicFileName = "audio/Tempest2000/11 Track 11.ogg"; break;
+        case_12: musicFileName = "audio/Tempest2000/12 Track 12.ogg"; break;
+        default: musicFileName = "audio/Tempest2000/01 Thermal Resolution.ogg"; break;
       }
     }
     ~WaveProcedural()

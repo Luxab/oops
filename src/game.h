@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *

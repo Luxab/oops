@@ -1,7 +1,7 @@
-/*  Created by: 
+/*  Created by:
  *
  *      * Hunter Brown
- *      * Duncan Klug 
+ *      * Duncan Klug
  *      * Andrew Morgan
  *      * HuiMin Zhang
  *
@@ -26,7 +26,7 @@
  *  SOFTWARE.
  */
 
-#ifndef POWERUP_H 
+#ifndef POWERUP_H
 #define POWERUP_H
 
 #include <SFML/Graphics.hpp>
@@ -62,7 +62,6 @@ public:
     this->boundaries = b;
     this->powerups = p;
     this->pos = pos;
-    
     // Set this in derived classes
     weapon = nullptr;
   }
@@ -125,7 +124,7 @@ class SnackBar : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/snackbar.png");
-        grabSound.openFromFile("audio/item_pickup.mp3");
+        grabSound.openFromFile("audio/other/item_pickup.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -152,7 +151,7 @@ class Doritos : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/doritos.png");
-        grabSound.openFromFile("audio/item_pickup.mp3");
+        grabSound.openFromFile("audio/other/item_pickup.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -180,7 +179,7 @@ class AK47PowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/ak47.png");
-        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.mp3");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.ogg");
 
         // Set texture
         setTexture(powerupTexture);
@@ -208,7 +207,7 @@ class SpreadEaglePowerUp : public PowerUp
         speed = 1;
 
         powerupTexture.loadFromFile("images/spread_eagle.png");
-        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.mp3");
+        grabSound.openFromFile("audio/weapon_sounds/ak47_reload.ogg");
 
         // Set texture
         setTexture(powerupTexture);
