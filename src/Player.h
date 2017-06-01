@@ -251,7 +251,6 @@ public:
           health->addHealth(powerup->getHealthBoost());
           health->draw(win);
         }
-
         if (powerup->getWeapon())
           weapon = powerup->getWeapon();
 

@@ -62,7 +62,6 @@ public:
     this->boundaries = b;
     this->powerups = p;
     this->pos = pos;
-
     // Set this in derived classes
     weapon = nullptr;
   }
