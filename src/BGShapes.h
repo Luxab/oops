@@ -50,6 +50,8 @@ class BGShapes
   Vector2f spawnLocation;                           // Location of where circles spawn
   SHAPE_COLOR shapeColor;
 
+  float M_PI = 3.14159265358979323;
+
 public:
   BGShapes(RectangleShape &b, RenderWindow &win, Vector2f spawnLoc, SHAPE_COLOR sc)
   {

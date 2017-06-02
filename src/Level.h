@@ -37,6 +37,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <functional>
 
 #include "Projectile.h"
 #include "Button.h"

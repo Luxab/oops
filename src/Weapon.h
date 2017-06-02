@@ -41,6 +41,8 @@
 
 using namespace sf;
 
+float M_PI = 3.14159265358979323;
+
 class Weapon
 {
 public:

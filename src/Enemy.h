@@ -73,6 +73,8 @@ public:
   bool mvDirect = false;            // For ZIG_ZAG: false if moving left, true if moving right
   int cirRad = 50;                  // Radius of circle for LOOP_DE_LOOP
 
+  float M_PI = 3.14159265358979323;
+
   Enemy()
   {
 

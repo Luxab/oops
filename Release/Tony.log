@@ -1,0 +1,146 @@
+﻿  game.cpp
+c:\users\duncan\documents\github\oops\src\Projectile.h(49): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Projectile.h(50): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Projectile.h(57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(62): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(63): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(79): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(80): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(94): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(95): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(102): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Button.h(103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(44): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(131): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(132): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(162): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(163): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(193): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(194): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(198): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(199): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(203): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(204): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(219): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(254): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(254): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(255): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(287): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(289): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(319): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(321): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(349): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(351): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(381): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(383): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(415): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(417): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(421): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(421): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(423): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Weapon.h(427): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(427): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Weapon.h(429): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\HealthBar.h(48): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\HealthBar.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\HealthBar.h(97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\HealthBar.h(136): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\HealthBar.h(142): warning C4018: '<': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Enemy.h(76): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Enemy.h(316): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Enemy.h(427): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Enemy.h(452): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\PowerUp.h(160): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\PowerUp.h(188): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\PowerUp.h(216): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\Wave.h(93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Wave.h(96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Wave.h(143): warning C4018: '>=': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Wave.h(158): warning C4018: '<': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Wave.h(174): warning C4018: '>=': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Wave.h(480): warning C4065: switch statement contains 'default' but no 'case' labels
+c:\users\duncan\documents\github\oops\src\Wave.h(468): warning C4102: 'case_2': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(469): warning C4102: 'case_3': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(470): warning C4102: 'case_4': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(471): warning C4102: 'case_5': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(472): warning C4102: 'case_6': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(473): warning C4102: 'case_7': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(474): warning C4102: 'case_8': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(475): warning C4102: 'case_9': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(476): warning C4102: 'case_10': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(477): warning C4102: 'case_11': unreferenced label
+c:\users\duncan\documents\github\oops\src\Wave.h(478): warning C4102: 'case_12': unreferenced label
+c:\users\duncan\documents\github\oops\src\Level.h(77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(110): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(111): warning C4244: '=': conversion from 'const float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(196): warning C4018: '<': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Level.h(255): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(257): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(269): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(281): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(282): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(285): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(295): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(86): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(88): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(89): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(93): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(189): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(193): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(224): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Player.h(339): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(353): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(363): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(437): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(585): warning C4018: '>=': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\Level.h(677): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(680): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(694): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(770): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(771): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(774): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(780): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\Level.h(847): warning C4018: '<': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\BGShapes.h(53): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\duncan\documents\github\oops\src\BGShapes.h(137): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\BGShapes.h(142): warning C4018: '<': signed/unsigned mismatch
+c:\users\duncan\documents\github\oops\src\MainMenu.h(92): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(95): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(98): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(101): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(104): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(137): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(138): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(141): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(147): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(153): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(158): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(166): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(167): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(168): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\MainMenu.h(169): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(82): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(85): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(104): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(140): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(141): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(144): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duncan\documents\github\oops\src\ScoreBoard.h(152): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+src\game.cpp(46): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  RichText.cpp
+src\RichText.cpp(94): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+  Tony.vcxproj -> C:\Users\Duncan\Documents\GitHub\oops\Release\Tony.exe
+  Tony.vcxproj -> C:\Users\Duncan\Documents\GitHub\oops\Release\Tony.pdb (Full PDB)
